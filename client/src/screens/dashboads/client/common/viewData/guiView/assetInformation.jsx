@@ -215,6 +215,7 @@ class AssetInformation extends Form {
                   user={user}
                 />
               </Grid>
+              <br />
               <Grid container direction="row" justify="space-between">
                 <Grid item>
                   <Button
@@ -222,11 +223,6 @@ class AssetInformation extends Form {
                     color="secondary"
                     startIcon={<SaveIcon />}
                     onClick={this.handleSave}
-                    // disabled={
-                    //   user.role === "junior" || user.role === "auditor"
-                    //     ? false
-                    //     : true
-                    // }
                   >
                     Save
                   </Button>

@@ -15,19 +15,21 @@ class Login extends Form {
     data: {
       email: "",
       password: ""
-    }
+    },
+    error: ""
   };
 
   onSubmit = async () => {
     const { data } = this.state;
     try {
-      const result = await login(data.email, data.password);
-      const { orgDatabase } = jwtDecode(result.data);
-      const connectData = await connect(orgDatabase);
-      if (result.status === 200 && connectData.status === 200) {
-        window.location = "/dashboard/";
-      }
+      await login(data.email, data.password).then(async result => {
+        const { orgDatabase } = jwtDecode(result.data);
+        await connect(orgDatabase).then(() => {
+          window.location = "/dashboard/";
+        });
+      });
     } catch (ex) {
+      this.setState({ error: ex.response.data.err });
       return null;
     }
   };
@@ -70,6 +72,7 @@ class Login extends Form {
                     onChange={this.handleOnChange}
                     size="small"
                     margin="normal"
+                    error={this.state.error}
                   />
                   <Grid container direction="row" justify="space-between">
                     <Fragment>

@@ -1,10 +1,10 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Card, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
   cardStyle: {
-    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    backgroundColor: "#d9534f",
     color: "white",
     height: 20,
     padding: "5px"
@@ -51,7 +51,13 @@ const Input = ({
         className={className}
         defaultValue={defaultValue}
       />
-      {error && <Card className={classes.cardStyle}>{error}</Card>}
+      {error && (
+        <Fragment>
+          <br />
+          <Card className={classes.cardStyle}>{error}</Card>
+          <br />
+        </Fragment>
+      )}
     </div>
   );
 };

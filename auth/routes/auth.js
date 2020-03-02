@@ -11,7 +11,7 @@ router.post("/", async (req, res) => {
   // Check if the user is present or not
   let tenant = await Tenant.findOne({ email: req.body.email });
   if (!tenant)
-    return res.status(500).send({ err: "Invalid email or password" });
+    return res.status(400).send({ err: "Invalid email or password" });
 
   // Check password
   const isPasswordValid = await bcrypt.compare(
@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
     tenant.password
   );
   if (!isPasswordValid)
-    return res.status(500).send({ err: "Invalid email or password" });
+    return res.status(400).send({ err: "Invalid email or password" });
 
   // Get auth token from User model
   const token = tenant.generateAuthToken();
