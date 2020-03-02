@@ -15,19 +15,21 @@ class Login extends Form {
     data: {
       email: "",
       password: ""
-    }
+    },
+    error: ""
   };
 
   onSubmit = async () => {
     const { data } = this.state;
     try {
-      const result = await login(data.email, data.password);
-      const { orgDatabase } = jwtDecode(result.data);
-      const connectData = await connect(orgDatabase);
-      if (result.status === 200 && connectData.status === 200) {
-        window.location = "/dashboard/";
-      }
+      await login(data.email, data.password).then(async result => {
+        const { orgDatabase } = jwtDecode(result.data);
+        await connect(orgDatabase).then(() => {
+          window.location = "/dashboard/";
+        });
+      });
     } catch (ex) {
+      this.setState({ error: ex.response.data.err });
       return null;
     }
   };
@@ -70,6 +72,7 @@ class Login extends Form {
                     onChange={this.handleOnChange}
                     size="small"
                     margin="normal"
+                    error={this.state.error}
                   />
                   <Grid container direction="row" justify="space-between">
                     <Fragment>
@@ -86,7 +89,7 @@ class Login extends Form {
                           Log In
                         </Button>
                       </Grid>
-                      <Grid item>
+                      {/* <Grid item>
                         <Link
                           style={{
                             textDecoration: "none",
@@ -96,11 +99,21 @@ class Login extends Form {
                         >
                           Forgot password?
                         </Link>
-                      </Grid>
+                      </Grid> */}
                     </Fragment>
                   </Grid>
                 </form>
               </Grid>
+              <div style={{ bottom: 20, position: "absolute", flex: 1 }}>
+                <a
+                  href="https://fixed-asset-flookup.s3.ap-south-1.amazonaws.com/privacy_policy_fastapp.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "blue" }}
+                >
+                  Privacy Policy
+                </a>
+              </div>
             </Grid>
           </Grid>
           <Grid item lg={9} md={8}>

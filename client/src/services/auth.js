@@ -7,15 +7,11 @@ const token = "token";
 const userDetails = "User";
 
 export async function login(email, password) {
-  try {
-    const data = await http.post(authApiEndpoint, { email, password });
-    localStorage.setItem(token, data.data);
-    const user = JSON.stringify(jwtDecode(data.data));
-    localStorage.setItem(userDetails, user);
-    return data;
-  } catch (error) {
-    return null;
-  }
+  const data = await http.post(authApiEndpoint, { email, password });
+  localStorage.setItem(token, data.data);
+  const user = JSON.stringify(jwtDecode(data.data));
+  localStorage.setItem(userDetails, user);
+  return data;
 }
 
 export function logoutUser() {
