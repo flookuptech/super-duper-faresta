@@ -86,7 +86,7 @@ class Login extends Form {
                           Log In
                         </Button>
                       </Grid>
-                      <Grid item>
+                      {/* <Grid item>
                         <Link
                           style={{
                             textDecoration: "none",
@@ -96,11 +96,21 @@ class Login extends Form {
                         >
                           Forgot password?
                         </Link>
-                      </Grid>
+                      </Grid> */}
                     </Fragment>
                   </Grid>
                 </form>
               </Grid>
+              <div style={{ bottom: 20, position: "absolute", flex: 1 }}>
+                <a
+                  href="https://fixed-asset-flookup.s3.ap-south-1.amazonaws.com/privacy_policy_fastapp.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "blue" }}
+                >
+                  Privacy Policy
+                </a>
+              </div>
             </Grid>
           </Grid>
           <Grid item lg={9} md={8}>
