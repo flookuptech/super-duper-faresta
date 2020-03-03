@@ -4,15 +4,16 @@ import {
   Container,
   Box,
   withStyles,
-  Button,
   Grid
 } from "@material-ui/core";
+
+import { Helmet } from "react-helmet";
+import PieChart from "components/charts/pie";
 
 import {
   getReportsData,
   getReportsDataVerifiedOnly
 } from "services/getReportsData";
-import PieChart from "components/charts/pie";
 
 const styles = {
   boxBorder: {
@@ -58,6 +59,9 @@ class AuditReport extends Component {
     const { reportsData, verifiedOnly } = this.state;
     return (
       <Fragment>
+        <Helmet>
+          <title>Flookup | Audit Reports</title>
+        </Helmet>
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
