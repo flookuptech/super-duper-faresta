@@ -7,7 +7,8 @@ router.get("/all", async (req, res) => {
   try {
     const data = await Asset.aggregate([
       { $match: {} },
-      { $group: { _id: "$category", count: { $sum: 1 } } },
+      { $group: { _id: "$category", value: { $sum: 1 } } },
+      { $project: { _id: 0, id: "$_id", label: "$_id", value: 1 } },
       { $sort: { total: -1 } }
     ]);
     res.send(data);
@@ -20,7 +21,8 @@ router.get("/verifiedStatus", async (req, res) => {
   try {
     const data = await Asset.aggregate([
       { $match: {} },
-      { $group: { _id: "$verifiedStatus", count: { $sum: 1 } } },
+      { $group: { _id: "$verifiedStatus", value: { $sum: 1 } } },
+      { $project: { _id: 0, id: "$_id", label: "$_id", value: 1 } },
       { $sort: { total: -1 } }
     ]);
     res.send(data);
