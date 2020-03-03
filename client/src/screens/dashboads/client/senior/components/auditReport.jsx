@@ -12,6 +12,7 @@ import {
   getReportsData,
   getReportsDataVerifiedOnly
 } from "services/getReportsData";
+import PieChart from "components/charts/pie";
 
 const styles = {
   boxBorder: {
@@ -38,26 +39,14 @@ class AuditReport extends Component {
     this.setState({ reportsData, verifiedOnly });
   }
 
-  getAssetsCount() {
-    return this.state.reportsData.map(item => {
-      return (
-        <Fragment>
-          <p>
-            {item._id} : {item.count}
-          </p>
-        </Fragment>
-      );
-    });
-  }
-
   getAssetsVerifiedStatus() {
     return this.state.verifiedOnly.map(item => {
       return (
         <Fragment>
-          {item._id ? (
-            <p>Verified : {item.count}</p>
+          {item.id ? (
+            <p>Verified : {item.value}</p>
           ) : (
-            <p>Not Verified : {item.count}</p>
+            <p>Not Verified : {item.value}</p>
           )}
         </Fragment>
       );
@@ -66,7 +55,7 @@ class AuditReport extends Component {
 
   render() {
     const { classes } = this.props;
-
+    const { reportsData, verifiedOnly } = this.state;
     return (
       <Fragment>
         <Grid>
@@ -80,20 +69,28 @@ class AuditReport extends Component {
                   </Typography>
                 </Fragment>
                 <br />
-                <Grid container direction="column">
-                  <Grid item>
-                    <Typography variant="h6" component="h6">
-                      Assets count by category
-                    </Typography>
-                    <div>{this.getAssetsCount()}</div>
+                {reportsData.length ? (
+                  <Grid container direction="row" justify="space-between">
+                    <Grid item lg={6}>
+                      <Typography variant="h6" component="h6">
+                        Assets count by category
+                      </Typography>
+                      <div style={{ height: 300 }}>
+                        <PieChart data={reportsData} />
+                      </div>
+                    </Grid>
+                    <Grid item lg={6}>
+                      <Typography variant="h6" component="h6">
+                        Assets count verificaton status
+                      </Typography>
+                      <div style={{ height: 300 }}>
+                        <PieChart data={verifiedOnly} />
+                      </div>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <Typography variant="h6" component="h6">
-                      Assets count verificaton status
-                    </Typography>
-                  </Grid>
-                  <div>{this.getAssetsVerifiedStatus()}</div>
-                </Grid>
+                ) : (
+                  <div>Upload some assets</div>
+                )}
               </Box>
               <br />
             </Container>
