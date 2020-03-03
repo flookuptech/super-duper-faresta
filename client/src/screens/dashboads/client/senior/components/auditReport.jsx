@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 
 import { Helmet } from "react-helmet";
-import PieChart from "components/charts/pie";
+import { PieChart, PieChartCanvas } from "components/charts/pie";
 
 import {
   getReportsData,
@@ -88,7 +88,7 @@ class AuditReport extends Component {
                         Assets count verificaton status
                       </Typography>
                       <div style={{ height: 300 }}>
-                        <PieChart data={verifiedOnly} />
+                        <PieChartCanvas data={verifiedOnly} />
                       </div>
                     </Grid>
                   </Grid>
