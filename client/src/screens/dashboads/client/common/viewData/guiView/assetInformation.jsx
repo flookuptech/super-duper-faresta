@@ -21,6 +21,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
 const imageUploadUrl = config.apiUrl + "/imageUpload";
+const imageUploadUrlAuditor = config.apiUrl + "/imageUpload/auditorFileUpload";
 
 const styles = {
   boxBorder: {
@@ -99,6 +100,20 @@ class AssetInformation extends Form {
     });
   };
 
+  onClickHandlerAuditor = () => {
+    const data = new FormData();
+    if (!this.state.selectedFile) return;
+    data.append("file", this.state.selectedFile);
+    data.append("id", this.state.id);
+    http.post(imageUploadUrlAuditor, data, {
+      onUploadProgress: ProgressEvent => {
+        this.setState({
+          loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+        });
+      }
+    });
+  };
+
   handleSave = async () => {
     const data = { ...this.state.data };
     try {
@@ -148,7 +163,7 @@ class AssetInformation extends Form {
     const data = JSON.parse(getUser());
     const dbName = data.orgDatabase;
     const { id } = this.state;
-    const { verifiedStatus, imageUri } = this.state.data;
+    const { verifiedStatus, imageUri, imageUriByAuditor } = this.state.data;
     const { user } = this.props;
 
     return (
@@ -173,12 +188,31 @@ class AssetInformation extends Form {
                       />
                     </div>
                   )}
+                  {user.role === "auditor" && (
+                    <div className="upload-btn-style">
+                      <ImageUpload
+                        onChangeHandler={this.onChangeHandler}
+                        onClickHandler={this.onClickHandlerAuditor}
+                        loaded={this.state.loaded}
+                        imageSet={this.state.selectedFile}
+                      />
+                    </div>
+                  )}
                 </Grid>
                 <Grid item>
                   <ModalImage
                     className="image-upload-style"
                     small={imageUri}
                     large={imageUri}
+                    alt="Image Preview"
+                  />
+                </Grid>
+                <Grid item>
+                  <p>Auditor Uploaded Image</p>
+                  <ModalImage
+                    className="image-upload-style"
+                    small={imageUriByAuditor}
+                    large={imageUriByAuditor}
                     alt="Image Preview"
                   />
                 </Grid>
