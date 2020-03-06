@@ -59,17 +59,13 @@ class ViewData extends Form {
   };
 
   render() {
-    const { classes, user: userData } = this.props;
+    const { classes } = this.props;
     const { view, assetData } = this.state;
     return (
       <Fragment>
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
-              <br />
-              {/* <Box className={classes.boxBorder}>
-                <KeyForApp userData={userData} />
-              </Box> */}
               <br />
               <Box className={classes.boxBorder}>
                 <div>

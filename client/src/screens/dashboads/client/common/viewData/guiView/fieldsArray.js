@@ -148,3 +148,10 @@ export let auditorRemarksArray = [
     value: "remarkAuditor_3"
   }
 ];
+
+export const tags = [
+  "Asset mismatch",
+  "Not found",
+  "Damaged",
+  "Incorrect details"
+];

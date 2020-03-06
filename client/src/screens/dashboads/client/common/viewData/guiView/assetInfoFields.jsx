@@ -13,8 +13,8 @@ class AssetInfoFields extends Component {
   };
 
   componentDidMount() {
-    const { user } = this.props;
-    if (user.role !== "senior") {
+    const { role } = this.props.user;
+    if (role !== "senior") {
       this.setState({ readStatus: !this.state.readStatus });
     }
   }

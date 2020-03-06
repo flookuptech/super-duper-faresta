@@ -11,6 +11,7 @@ import NotFound from "components/pageNotFound";
 import EditProfile from "components/editProfile";
 import AssetList from "../common/viewData/guiView/assetList";
 import AssetInformation from "../common/viewData/guiView/assetInformation";
+import CreateAsset from "./components/createAsset";
 
 class JuniorUserDS extends Component {
   state = {};
@@ -33,6 +34,10 @@ class JuniorUserDS extends Component {
           />
           <Route path="/dashboard/editprofile" component={EditProfile} />
           <Route exact path="/dashboard/" component={Home} />
+          <Route
+            path="/dashboard/createAsset"
+            render={props => <CreateAsset user={this.props.user} {...props} />}
+          />
           <Route component={NotFound} />
         </Switch>
       </DashboardLayout>
