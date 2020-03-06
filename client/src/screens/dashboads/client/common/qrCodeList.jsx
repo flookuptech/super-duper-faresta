@@ -117,7 +117,6 @@ class QRCodeList extends Component {
         <br />
         <main className={classes.content}>
           <Container maxWidth="lg">
-            <br />
             <Box className={classes.boxBorder}>
               {
                 <Button

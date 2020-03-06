@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { ResponsivePie, ResponsivePieCanvas } from "@nivo/pie";
 
-export const PieChart = ({ data }) => {
+export const PieChart = ({ data, schemeColor }) => {
   return (
     <Fragment>
       <ResponsivePie
@@ -11,8 +11,7 @@ export const PieChart = ({ data }) => {
         pixelRatio={1}
         padAngle={0.7}
         cornerRadius={3}
-        colors={{ scheme: "nivo" }}
-        borderWidth={1}
+        colors={schemeColor}
         sortByValue={true}
         borderColor={{ from: "color", modifiers: [["darker", 0.2]] }}
         enableRadialLabels={false}

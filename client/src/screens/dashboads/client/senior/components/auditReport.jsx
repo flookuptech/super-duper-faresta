@@ -80,15 +80,21 @@ class AuditReport extends Component {
                         Assets count by category
                       </Typography>
                       <div style={{ height: 300 }}>
-                        <PieChart data={reportsData} />
+                        <PieChart
+                          data={reportsData}
+                          schemeColor={{ scheme: "nivo" }}
+                        />
                       </div>
                     </Grid>
                     <Grid item lg={6}>
                       <Typography variant="h6" component="h6">
-                        Assets count verificaton status
+                        Assets verificaton status
                       </Typography>
                       <div style={{ height: 300 }}>
-                        <PieChartCanvas data={verifiedOnly} />
+                        <PieChartCanvas
+                          data={verifiedOnly}
+                          schemeColor={{ scheme: "accent" }}
+                        />
                       </div>
                     </Grid>
                   </Grid>
