@@ -36,4 +36,40 @@ router.get("/verifiedStatus", async (req, res) => {
   }
 });
 
+router.get("/auditorRemarksOnly", async (req, res) => {
+  try {
+    const data = await Asset.find(
+      {
+        $or: [
+          { remarkAuditor_1: { $ne: null } },
+          { remarkAuditor_2: { $ne: null } },
+          { remarkAuditor_3: { $ne: null } }
+        ]
+      },
+      { _id: 1 }
+    );
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ err: "Request failed" });
+  }
+});
+
+router.get("/juniorRemarksOnly", async (req, res) => {
+  try {
+    const data = await Asset.find(
+      {
+        $or: [
+          { remarkJunior_1: { $ne: null } },
+          { remarkJunior_2: { $ne: null } },
+          { remarkJunior_3: { $ne: null } }
+        ]
+      },
+      { _id: 1 }
+    );
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ err: "Request failed" });
+  }
+});
+
 module.exports = router;

@@ -12,7 +12,9 @@ import { PieChart, PieChartCanvas } from "components/charts/pie";
 
 import {
   getReportsData,
-  getReportsDataVerifiedOnly
+  getReportsDataVerifiedOnly,
+  getAuditorRemarksOnly,
+  getJuniorRemarksOnly
 } from "services/getReportsData";
 
 const styles = {
@@ -31,13 +33,22 @@ const styles = {
 class AuditReport extends Component {
   state = {
     reportsData: [],
-    verifiedOnly: []
+    verifiedOnly: [],
+    auditorRemarksOnly: [],
+    juniorRemarksOnly: []
   };
 
   async componentDidMount() {
     const { data: reportsData } = await getReportsData();
     const { data: verifiedOnly } = await getReportsDataVerifiedOnly();
-    this.setState({ reportsData, verifiedOnly });
+    const { data: auditorRemarksOnly } = await getAuditorRemarksOnly();
+    const { data: juniorRemarksOnly } = await getJuniorRemarksOnly();
+    this.setState({
+      reportsData,
+      verifiedOnly,
+      auditorRemarksOnly,
+      juniorRemarksOnly
+    });
   }
 
   getAssetsVerifiedStatus() {
@@ -49,6 +60,30 @@ class AuditReport extends Component {
           ) : (
             <p>Not Verified : {item.value}</p>
           )}
+        </Fragment>
+      );
+    });
+  }
+
+  getAuditorRemarkedAssets() {
+    return this.state.auditorRemarksOnly.map((remark, counter) => {
+      return (
+        <Fragment>
+          <p>
+            {counter + 1}. Asset : {remark._id}
+          </p>
+        </Fragment>
+      );
+    });
+  }
+
+  getJuniorRemarkedAssets() {
+    return this.state.juniorRemarksOnly.map((remark, counter) => {
+      return (
+        <Fragment>
+          <p>
+            {counter + 1}. Asset : {remark._id}
+          </p>
         </Fragment>
       );
     });
@@ -95,6 +130,22 @@ class AuditReport extends Component {
                           data={verifiedOnly}
                           schemeColor={{ scheme: "accent" }}
                         />
+                      </div>
+                    </Grid>
+                    <Grid item lg={6}>
+                      <Typography variant="h6" component="h6">
+                        Auditor remarked assets
+                      </Typography>
+                      <div style={{ height: 300 }}>
+                        {this.getAuditorRemarkedAssets()}
+                      </div>
+                    </Grid>
+                    <Grid item lg={6}>
+                      <Typography variant="h6" component="h6">
+                        Junior remarked assets
+                      </Typography>
+                      <div style={{ height: 300 }}>
+                        {this.getJuniorRemarkedAssets()}
                       </div>
                     </Grid>
                   </Grid>

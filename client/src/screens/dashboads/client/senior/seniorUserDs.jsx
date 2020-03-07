@@ -15,6 +15,7 @@ import Guide from "components/guide";
 import AssetList from "../common/viewData/guiView/assetList";
 import AssetInformation from "../common/viewData/guiView/assetInformation";
 import QRCodeList from "../common/qrCodeList";
+import SearchAsset from "../common/search/searchIndex";
 
 class SeniorUserDS extends Component {
   state = {};
@@ -23,6 +24,7 @@ class SeniorUserDS extends Component {
     return (
       <DashboardLayout user={user}>
         <Switch>
+          <Route path="/dashboard/search" component={SearchAsset} />
           <Route path="/dashboard/qrList" component={QRCodeList} />
           <Route
             path="/dashboard/viewData/:category/:id"
