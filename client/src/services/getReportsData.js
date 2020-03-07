@@ -13,7 +13,19 @@ export function getReportsDataVerifiedOnly() {
   return result;
 }
 
+export function getAuditorRemarksOnly() {
+  const result = http.get(apiUrlToGetReportsData + "/auditorRemarksOnly");
+  return result;
+}
+
+export function getJuniorRemarksOnly() {
+  const result = http.get(apiUrlToGetReportsData + "/juniorRemarksOnly");
+  return result;
+}
+
 export default {
   getReportsData,
-  getReportsDataVerifiedOnly
+  getReportsDataVerifiedOnly,
+  getAuditorRemarksOnly,
+  getJuniorRemarksOnly
 };
