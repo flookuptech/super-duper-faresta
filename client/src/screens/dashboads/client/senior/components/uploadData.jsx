@@ -48,8 +48,9 @@ class UploadData extends Component {
       console.log(result);
       if (result.status == 200) toast.info(result.data.res);
     } catch (error) {
-      const { data } = error.response;
-      toast.error(data.res);
+      console.log(error.response.data.err);
+      toast.error(error.response.data.err);
+      // toast.error(error);
     }
   };
 
@@ -59,7 +60,7 @@ class UploadData extends Component {
 
     return (
       <Fragment>
-        <ToastContainer autoClose={1500} closeButton={false} />
+        <ToastContainer autoClose={false} />
 
         <Grid>
           <main className={classes.content}>

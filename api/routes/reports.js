@@ -14,7 +14,7 @@ router.get("/all", async (req, res) => {
 
     res.send(data);
   } catch (error) {
-    res.status(500).send("Unable to fetch assets");
+    res.status(500).send({ err: "Unable to fetch assets" });
   }
 });
 
@@ -32,7 +32,7 @@ router.get("/verifiedStatus", async (req, res) => {
     });
     res.send(data);
   } catch (error) {
-    res.status(500).send("Unable to fetch assets");
+    res.status(500).send({ err: "Unable to fetch assets" });
   }
 });
 

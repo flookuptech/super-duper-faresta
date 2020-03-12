@@ -9,6 +9,9 @@ const useStyles = makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     flex: 1
   },
+  iconPosition: {
+    marginRight: theme.spacing(2)
+  },
   searchIcon: {
     color: "#dfdfdf"
   }
@@ -25,7 +28,7 @@ export default function CustomizedInputBase({ onChange, searchText }) {
         inputProps={{ "aria-label": "search assets" }}
         margin="dense"
         endAdornment={
-          <InputAdornment position="end">
+          <InputAdornment position="end" className={classes.iconPosition}>
             {searchText ? (
               <CloseIcon className={classes.searchIcon} />
             ) : (
@@ -34,6 +37,7 @@ export default function CustomizedInputBase({ onChange, searchText }) {
           </InputAdornment>
         }
         name="searchText"
+        fullWidth
         onChange={onChange}
       />
     </Fragment>

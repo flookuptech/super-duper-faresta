@@ -1,22 +1,39 @@
-import React, { Component, Fragment } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import React, { Fragment } from "react";
+import { Grid } from "@material-ui/core";
 import SearchBox from "./components/searchBox";
 import Form from "components/form/form";
-
-const style = {};
+import { searchQuery } from "services/search";
 
 class Search extends Form {
   state = {
-    data: {}
+    searchText: ""
   };
+
+  handleChange = e => {
+    this.setState({ searchText: e.target.value }, () => {
+      this.searchData();
+    });
+  };
+
+  searchData = async () => {
+    try {
+      const results = await searchQuery(this.state.searchText);
+      console.log(results);
+    } catch (error) {
+      console.log(error.response);
+    }
+  };
+
   render() {
-    const { searchText } = this.state.data;
+    const { searchText } = this.state;
     return (
       <Fragment>
-        <SearchBox onChange={this.handleOnChange} searchText={searchText} />
+        <Grid>
+          <SearchBox onChange={this.handleChange} searchText={searchText} />
+        </Grid>
       </Fragment>
     );
   }
 }
 
-export default withStyles(style)(Search);
+export default Search;
