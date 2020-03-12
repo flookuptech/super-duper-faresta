@@ -9,7 +9,7 @@ router.post("/", async (req, res) => {
     await Asset.deleteOne({ _id: assetId });
     res.send({ res: "Asset deleted" });
   } catch (error) {
-    res.status(500).send({ res: "Asset deletion failed" });
+    res.status(500).send({ err: "Asset deletion failed" });
   }
 });
 

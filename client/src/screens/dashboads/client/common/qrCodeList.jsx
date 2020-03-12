@@ -53,7 +53,11 @@ class Code extends Component {
           {assetData.map((asset, i) => {
             return (
               <Fragment>
-                <div style={des ? null : { paddingLeft: "40px" }}>
+                <div
+                  style={
+                    des ? { paddingLeft: "40px" } : { paddingLeft: "40px" }
+                  }
+                >
                   <Grid container direction="column">
                     <Grid container direction="row">
                       <QRCodeGenerator id={asset._id} keyValue={dbName} />
@@ -63,14 +67,16 @@ class Code extends Component {
                           des ? { paddingLeft: "15px" } : { display: "none" }
                         }
                       >
-                        <div>
-                          <b>ID:</b> {asset._id}
-                        </div>
-                        <div>
-                          <b>Description:</b> {asset.description}
-                        </div>
-                        <div>
-                          <b>Category:</b> {asset.category}
+                        <div style={{ fontSize: 12 }}>
+                          <div>
+                            <b>{asset._id}</b>
+                          </div>
+                          <div>
+                            <b>{asset.description}</b>
+                          </div>
+                          <div>
+                            <b>{asset.category}</b>
+                          </div>
                         </div>
                       </Grid>
                     </Grid>

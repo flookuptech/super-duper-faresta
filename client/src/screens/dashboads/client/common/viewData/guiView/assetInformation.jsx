@@ -1,7 +1,6 @@
 import React, { Fragment } from "react";
 import { Button, Grid, Box, Container, Typography } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
-
 import config from "config.js";
 import Dialog from "components/dialog";
 import Form from "components/form/form";
@@ -15,10 +14,11 @@ import { deleteAsset } from "services/deleteAsset";
 import { sendEditedData } from "services/sendAssetData";
 import { verifyAsset } from "services/assetVerification";
 import QRCodeGenerator from "components/qrCodeGenerator";
-
+import MultiSelect from "@khanacademy/react-multi-select";
 import ModalImage from "react-modal-image";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { options } from "./fieldsArray";
 
 const imageUploadUrl = config.apiUrl + "/imageUpload";
 const imageUploadUrlAuditor = config.apiUrl + "/imageUpload/auditorFileUpload";
@@ -52,7 +52,8 @@ class AssetInformation extends Form {
       remarkAuditor_1: "",
       remarkAuditor_2: "",
       remarkAuditor_3: ""
-    }
+    },
+    selected: []
   };
 
   async componentDidMount() {
@@ -115,12 +116,13 @@ class AssetInformation extends Form {
   };
 
   handleSave = async () => {
-    const data = { ...this.state.data };
+    const data = { ...this.state.selected, ...this.state.data };
     try {
-      const { data: result } = await sendEditedData(data, this.state.id);
-      toast.success(result.res);
+      console.log(data);
+      // const { data: result } = await sendEditedData(data, this.state.id);
+      // toast.success(result.res);
     } catch (error) {
-      toast.error(error.response.data.err);
+      // toast.error(error.response.data.err);
     }
   };
 
@@ -164,6 +166,7 @@ class AssetInformation extends Form {
     const dbName = data.orgDatabase;
     const { id } = this.state;
     const { verifiedStatus, imageUri, imageUriByAuditor } = this.state.data;
+    const selected = this.state.selected;
     const { user } = this.props;
 
     return (
@@ -248,6 +251,15 @@ class AssetInformation extends Form {
                   handleOnChange={this.handleOnChange}
                   user={user}
                 />
+              </Grid>
+              <br />
+              <Grid item xs={12} lg={3} md={3}>
+                <MultiSelect
+                  options={options}
+                  selected={selected}
+                  onSelectedChanged={selected => this.setState({ selected })}
+                />
+                {console.log(selected)}
               </Grid>
               <br />
               <Grid container direction="row" justify="space-between">

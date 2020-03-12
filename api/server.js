@@ -9,6 +9,7 @@ app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 
 //Local imports
+const search = require("./routes/search");
 const connect = require("./routes/connect");
 const reports = require("./routes/reports");
 const sendMail = require("./routes/sendMail");
@@ -54,8 +55,9 @@ mongoose.set("useUnifiedTopology", true);
 mongoose.set("useCreateIndex", true);
 
 // Routes
-app.use("/reports", reports);
+app.use("/search", search);
 app.use("/connect", connect);
+app.use("/reports", reports);
 app.use("/sendMail", sendMail);
 app.use("/getAssets", getAssets);
 app.use("/imageUpload", fileUpload);

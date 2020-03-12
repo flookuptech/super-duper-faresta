@@ -9,7 +9,9 @@ const assetSchema = new mongoose.Schema({
   quantity: { type: String, default: null },
   location: { type: String, default: null },
   base_amount: { type: String, default: null },
-  date_of_installation: { type: String, default: null },
+  date_of_installation: {
+    type: Date
+  },
   month_of_installation: { type: String, default: null },
   vat: { type: String, default: null },
   taxes_: { type: String, default: null },
