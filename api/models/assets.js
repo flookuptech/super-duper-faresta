@@ -39,6 +39,7 @@ const assetSchema = new mongoose.Schema({
   imageUri: { type: String, default: null },
   imageUriByAuditor: { type: String, default: null },
   verifiedStatus: { type: Boolean, default: false },
+  assetTags: [String],
   remarkJunior_1: { type: String, default: null },
   remarkJunior_2: { type: String, default: null },
   remarkJunior_3: { type: String, default: null },

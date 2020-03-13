@@ -63,7 +63,8 @@ class AssetInformation extends Form {
       const { data: assetDataFrom } = await getAssetById(category, assetId);
       this.setState({
         data: assetDataFrom[0],
-        id: assetId
+        id: assetId,
+        selected: assetDataFrom[0].assetTags
       });
     } catch (error) {}
   }
@@ -116,13 +117,14 @@ class AssetInformation extends Form {
   };
 
   handleSave = async () => {
-    const data = { ...this.state.selected, ...this.state.data };
+    const { data } = this.state;
+    data["assetTags"] = this.state.selected;
+    console.log(data);
     try {
-      console.log(data);
-      // const { data: result } = await sendEditedData(data, this.state.id);
-      // toast.success(result.res);
+      const { data: result } = await sendEditedData(data, this.state.id);
+      toast.success(result.res);
     } catch (error) {
-      // toast.error(error.response.data.err);
+      toast.error(error.response.data.err);
     }
   };
 
@@ -220,13 +222,28 @@ class AssetInformation extends Form {
                   />
                 </Grid>
               </Grid>
+              <br />
               <Grid
                 container
-                justify="flex-end"
-                direction="row"
+                justify={user.role === "auditor" ? "space-between" : "flex-end"}
                 alignItems="center"
-                spacing={2}
+                direction="row"
               >
+                {user.role === "auditor" && (
+                  <Grid item lg={3} xs={6} md={6}>
+                    <MultiSelect
+                      overrideStrings={{
+                        selectSomeItems: "Tag incase error...",
+                        search: "Search tag"
+                      }}
+                      options={options}
+                      selected={selected}
+                      onSelectedChanged={selected =>
+                        this.setState({ selected })
+                      }
+                    />
+                  </Grid>
+                )}
                 <Grid item>
                   <Typography
                     variant="overline"
@@ -245,21 +262,13 @@ class AssetInformation extends Form {
                   />
                 </Grid>
               </Grid>
+              <br />
               <Grid>
                 <AssetInfoFields
                   assetData={this.state.data}
                   handleOnChange={this.handleOnChange}
                   user={user}
                 />
-              </Grid>
-              <br />
-              <Grid item xs={12} lg={3} md={3}>
-                <MultiSelect
-                  options={options}
-                  selected={selected}
-                  onSelectedChanged={selected => this.setState({ selected })}
-                />
-                {console.log(selected)}
               </Grid>
               <br />
               <Grid container direction="row" justify="space-between">
