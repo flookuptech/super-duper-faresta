@@ -150,8 +150,8 @@ export let auditorRemarksArray = [
 ];
 
 export const options = [
-  { label: "Asset Damaged", value: "assetDamaged" },
-  { label: "Asset Mismatch", value: "assetMismatch" },
-  { label: "Asset Not Found", value: "assetNotFound" },
-  { label: "Incorrect details", value: "incorrectDetails" }
+  { label: "Asset Damaged", value: "Asset Damaged" },
+  { label: "Asset Mismatch", value: "Asset Mismatch" },
+  { label: "Asset Not Found", value: "Asset Not Found" },
+  { label: "Incorrect details", value: "Incorrect details" }
 ];

@@ -1,16 +1,14 @@
 import React, { Component, Fragment } from "react";
+import { Link } from "react-router-dom";
 import {
   List,
   ListItem,
-  Grid,
+  ListItemText,
   Typography,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails
+  Paper,
+  ListItemIcon
 } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { getAssetsCategory } from "services/getAssets";
 
 class AssetList extends Component {
@@ -34,43 +32,22 @@ class AssetList extends Component {
         <Typography component="p" variant="p">
           Total: <b>{result.length}</b>
         </Typography>
-        <List className="list-style">
+        <List>
           {result.map(item => {
             return (
-              <ExpansionPanel>
-                <ExpansionPanelSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+              <Paper>
+                <ListItem
+                  key={item._id}
+                  component={Link}
+                  style={{ color: "black" }}
+                  to={`/dashboard/viewData/${category}/${item._id}`}
                 >
-                  {item.description}
-                </ExpansionPanelSummary>
-                <ListItem key={item._id} className="asset-expansion-list-style">
-                  <Link
-                    key={item._id}
-                    to={`/dashboard/viewData/${category}/${item._id}`}
-                  >
-                    <ExpansionPanelDetails>
-                      <Grid container spacing={3}>
-                        <Grid item xs={12} md={6} lg={6}>
-                          Location : {item.location}
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6}>
-                          Invoice No : {item.invoice_number}
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6}>
-                          Invoice Amount : {item.total_invoice_amount}
-                        </Grid>
-                        <Grid item xs={12} md={6} lg={6}>
-                          Vendor Name : {item.vendor_name}
-                        </Grid>
-                      </Grid>
-                    </ExpansionPanelDetails>
-                  </Link>
-
-                  <br />
+                  <ListItemText primary={item.description} />
+                  <ListItemIcon>
+                    <NavigateNextIcon />
+                  </ListItemIcon>
                 </ListItem>
-              </ExpansionPanel>
+              </Paper>
             );
           })}
         </List>
