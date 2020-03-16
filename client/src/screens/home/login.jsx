@@ -1,6 +1,5 @@
 import React, { Fragment } from "react";
 import { Button, Grid, Typography } from "@material-ui/core";
-import { Link } from "react-router-dom";
 import jwtDecode from "jwt-decode";
 
 import { login } from "services/auth";
@@ -21,17 +20,23 @@ class Login extends Form {
 
   onSubmit = async () => {
     const { data } = this.state;
-    try {
-      await login(data.email, data.password).then(async result => {
+    await login(data.email, data.password)
+      .then(async result => {
         const { orgDatabase } = jwtDecode(result.data);
-        await connect(orgDatabase).then(() => {
-          window.location = "/dashboard/";
-        });
+        await connect(orgDatabase)
+          .then(() => {
+            window.location = "/dashboard/";
+          })
+          .catch(err => {
+            this.setState({
+              error: "Something failed! Contact Administrator."
+            });
+          });
+      })
+      .catch(ex => {
+        this.setState({ error: ex.response.data.err });
+        return null;
       });
-    } catch (ex) {
-      this.setState({ error: ex.response.data.err });
-      return null;
-    }
   };
 
   render() {

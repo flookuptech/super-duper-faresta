@@ -30,22 +30,27 @@ router.post("/", upload.single("file"), async (req, res) => {
     Date.now() + "-" + req.file.originalname.toLowerCase().replace(/\s/g, "");
   uploadParams.Body = req.file.buffer;
 
-  try {
-    await new AWS.S3().putObject(params).promise();
-  } catch (e) {
-    console.log("Error uploading data: ", e);
-  }
-  const imageUri = config.get("far_awsBucketLink") + params.Key;
-
-  const asset = await Asset.updateOne(
-    { _id: id },
-    {
-      $set: {
-        imageUri: imageUri
-      }
-    }
-  );
-  res.send(asset);
+  await new AWS.S3()
+    .putObject(params)
+    .promise()
+    .then(async () => {
+      const imageUri = config.get("far_awsBucketLink") + params.Key;
+      await Asset.updateOne(
+        { _id: id },
+        {
+          $set: {
+            imageUri: imageUri
+          }
+        }
+      )
+        .then(() => res.status(200).send({ msg: "Image uploaded!" }))
+        .catch(err => {
+          res.status(500).send({ err: "Uoload failed" });
+        });
+    })
+    .catch(err => {
+      res.status(500).send({ err: "Something failed!" });
+    });
 });
 
 router.post("/auditorFileUpload", upload.single("file"), async (req, res) => {

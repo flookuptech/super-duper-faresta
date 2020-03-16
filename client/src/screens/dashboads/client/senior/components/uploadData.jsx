@@ -7,7 +7,6 @@ import {
   Button,
   Grid
 } from "@material-ui/core";
-import CloudDoneSharpIcon from "@material-ui/icons/CloudDoneSharp";
 import JsonTable from "ts-react-json-table";
 // import CsvDownload from "react-json-to-csv";
 import { ToastContainer, toast } from "react-toastify";
@@ -45,12 +44,10 @@ class UploadData extends Component {
   handleSaveData = async () => {
     try {
       const result = await saveAssetsData(this.state.data);
-      console.log(result);
-      if (result.status == 200) toast.info(result.data.res);
+      if (result.status === 200) toast.info(result.data.res);
     } catch (error) {
-      console.log(error.response.data.err);
+      console.log(error);
       toast.error(error.response.data.err);
-      // toast.error(error);
     }
   };
 

@@ -23,8 +23,6 @@ import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import { Link } from "react-router-dom";
-
-import { mainListItems } from "./components/listDrawerItems";
 import ListDrawerItems from "./components/listDrawerItems";
 
 const drawerWidth = 220;

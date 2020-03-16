@@ -5,6 +5,7 @@ import ListItemText from "@material-ui/core/ListItemText";
 import HomeIcon from "@material-ui/icons/Home";
 import { Link } from "react-router-dom";
 import PageviewIcon from "@material-ui/icons/Pageview";
+import PostAddIcon from "@material-ui/icons/PostAdd";
 
 export default function ListDrawerItems() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -31,13 +32,25 @@ export default function ListDrawerItems() {
         button
         component={Link}
         to="/dashboard/viewData"
-        selected={selectedIndex === 2}
-        onClick={event => handleListItemClick(event, 2)}
+        selected={selectedIndex === 3}
+        onClick={event => handleListItemClick(event, 3)}
       >
         <ListItemIcon>
           <PageviewIcon />
         </ListItemIcon>
         <ListItemText primary="View Data" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/dashboard/floorToFile"
+        selected={selectedIndex === 2}
+        onClick={event => handleListItemClick(event, 2)}
+      >
+        <ListItemIcon>
+          <PostAddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Floor to file" />
       </ListItem>
     </div>
   );

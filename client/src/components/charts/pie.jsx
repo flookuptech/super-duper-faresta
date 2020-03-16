@@ -9,7 +9,6 @@ export const PieChart = ({ data, schemeColor }) => {
         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
         innerRadius={0.5}
         pixelRatio={1}
-        padAngle={0.7}
         cornerRadius={3}
         colors={schemeColor}
         sortByValue={true}
@@ -67,7 +66,6 @@ export const PieChartCanvas = ({ data }) => {
         slicesLabelsSkipAngle={0}
         slicesLabelsTextColor="#000"
         animate={true}
-        slicesLabelsTextColor="#000"
         motionStiffness={90}
         motionDamping={15}
         legends={[

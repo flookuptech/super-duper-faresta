@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from "react";
-import { Grid, Button, IconButton } from "@material-ui/core";
+import { Grid, IconButton } from "@material-ui/core";
 import FullscreenIcon from "@material-ui/icons/Fullscreen";
 import JsonTable from "ts-react-json-table";
 import Fullscreen from "react-full-screen";

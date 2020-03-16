@@ -5,7 +5,6 @@ import UserDataFields from "./userDataFields";
 import Form from "components/form/form";
 import { createUser } from "services/createUserSenior";
 import "react-toastify/dist/ReactToastify.css";
-import * as Sentry from "@sentry/browser";
 import { ToastContainer, toast } from "react-toastify";
 
 const styles = {
@@ -50,7 +49,7 @@ class AddUsers extends Form {
     };
     try {
       const result = await createUser(data);
-      if (result.status == 200) toast.success(result.data.res);
+      if (result.status === 200) toast.success(result.data.res);
     } catch (error) {
       const { data } = error.response;
       toast.error(data.res);

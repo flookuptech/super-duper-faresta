@@ -1,7 +1,8 @@
 const mongoose = require("mongoose");
+var uniqueValidator = require("mongoose-unique-validator");
 
 const assetSchema = new mongoose.Schema({
-  asset_code: { type: String, default: null },
+  asset_code: { type: String, required: true, unique: true },
   category: { type: String, default: null },
   description: { type: String, default: null },
   element: { type: String, default: null },
@@ -47,6 +48,8 @@ const assetSchema = new mongoose.Schema({
   remarkAuditor_2: { type: String, default: null },
   remarkAuditor_3: { type: String, default: null }
 });
+
+assetSchema.plugin(uniqueValidator);
 
 const Asset = mongoose.model("Asset", assetSchema);
 
