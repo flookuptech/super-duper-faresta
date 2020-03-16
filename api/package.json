@@ -4,12 +4,13 @@
   "description": "Application for assets management",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "export NODE_ENV=production && node server.js",
+    "dev": "export NODE_ENV=development && nodemon server.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "aws-sdk": "^2.610.0",
     "axios": "^0.19.0",
     "bcryptjs": "*",
@@ -24,9 +25,11 @@
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.15",
     "mongoose": "^5.7.12",
+    "mongoose-unique-validator": "^2.0.3",
     "multer": "^1.4.2",
     "nodemailer": "^6.4.0",
     "nodemon": "^2.0.2",
-    "randomstring": "^1.1.5"
+    "randomstring": "^1.1.5",
+    "winston": "^3.2.1"
   }
 }

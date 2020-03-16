@@ -23,23 +23,6 @@ import { options } from "./fieldsArray";
 const imageUploadUrl = config.apiUrl + "/imageUpload";
 const imageUploadUrlAuditor = config.apiUrl + "/imageUpload/auditorFileUpload";
 
-const styles = {
-  boxBorder: {
-    border: "1px solid rgba(0, 0, 0, 0.2)",
-    borderRadius: "10px",
-    opacity: "1",
-    padding: "15px"
-  },
-  content: {
-    flexGrow: 1,
-    height: "auto",
-    overflow: "auto"
-  },
-  text: {
-    textDecoration: "none"
-  }
-};
-
 class AssetInformation extends Form {
   state = {
     id: "",
@@ -93,13 +76,18 @@ class AssetInformation extends Form {
     if (!this.state.selectedFile) return;
     data.append("file", this.state.selectedFile);
     data.append("id", this.state.id);
-    http.post(imageUploadUrl, data, {
-      onUploadProgress: ProgressEvent => {
-        this.setState({
-          loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-        });
-      }
-    });
+    try {
+      http.post(imageUploadUrl, data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      });
+      toast.success("Image Uploaded");
+    } catch (error) {
+      toast.error("Upload failed");
+    }
   };
 
   onClickHandlerAuditor = () => {
@@ -156,7 +144,7 @@ class AssetInformation extends Form {
     const { verifiedStatus } = this.state.data;
     try {
       const result = await verifyAsset(verifiedStatus, id);
-      if (result.status == 200) toast.success(result.data.res);
+      if (result.status === 200) toast.success(result.data.res);
     } catch (error) {
       const { data } = error.response;
       toast.error(data.err);

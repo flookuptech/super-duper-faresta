@@ -3,6 +3,7 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
+const winston = require("winston");
 require("dotenv").config();
 
 app.use(cors());
@@ -10,6 +11,7 @@ app.use(express.json({ limit: "50mb" }));
 
 //Local imports
 const search = require("./routes/search");
+const error = require("./middleware/error");
 const connect = require("./routes/connect");
 const reports = require("./routes/reports");
 const sendMail = require("./routes/sendMail");
@@ -18,6 +20,18 @@ const fileUpload = require("./routes/fileUpload");
 const deleteAsset = require("./routes/deleteAsset");
 const verifyAsset = require("./routes/verifyAsset");
 const saveAssetsList = require("./routes/saveAssetsList");
+
+winston.add(new winston.transports.File({ filename: "logfile.log" }));
+
+process.on("uncaughtException", ex => {
+  winston.error(ex.message, ex);
+  process.exit(1);
+});
+
+process.on("unhandledRejection", ex => {
+  winston.error(ex.message, ex);
+  process.exit(1);
+});
 
 // Check if the jwt private key is set or not
 if (!process.env.FAR_JWT_PRIVATEKEY) {
@@ -65,6 +79,7 @@ app.use("/deleteAsset", deleteAsset);
 app.use("/verifyAsset", verifyAsset);
 app.use("/saveAssets", saveAssetsList);
 
+app.use(error);
 // Port
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Api app listening on port ${PORT}...`));

@@ -10,8 +10,6 @@ import {
 import { registerSenior } from "services/createCallsRoot";
 import OrgDataFields from "./orgDataFields";
 import Form from "components/form/form";
-
-import * as Sentry from "@sentry/browser";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 

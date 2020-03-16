@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Grid, Button } from "@material-ui/core";
-import HowToRegIcon from "@material-ui/icons/HowToReg";
 
 import InputField from "components/form/inputField";
 

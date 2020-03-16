@@ -10,14 +10,12 @@ import {
 } from "@material-ui/core";
 import GridOnIcon from "@material-ui/icons/GridOn";
 import InsertChartIcon from "@material-ui/icons/InsertChart";
-import CsvDownload from "react-json-to-csv";
+// import CsvDownload from "react-json-to-csv";
 import { CSVLink } from "react-csv";
 
-import KeyForApp from "./keyForApp";
 import Loader from "components/loader";
 import Form from "components/form/form";
 import { getAllAssets } from "services/getAssets";
-import GetAppRoundedIcon from "@material-ui/icons/GetAppRounded";
 
 const GUIView = lazy(() => import("./guiView/guiView"));
 const TabularView = lazy(() => import("./tabularView/tabularView"));

@@ -79,8 +79,12 @@ router.post("/", async (req, res) => {
       }. Error: ${error.details[0].context.label}`
     });
   } else {
-    await Asset.insertMany(array);
-    res.send({ res: "Asset list added" });
+    try {
+      await Asset.insertMany(array);
+      res.send({ res: "Asset list added" });
+    } catch (error) {
+      res.status(500).send({ err: error.message });
+    }
   }
 });
 

@@ -1,7 +1,6 @@
 import React from "react";
 import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
-import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import BusinessIcon from "@material-ui/icons/Business";
@@ -31,21 +30,9 @@ export default function ListDrawerItems() {
       <ListItem
         button
         component={Link}
-        to="/dashboard/IAM"
+        to="/dashboard/organizations"
         selected={selectedIndex === 2}
         onClick={event => handleListItemClick(event, 2)}
-      >
-        <ListItemIcon>
-          <PersonAddIcon />
-        </ListItemIcon>
-        <ListItemText primary="IAM" />
-      </ListItem>
-      <ListItem
-        button
-        component={Link}
-        to="/dashboard/organizations"
-        selected={selectedIndex === 3}
-        onClick={event => handleListItemClick(event, 3)}
       >
         <ListItemIcon>
           <PeopleIcon />
@@ -56,8 +43,8 @@ export default function ListDrawerItems() {
         button
         component={Link}
         to="/dashboard/tenantsList"
-        selected={selectedIndex === 4}
-        onClick={event => handleListItemClick(event, 4)}
+        selected={selectedIndex === 3}
+        onClick={event => handleListItemClick(event, 3)}
       >
         <ListItemIcon>
           <BusinessIcon />
@@ -68,8 +55,8 @@ export default function ListDrawerItems() {
         button
         component={Link}
         to="/dashboard/Reports"
-        selected={selectedIndex === 5}
-        onClick={event => handleListItemClick(event, 5)}
+        selected={selectedIndex === 4}
+        onClick={event => handleListItemClick(event, 4)}
       >
         <ListItemIcon>
           <BarChartIcon />

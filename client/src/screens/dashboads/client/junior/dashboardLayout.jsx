@@ -21,7 +21,6 @@ import {
 import { Link } from "react-router-dom";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
-import { mainListItems } from "./components/listDrawerItems";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
 import ListDrawerItems from "./components/listDrawerItems";

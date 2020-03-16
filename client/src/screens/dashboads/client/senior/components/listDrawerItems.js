@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListSubheader
-} from "@material-ui/core";
+import { ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import PeopleIcon from "@material-ui/icons/People";
@@ -12,7 +7,6 @@ import ReceiptIcon from "@material-ui/icons/Receipt";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import PageviewIcon from "@material-ui/icons/Pageview";
 import HelpIcon from "@material-ui/icons/Help";
-import AssignmentIcon from "@material-ui/icons/Assignment";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 

@@ -4,8 +4,6 @@ import { Route, Switch } from "react-router-dom";
 
 import NotFound from "components/pageNotFound";
 import EditProfile from "components/editProfile";
-// import PrivateRoute from "../";
-import IAM from "./components/iam";
 import Home from "./components/home";
 import Reports from "./components/reports";
 import DashboardLayout from "./dashboardLayout";
@@ -20,7 +18,6 @@ class AdminDashBoard extends Component {
       <DashboardLayout user={user}>
         <Switch>
           <Route path="/editprofile" component={EditProfile} />
-          <Route path="/dashboard/iam" component={IAM} />
           <Route path="/dashboard/reports" component={Reports} />
           <Route path="/dashboard/organizations" component={Organizations} />
           <Route
