@@ -7,7 +7,7 @@ import EditProfile from "components/editProfile";
 import AddUsers from "./components/addUsers/addUsers";
 import UsersList from "./components/userList";
 import ViewData from "../common/viewData/viewData";
-import AuditReport from "./components/auditReport";
+import Reports from "./components/auditReport";
 import UploadData from "./components/uploadData";
 import Home from "./components/home";
 import DashboardLayout from "./dashboardLayout";
@@ -36,7 +36,7 @@ class SeniorUserDS extends Component {
             render={props => <ViewData user={user} {...props} />}
           />
           <Route path="/dashboard/uploadData" component={UploadData} />
-          <Route path="/dashboard/auditReport" component={AuditReport} />
+          <Route path="/dashboard/reports" component={Reports} />
           <Route
             path="/dashboard/addUsers"
             render={props => <AddUsers user={user} {...props} />}

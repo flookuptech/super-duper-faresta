@@ -60,14 +60,14 @@ export default function ListDrawerItems() {
       <ListItem
         button
         component={Link}
-        to="/dashboard/auditReport"
+        to="/dashboard/reports"
         selected={selectedIndex === 4}
         onClick={event => handleListItemClick(event, 4)}
       >
         <ListItemIcon>
           <ReceiptIcon />
         </ListItemIcon>
-        <ListItemText primary="Audit Report" />
+        <ListItemText primary="Reports" />
       </ListItem>
       <ListItem
         button

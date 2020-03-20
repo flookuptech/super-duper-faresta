@@ -19,6 +19,7 @@ import ModalImage from "react-modal-image";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { options } from "./fieldsArray";
+import LoaderApp from "components/loaderApp";
 
 const imageUploadUrl = config.apiUrl + "/imageUpload";
 const imageUploadUrlAuditor = config.apiUrl + "/imageUpload/auditorFileUpload";
@@ -36,7 +37,8 @@ class AssetInformation extends Form {
       remarkAuditor_2: "",
       remarkAuditor_3: ""
     },
-    selected: []
+    selected: [],
+    loading: true
   };
 
   async componentDidMount() {
@@ -47,7 +49,8 @@ class AssetInformation extends Form {
       this.setState({
         data: assetDataFrom[0],
         id: assetId,
-        selected: assetDataFrom[0].assetTags
+        selected: assetDataFrom[0].assetTags,
+        loading: false
       });
     } catch (error) {}
   }
@@ -154,7 +157,7 @@ class AssetInformation extends Form {
   render() {
     const data = JSON.parse(getUser());
     const dbName = data.orgDatabase;
-    const { id } = this.state;
+    const { id, loading } = this.state;
     const { verifiedStatus, imageUri, imageUriByAuditor } = this.state.data;
     const selected = this.state.selected;
     const { user } = this.props;
@@ -162,6 +165,8 @@ class AssetInformation extends Form {
     return (
       <Fragment>
         <ToastContainer autoClose={1500} closeButton={false} />
+        {loading && <LoaderApp />}
+
         <Container maxWidth="lg">
           <Box>
             <Grid container direction="column">
