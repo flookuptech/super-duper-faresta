@@ -10,6 +10,7 @@ import HelpIcon from "@material-ui/icons/Help";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import SearchRoundedIcon from "@material-ui/icons/SearchRounded";
 
+
 import { Link } from "react-router-dom";
 
 export default function ListDrawerItems() {
@@ -62,7 +63,7 @@ export default function ListDrawerItems() {
         component={Link}
         to="/dashboard/reports"
         selected={selectedIndex === 4}
-        onClick={event => handleListItemClick(event, 4)}
+        onClick={event => handleListItemClick(event,4)}
       >
         <ListItemIcon>
           <ReceiptIcon />

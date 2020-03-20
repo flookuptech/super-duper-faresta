@@ -4,7 +4,7 @@ import { Route, Switch } from "react-router-dom";
 
 import Home from "./components/home";
 import DashboardLayout from "./dashboardLayout";
-import FloorToFile from "./components/floorToFile";
+import FloorToFile from "../common/floorToFile/floorToFile";
 import ViewData from "../common/viewData/viewData";
 import NotFound from "../../../../components/pageNotFound";
 import EditProfile from "../../../../components/editProfile";
@@ -23,7 +23,12 @@ class AuditorDS extends Component {
               <AssetInformation user={this.props.user} {...props} />
             )}
           />
-          <Route path="/dashboard/floorToFile" component={FloorToFile} />
+          <Route
+           path="/dashboard/floorToFile"
+           render={props => ( 
+              <FloorToFile user={this.props.user} {...props} />
+           )}
+          />
           <Route path="/dashboard/viewData/:category" component={AssetList} />
           <Route
             path="/dashboard/viewData"

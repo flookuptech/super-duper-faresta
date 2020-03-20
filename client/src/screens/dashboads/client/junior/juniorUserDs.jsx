@@ -12,6 +12,7 @@ import EditProfile from "components/editProfile";
 import AssetList from "../common/viewData/guiView/assetList";
 import AssetInformation from "../common/viewData/guiView/assetInformation";
 import CreateAsset from "./components/createAsset";
+import FloorToFile from '../common/floorToFile/floorToFile';
 
 class JuniorUserDS extends Component {
   state = {};
@@ -21,6 +22,11 @@ class JuniorUserDS extends Component {
         <Switch>
           <Route path="/dashboard/guide" component={Guide} />
           <Route path="/dashboard/qrList" component={QRCodeList} />
+          <Route
+            path="/dashboard/floorToFile"
+            render={props => (
+              <FloorToFile user={this.props.user} {...props} />
+            )} />
           <Route
             path="/dashboard/viewData/:category/:id"
             render={props => (

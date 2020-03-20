@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, Grid, Box, Container, Typography } from "@material-ui/core";
+import { Button, Grid, Box, Container, Typography, TextField} from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import config from "config.js";
 import Dialog from "components/dialog";
@@ -218,7 +218,7 @@ class AssetInformation extends Form {
               <br />
               <Grid
                 container
-                justify={user.role === "auditor" ? "space-between" : "flex-end"}
+                justify="space-between"
                 alignItems="center"
                 direction="row"
               >
@@ -237,17 +237,28 @@ class AssetInformation extends Form {
                     />
                   </Grid>
                 )}
+                {(user.role === 'junior' || user.role === 'senior') && (
+                  <Grid item lg={4} xs={6} md={4}>
+                    <TextField
+                      error
+                      id="filled-error-helper-text"
+                      label="Error Tag"
+                      value={this.state.selected}
+                      helperText="Submitted by Auditor"
+                      variant="outlined"
+                      style={{marginTop: 25}}
+                      fullWidth
+                    />
+                  </Grid>
+                )}
                 <Grid item>
                   <Typography
                     variant="overline"
-                    display="block"
-                    style={{ fontWeight: "500", fontSize: 15 }}
+                    style={{ fontWeight: "500", fontSize: 15}}
                   >
-                    Asset Verified:
+                    Asset Verified:&nbsp;&nbsp;
                   </Typography>
-                </Grid>
-                <Grid item>
-                  <SwitchSelector
+                    <SwitchSelector
                     onChangeHandler={
                       user.role === "auditor" ? this.handleChangeSwitch : null
                     }

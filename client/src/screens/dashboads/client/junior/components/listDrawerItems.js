@@ -8,6 +8,8 @@ import PageviewIcon from "@material-ui/icons/Pageview";
 import HelpIcon from "@material-ui/icons/Help";
 import CropFreeIcon from "@material-ui/icons/CropFree";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import PostAddIcon from "@material-ui/icons/PostAdd";
+
 
 export default function ListDrawerItems() {
   const [selectedIndex, setSelectedIndex] = React.useState(1);
@@ -45,9 +47,21 @@ export default function ListDrawerItems() {
       <ListItem
         button
         component={Link}
-        to="/dashboard/viewData"
+        to="/dashboard/floorToFile"
         selected={selectedIndex === 3}
         onClick={event => handleListItemClick(event, 3)}
+      >
+        <ListItemIcon>
+          <PostAddIcon />
+        </ListItemIcon>
+        <ListItemText primary="Floor to file" />
+      </ListItem>
+      <ListItem
+        button
+        component={Link}
+        to="/dashboard/viewData"
+        selected={selectedIndex === 4}
+        onClick={event => handleListItemClick(event, 4)}
       >
         <ListItemIcon>
           <PageviewIcon />
@@ -58,8 +72,8 @@ export default function ListDrawerItems() {
         button
         component={Link}
         to="/dashboard/qrList"
-        selected={selectedIndex === 4}
-        onClick={event => handleListItemClick(event, 4)}
+        selected={selectedIndex === 5}
+        onClick={event => handleListItemClick(event, 5)}
       >
         <ListItemIcon>
           <CropFreeIcon />
@@ -70,8 +84,8 @@ export default function ListDrawerItems() {
         button
         component={Link}
         to="/dashboard/guide"
-        selected={selectedIndex === 5}
-        onClick={event => handleListItemClick(event, 5)}
+        selected={selectedIndex === 6}
+        onClick={event => handleListItemClick(event, 6)}
       >
         <ListItemIcon>
           <HelpIcon />
