@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 // import CsvDownload from "react-json-to-csv";
 import { ToastContainer, toast } from "react-toastify";
-import UploadDataTable from './uploadDataTable';
+import UploadDataTable from "./uploadData/uploadDataTable";
 
 import { saveAssetsData } from "services/sendAssetData";
 import UploadCSV from "components/csvUpload";

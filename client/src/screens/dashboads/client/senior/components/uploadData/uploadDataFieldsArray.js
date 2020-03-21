@@ -73,7 +73,8 @@ export let uploadDataFieldsArray = [
   },
   {
     value: "Capitalised value"
-  },,
+  },
+  ,
   {
     value: "Useful life Companies act"
   },
@@ -92,4 +93,4 @@ export let uploadDataFieldsArray = [
   {
     value: "WDV Closing"
   }
-]  
+];
