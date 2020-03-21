@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Home from "./components/home";
-import DashboardLayout from "./dashboardLayout";
+import DashboardLayout from "../../../../components/dashboard/dashboardLayout";
 import Guide from "components/guide";
 import ViewData from "../common/viewData/viewData";
 import QRCodeList from "../common/qrCodeList";

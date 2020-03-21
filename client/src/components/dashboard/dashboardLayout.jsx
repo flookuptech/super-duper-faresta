@@ -22,8 +22,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import ListTwoToneIcon from '@material-ui/icons/ListTwoTone';
 import { Link } from "react-router-dom";
-import ListDrawerItems from "./components/listDrawerItems";
+import {
+    ListRootDrawerItems,
+    ListSeniorDrawerItems,
+    ListJuniorDrawerItems,
+    ListAuditorDrawerItems
+  } from "./drawerItems";
 
 const drawerWidth = 220;
 
@@ -125,10 +131,6 @@ const useStyles = makeStyles(theme => ({
   },
   accountMenu: {
     margin: theme.spacing(0.7)
-  },
-  textStyle: {
-    textDecoration: "none",
-    color: "red"
   }
 }));
 
@@ -136,6 +138,24 @@ export default function Dashboard({ user, children }) {
   const userData = user || {};
   const role = userData.role;
   const companyName = userData.companyName;
+  let drawerList;
+  
+  switch (role) {
+    case "root":
+      drawerList = <ListRootDrawerItems />;
+      break;
+    case "senior":
+      drawerList = <ListSeniorDrawerItems />;
+      break;
+    case "junior":
+      drawerList = <ListJuniorDrawerItems />;
+      break;
+    case "auditor":
+      drawerList = <ListAuditorDrawerItems />;
+      break;
+    default:
+      break;
+  }
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -228,6 +248,14 @@ export default function Dashboard({ user, children }) {
           >
             {companyName}
           </Typography>
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="open modal"
+            onClick={() => alert('More Products')}
+          > 
+            <ListTwoToneIcon style={{fontSize: 35}} />
+          </IconButton>
           <Button
             edge="end"
             aria-label="account of current user"
@@ -258,7 +286,7 @@ export default function Dashboard({ user, children }) {
         </div>
         <Divider />
         <List>
-          <ListDrawerItems />
+          {drawerList}
         </List>
         <Divider />
       </Drawer>

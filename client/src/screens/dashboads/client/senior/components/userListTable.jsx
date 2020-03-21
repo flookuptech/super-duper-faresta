@@ -30,6 +30,7 @@ const styles = {
 class UserTable extends Component{
   render(){    
     const {userList, classes} = this.props
+    console.log(userList);
     return (
         <Paper style={styles.root}>
             <TableContainer style={styles.container} component={Paper}>

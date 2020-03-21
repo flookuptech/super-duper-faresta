@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import Home from "./components/home";
-import DashboardLayout from "./dashboardLayout";
+import DashboardLayout from "../../../../components/dashboard/dashboardLayout"
 import FloorToFile from "../common/floorToFile/floorToFile";
 import ViewData from "../common/viewData/viewData";
 import NotFound from "../../../../components/pageNotFound";

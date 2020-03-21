@@ -6,7 +6,7 @@ import NotFound from "components/pageNotFound";
 import EditProfile from "components/editProfile";
 import Home from "./components/home";
 import Reports from "./components/reports";
-import DashboardLayout from "./dashboardLayout";
+import DashboardLayout from "../../../components/dashboard/dashboardLayout";
 import TenantsList from "./components/tenantsList";
 import Organizations from "./components/orgComponents/organizations";
 

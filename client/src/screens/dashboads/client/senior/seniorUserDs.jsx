@@ -10,7 +10,7 @@ import ViewData from "../common/viewData/viewData";
 import Reports from "./components/auditReport";
 import UploadData from "./components/uploadData";
 import Home from "./components/home";
-import DashboardLayout from "./dashboardLayout";
+import DashboardLayout from "../../../../components/dashboard/dashboardLayout";
 import Guide from "components/guide";
 import AssetList from "../common/viewData/guiView/assetList";
 import AssetInformation from "../common/viewData/guiView/assetInformation";
