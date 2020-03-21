@@ -9,8 +9,9 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getUsers } from "services/getUsers";
-import UserTable from "components/table";
+import UserListTable from "./userListTable";
 import LoaderApp from "components/loaderApp";
+
 
 const styles = {
   boxBorder: {
@@ -58,7 +59,7 @@ class UsersList extends Component {
                   <br />
                 </div>
                 <React.Fragment>
-                  <UserTable userList={userList} />
+                  <UserListTable userList={userList} />
                 </React.Fragment>
                 <br />
               </Box>

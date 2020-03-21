@@ -7,9 +7,9 @@ import {
   Button,
   Grid
 } from "@material-ui/core";
-import JsonTable from "ts-react-json-table";
 // import CsvDownload from "react-json-to-csv";
 import { ToastContainer, toast } from "react-toastify";
+import UploadDataTable from './uploadDataTable';
 
 import { saveAssetsData } from "services/sendAssetData";
 import UploadCSV from "components/csvUpload";
@@ -96,7 +96,7 @@ class UploadData extends Component {
               {data && (
                 <Box className={classes.boxBorder}>
                   <div className="test-table">
-                    <JsonTable className="table-test" rows={data} />
+                    <UploadDataTable data={data} />
                   </div>
                 </Box>
               )}
