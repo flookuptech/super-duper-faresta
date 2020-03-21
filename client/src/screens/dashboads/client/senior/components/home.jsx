@@ -44,19 +44,21 @@ class AuditReport extends PureComponent {
   };
 
   async componentDidMount() {
-    const { data: reportsData } = await getReportsData();
-    const { data: verifiedOnly } = await getReportsDataVerifiedOnly();
-    const { data: auditorRemarksOnly } = await getAuditorRemarksOnly();
-    const { data: juniorRemarksOnly } = await getJuniorRemarksOnly();
-    const { data: locationData } = await getLocationData();
-    this.setState({
-      reportsData,
-      verifiedOnly,
-      auditorRemarksOnly,
-      juniorRemarksOnly,
-      locationData,
-      loading: false
-    });
+    try {
+      const { data: reportsData } = await getReportsData();
+      const { data: verifiedOnly } = await getReportsDataVerifiedOnly();
+      const { data: auditorRemarksOnly } = await getAuditorRemarksOnly();
+      const { data: juniorRemarksOnly } = await getJuniorRemarksOnly();
+      const { data: locationData } = await getLocationData();
+      this.setState({
+        reportsData,
+        verifiedOnly,
+        auditorRemarksOnly,
+        juniorRemarksOnly,
+        locationData,
+        loading: false
+      });
+    } catch (error) {}
   }
 
   getAssetsVerifiedStatus() {

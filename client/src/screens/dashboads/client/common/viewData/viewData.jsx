@@ -17,6 +17,8 @@ import { getAllAssets } from "services/getAssets";
 import LoaderApp from "components/loaderApp";
 import GUIView from "./guiView/guiView";
 import TabularView from "./tabularView/tabularView";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const styles = {
   boxBorder: {
@@ -43,8 +45,12 @@ class ViewData extends Form {
   };
 
   async componentDidMount() {
-    const { data } = await getAllAssets();
-    this.setState({ assetData: data, loading: false });
+    try {
+      const { data } = await getAllAssets();
+      this.setState({ assetData: data, loading: false });
+    } catch (error) {
+      toast.error(error.response.data.err);
+    }
   }
 
   handleViewChange = () => {

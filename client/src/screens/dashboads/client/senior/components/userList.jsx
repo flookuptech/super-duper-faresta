@@ -12,7 +12,6 @@ import { getUsers } from "services/getUsers";
 import UserListTable from "./userListTable";
 import LoaderApp from "components/loaderApp";
 
-
 const styles = {
   boxBorder: {
     border: "1px solid rgba(0, 0, 0, 0.2)",
@@ -58,9 +57,9 @@ class UsersList extends Component {
                   </Typography>
                   <br />
                 </div>
-                <React.Fragment>
+                <Fragment>
                   <UserListTable userList={userList} />
-                </React.Fragment>
+                </Fragment>
                 <br />
               </Box>
               <br />

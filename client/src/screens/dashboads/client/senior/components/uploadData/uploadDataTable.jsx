@@ -25,13 +25,12 @@ const styles = {
   },
 
   tableCell: {
-    backgroundColor: '#EDFCEC'
+    backgroundColor: "#F8F8F8"
   },
 
   root: {
-    width: '100%',
+    width: "100%"
   }
-  
 };
 
 const UploadDataTable = ({ data }) => {
@@ -68,7 +67,11 @@ const UploadDataTable = ({ data }) => {
               .map((item, index) => {
                 return (
                   <Fragment>
-                    <TableRow tabIndex={-1} key={item.asset_code} style={index%2 === 0 ? styles.tableCell: null}>
+                    <TableRow
+                      tabIndex={-1}
+                      key={item.asset_code}
+                      style={index % 2 === 0 ? null : styles.tableCell}
+                    >
                       <TableCell align="center">{item.asset_code}</TableCell>
                       <TableCell align="center">
                         {item.date_of_installation}
