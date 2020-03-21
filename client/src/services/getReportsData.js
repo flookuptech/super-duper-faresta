@@ -18,6 +18,11 @@ export function getAuditorRemarksOnly() {
   return result;
 }
 
+export function getLocationData() {
+  const result = http.get(apiUrlToGetReportsData + "/location");
+  return result;
+}
+
 export function getJuniorRemarksOnly() {
   const result = http.get(apiUrlToGetReportsData + "/juniorRemarksOnly");
   return result;
@@ -27,5 +32,6 @@ export default {
   getReportsData,
   getReportsDataVerifiedOnly,
   getAuditorRemarksOnly,
-  getJuniorRemarksOnly
+  getJuniorRemarksOnly,
+  getLocationData
 };

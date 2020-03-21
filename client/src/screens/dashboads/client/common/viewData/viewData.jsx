@@ -1,4 +1,4 @@
-import React, { Fragment, lazy, Suspense } from "react";
+import React, { Fragment } from "react";
 import {
   Typography,
   Container,
@@ -12,13 +12,13 @@ import GridOnIcon from "@material-ui/icons/GridOn";
 import InsertChartIcon from "@material-ui/icons/InsertChart";
 // import CsvDownload from "react-json-to-csv";
 import { CSVLink } from "react-csv";
-
-import Loader from "components/loader";
 import Form from "components/form/form";
 import { getAllAssets } from "services/getAssets";
-
-const GUIView = lazy(() => import("./guiView/guiView"));
-const TabularView = lazy(() => import("./tabularView/tabularView"));
+import LoaderApp from "components/loaderApp";
+import GUIView from "./guiView/guiView";
+import TabularView from "./tabularView/tabularView";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer, toast } from "react-toastify";
 
 const styles = {
   boxBorder: {
@@ -40,12 +40,17 @@ const styles = {
 class ViewData extends Form {
   state = {
     assetData: [],
-    view: true
+    view: true,
+    loading: true
   };
 
   async componentDidMount() {
-    const { data } = await getAllAssets();
-    this.setState({ assetData: data });
+    try {
+      const { data } = await getAllAssets();
+      this.setState({ assetData: data, loading: false });
+    } catch (error) {
+      toast.error(error.response.data.err);
+    }
   }
 
   handleViewChange = () => {
@@ -58,9 +63,10 @@ class ViewData extends Form {
 
   render() {
     const { classes } = this.props;
-    const { view, assetData } = this.state;
+    const { view, assetData, loading } = this.state;
     return (
       <Fragment>
+        {loading && <LoaderApp />}
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
@@ -86,7 +92,6 @@ class ViewData extends Form {
                             backgroundColor: "white",
                             color: "#009933"
                           }}
-                          // endIcon={<GetAppRoundedIcon />}
                         >
                           Download CSV
                         </Button>
@@ -120,9 +125,7 @@ class ViewData extends Form {
                   </ButtonGroup>
                 </div>
                 <div>
-                  <Suspense fallback={<Loader />}>
-                    {view ? <GUIView /> : <TabularView data={assetData} />}
-                  </Suspense>
+                  {view ? <GUIView /> : <TabularView data={assetData} />}
                 </div>
                 <br />
               </Box>

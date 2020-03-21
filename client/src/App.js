@@ -14,8 +14,6 @@ import "assets/css/loginstyles.css";
 import { getCurrentUser } from "./services/auth";
 
 //Components
-// import HomeScreen from "screens/home/homeScreen";
-// import Dashboard from "screens/dashboads/dashboard";
 import RootUserDashboard from "screens/dashboads/root/adminDashBoard";
 import AuditorDashboard from "screens/dashboads/client/auditor/auditorDs";
 import SeniorUserDashboard from "screens/dashboads/client/senior/seniorUserDs";
@@ -23,6 +21,8 @@ import JuniorUserDashboard from "screens/dashboads/client/junior/juniorUserDs";
 
 //APPLoader
 import LoaderApp from "./components/loaderApp";
+const Login = lazy(() => import("./screens/home/login"));
+const Logout = lazy(() => import("./components/logout"));
 
 class App extends Component {
   constructor(props) {
@@ -44,9 +44,6 @@ class App extends Component {
 
   render() {
     const { user } = this.state;
-
-    const Login = lazy(() => import("./screens/home/login"));
-    const Logout = lazy(() => import("./components/logout"));
 
     return (
       <Fragment>

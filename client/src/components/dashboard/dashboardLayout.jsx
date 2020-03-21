@@ -22,8 +22,14 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import AppsIcon from "@material-ui/icons/Apps";
 import { Link } from "react-router-dom";
-import ListDrawerItems from "./components/listDrawerItems";
+import {
+  ListRootDrawerItems,
+  ListSeniorDrawerItems,
+  ListJuniorDrawerItems,
+  ListAuditorDrawerItems
+} from "./drawerItems";
 
 const drawerWidth = 220;
 
@@ -67,8 +73,11 @@ const useStyles = makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen
     })
   },
+  productsMenuButton: {
+    marginRight: 20
+  },
   menuButton: {
-    marginRight: 36
+    marginRight: 20
   },
   menuButtonHidden: {
     display: "none"
@@ -125,10 +134,6 @@ const useStyles = makeStyles(theme => ({
   },
   accountMenu: {
     margin: theme.spacing(0.7)
-  },
-  textStyle: {
-    textDecoration: "none",
-    color: "red"
   }
 }));
 
@@ -136,6 +141,24 @@ export default function Dashboard({ user, children }) {
   const userData = user || {};
   const role = userData.role;
   const companyName = userData.companyName;
+  let drawerList;
+
+  switch (role) {
+    case "root":
+      drawerList = <ListRootDrawerItems />;
+      break;
+    case "senior":
+      drawerList = <ListSeniorDrawerItems />;
+      break;
+    case "junior":
+      drawerList = <ListJuniorDrawerItems />;
+      break;
+    case "auditor":
+      drawerList = <ListAuditorDrawerItems />;
+      break;
+    default:
+      break;
+  }
 
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
@@ -148,6 +171,15 @@ export default function Dashboard({ user, children }) {
   };
 
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorElProductsMenu, setAnchorElProductsMenu] = React.useState(null);
+
+  const handleClickProductsMenu = event => {
+    setAnchorElProductsMenu(event.currentTarget);
+  };
+
+  const handleCloseProductsMenu = () => {
+    setAnchorElProductsMenu(null);
+  };
 
   const isMenuOpen = Boolean(anchorEl);
 
@@ -200,6 +232,33 @@ export default function Dashboard({ user, children }) {
           <IconButton
             edge="start"
             color="inherit"
+            aria-label="open modal"
+            className={classes.productsMenuButton}
+            onClick={handleClickProductsMenu}
+          >
+            <AppsIcon />
+          </IconButton>
+          <Menu
+            id="simple-menu"
+            anchorEl={anchorElProductsMenu}
+            keepMounted
+            open={Boolean(anchorElProductsMenu)}
+            onClose={handleCloseProductsMenu}
+          >
+            <Typography>More from Flookup</Typography>
+            <Divider />
+            <Typography>Current</Typography>
+            <MenuItem>FAST</MenuItem>
+            <Divider />
+            <Typography>Check out</Typography>
+            <MenuItem>15CACB</MenuItem>
+            <MenuItem>CA ASSIST</MenuItem>
+            <MenuItem>Tally Visuals</MenuItem>
+            <MenuItem>Recon</MenuItem>
+          </Menu>
+          <IconButton
+            edge="start"
+            color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             className={clsx(
@@ -209,7 +268,6 @@ export default function Dashboard({ user, children }) {
           >
             <MenuIcon />
           </IconButton>
-
           <Typography
             component="h1"
             variant="h6"
@@ -257,9 +315,7 @@ export default function Dashboard({ user, children }) {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          <ListDrawerItems />
-        </List>
+        <List>{drawerList}</List>
         <Divider />
       </Drawer>
       <main className={classes.content}>

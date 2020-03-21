@@ -36,6 +36,20 @@ router.get("/verifiedStatus", async (req, res) => {
   }
 });
 
+router.get("/location", async (req, res) => {
+  try {
+    const data = await Asset.aggregate([
+      { $match: {} },
+      { $group: { _id: "$location", value: { $sum: 1 } } },
+      { $project: { _id: 0, id: "$_id", label: "$_id", value: 1 } },
+      { $sort: { total: -1 } }
+    ]);
+    res.send(data);
+  } catch (error) {
+    res.status(500).send({ err: "Unable to fetch assets" });
+  }
+});
+
 router.get("/auditorRemarksOnly", async (req, res) => {
   try {
     const data = await Asset.find(

@@ -5,10 +5,11 @@ import { Box, Container, Typography, Button, Grid } from "@material-ui/core";
 import Form from "components/form/form";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
-import FloorToFileFields from "./dataFields/floorToFile";
+import FloorToFileFields from "./dataFields";
 import ImageUpload from "components/imageUpload";
 
 const imageUploadUrlAuditor = config.apiUrl + "/imageUpload/auditorFileUpload";
+const imageUploadUrl = config.apiUrl + "/imageUpload";
 
 const styles = {
   boxBorder: {
@@ -25,7 +26,7 @@ const styles = {
 
 export default class FloorToFile extends Form {
   state = {
-    data: {}
+    data: {assetFoundBy: this.props.user.name}
   };
 
   onChangeHandler = event => {
@@ -47,6 +48,22 @@ export default class FloorToFile extends Form {
         });
       }
     });
+    {this.props.user.role === 'auditor' ?     
+      http.post(imageUploadUrlAuditor, data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      }) : 
+      http.post(imageUploadUrl, data, {
+        onUploadProgress: ProgressEvent => {
+          this.setState({
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          });
+        }
+      });
+    }
   };
 
   onSubmit = async () => {
@@ -62,8 +79,8 @@ export default class FloorToFile extends Form {
             <br />
             <Box style={styles.boxBorder}>
               <Typography component="h5" variant="h5">
-                Floor to file
               </Typography>
+                Floor to file
               <br />
               <form onSubmit={this.handleSubmit}>
                 <Grid container direction="column">

@@ -7,9 +7,7 @@ router.post("/", async (req, res) => {
   const tenants = await Tenant.find({
     orgDatabase: { $eq: req.body.db },
     role: { $ne: "senior" }
-  }).select(
-    "-__v -password -dateCreated -userType -companyName -panNumber -orgEmail"
-  );
+  }).select("-__v -password -userType -panNumber -orgEmail");
   res.send(tenants);
 });
 

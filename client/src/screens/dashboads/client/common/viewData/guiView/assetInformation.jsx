@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Button, Grid, Box, Container, Typography } from "@material-ui/core";
+import { Button, Grid, Box, Container, Typography, TextField} from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import config from "config.js";
 import Dialog from "components/dialog";
@@ -19,6 +19,7 @@ import ModalImage from "react-modal-image";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { options } from "./fieldsArray";
+import LoaderApp from "components/loaderApp";
 
 const imageUploadUrl = config.apiUrl + "/imageUpload";
 const imageUploadUrlAuditor = config.apiUrl + "/imageUpload/auditorFileUpload";
@@ -36,7 +37,8 @@ class AssetInformation extends Form {
       remarkAuditor_2: "",
       remarkAuditor_3: ""
     },
-    selected: []
+    selected: [],
+    loading: true
   };
 
   async componentDidMount() {
@@ -47,7 +49,8 @@ class AssetInformation extends Form {
       this.setState({
         data: assetDataFrom[0],
         id: assetId,
-        selected: assetDataFrom[0].assetTags
+        selected: assetDataFrom[0].assetTags,
+        loading: false
       });
     } catch (error) {}
   }
@@ -154,7 +157,7 @@ class AssetInformation extends Form {
   render() {
     const data = JSON.parse(getUser());
     const dbName = data.orgDatabase;
-    const { id } = this.state;
+    const { id, loading } = this.state;
     const { verifiedStatus, imageUri, imageUriByAuditor } = this.state.data;
     const selected = this.state.selected;
     const { user } = this.props;
@@ -162,6 +165,8 @@ class AssetInformation extends Form {
     return (
       <Fragment>
         <ToastContainer autoClose={1500} closeButton={false} />
+        {loading && <LoaderApp />}
+
         <Container maxWidth="lg">
           <Box>
             <Grid container direction="column">
@@ -213,7 +218,7 @@ class AssetInformation extends Form {
               <br />
               <Grid
                 container
-                justify={user.role === "auditor" ? "space-between" : "flex-end"}
+                justify="space-between"
                 alignItems="center"
                 direction="row"
               >
@@ -232,17 +237,28 @@ class AssetInformation extends Form {
                     />
                   </Grid>
                 )}
+                {(user.role === 'junior' || user.role === 'senior') && (
+                  <Grid item lg={4} xs={6} md={4}>
+                    <TextField
+                      error
+                      id="filled-error-helper-text"
+                      label="Error Tag"
+                      value={this.state.selected}
+                      helperText="Submitted by Auditor"
+                      variant="outlined"
+                      style={{marginTop: 25}}
+                      fullWidth
+                    />
+                  </Grid>
+                )}
                 <Grid item>
                   <Typography
                     variant="overline"
-                    display="block"
-                    style={{ fontWeight: "500", fontSize: 15 }}
+                    style={{ fontWeight: "500", fontSize: 15}}
                   >
-                    Asset Verified:
+                    Asset Verified:&nbsp;&nbsp;
                   </Typography>
-                </Grid>
-                <Grid item>
-                  <SwitchSelector
+                    <SwitchSelector
                     onChangeHandler={
                       user.role === "auditor" ? this.handleChangeSwitch : null
                     }

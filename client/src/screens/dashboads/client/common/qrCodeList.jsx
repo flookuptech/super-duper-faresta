@@ -1,4 +1,4 @@
-import React, { Component, Fragment, Suspense } from "react";
+import React, { Component, Fragment } from "react";
 import {
   Button,
   Typography,
@@ -11,10 +11,10 @@ import {
 import Print from "react-to-print";
 import PrintIcon from "@material-ui/icons/Print";
 
-import Loader from "components/loader";
 import { getUser } from "services/getToken";
 import { getAllAssets } from "services/getAssets";
 import QRCodeGenerator from "components/qrCodeGenerator";
+import LoaderApp from "components/loaderApp";
 
 const styles = {
   boxBorder: {
@@ -32,21 +32,23 @@ const styles = {
 
 class Code extends Component {
   state = {
-    assetData: []
+    assetData: [],
+    loading: true
   };
 
   async componentDidMount() {
     const { data } = await getAllAssets();
-    this.setState({ assetData: data });
+    this.setState({ assetData: data, loading: false });
   }
 
   get QRCodesList() {
     const { des } = this.props;
-    const { assetData } = this.state;
+    const { assetData, loading } = this.state;
     const data = JSON.parse(getUser());
     const dbName = data.orgDatabase;
     return (
       <Fragment>
+        {loading && <LoaderApp />}
         <br />
         <br />
         <div id="printme">
@@ -156,12 +158,7 @@ class QRCodeList extends Component {
                 content={() => this.componentRef}
               />
 
-              <Suspense fallback={<Loader />}>
-                <Code
-                  ref={el => (this.componentRef = el)}
-                  des={this.state.des}
-                />
-              </Suspense>
+              <Code ref={el => (this.componentRef = el)} des={this.state.des} />
             </Box>
           </Container>
         </main>

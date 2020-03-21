@@ -10,25 +10,28 @@ import {
 } from "@material-ui/core";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { getAssetsCategory } from "services/getAssets";
+import LoaderApp from "components/loaderApp";
 
 class AssetList extends Component {
   state = {
     result: [],
-    category: ""
+    category: "",
+    loading: true
   };
 
   async componentDidMount() {
     try {
       const category = this.props.match.params.category;
       const { data } = await getAssetsCategory(category);
-      this.setState({ result: data, category: category });
+      this.setState({ result: data, category: category, loading: false });
     } catch (error) {}
   }
 
   get assetsList() {
-    const { result, category } = this.state;
+    const { result, category, loading } = this.state;
     return (
       <Fragment>
+        {loading && <LoaderApp />}{" "}
         <Typography component="p" variant="p">
           Total: <b>{result.length}</b>
         </Typography>

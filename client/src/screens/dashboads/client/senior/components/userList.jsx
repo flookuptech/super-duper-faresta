@@ -9,7 +9,8 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import { getUsers } from "services/getUsers";
-import UserTable from "components/table";
+import UserListTable from "./userListTable";
+import LoaderApp from "components/loaderApp";
 
 const styles = {
   boxBorder: {
@@ -25,20 +26,21 @@ const styles = {
 };
 
 class UsersList extends Component {
-  state = { userList: [] };
+  state = { userList: [], loading: true };
 
   async componentDidMount() {
     const db = this.props.user.orgDatabase;
     const { data: userList } = await getUsers(db);
-    this.setState({ userList });
+    this.setState({ userList, loading: false });
   }
 
   render() {
     const { classes } = this.props;
-    const { userList } = this.state;
+    const { userList, loading } = this.state;
 
     return (
       <Fragment>
+        {loading && <LoaderApp />}
         <ToastContainer auatoClose={1500} closeButton={false} />
         <Grid>
           <main className={classes.content}>
@@ -55,9 +57,9 @@ class UsersList extends Component {
                   </Typography>
                   <br />
                 </div>
-                <React.Fragment>
-                  <UserTable userList={userList} />
-                </React.Fragment>
+                <Fragment>
+                  <UserListTable userList={userList} />
+                </Fragment>
                 <br />
               </Box>
               <br />
