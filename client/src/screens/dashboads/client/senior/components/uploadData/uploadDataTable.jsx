@@ -14,11 +14,24 @@ const styles = {
     minWidth: 650
   },
 
+  container: {
+    maxHeight: 650
+  },
+
   tableHeader: {
     fontWeight: "bold",
     fontSize: 16,
-    minWidth: 180
+    minWidth: 200
+  },
+
+  tableCell: {
+    backgroundColor: '#EDFCEC'
+  },
+
+  root: {
+    width: '100%',
   }
+  
 };
 
 const UploadDataTable = ({ data }) => {
@@ -35,14 +48,14 @@ const UploadDataTable = ({ data }) => {
   };
 
   return (
-    <Fragment>
-      <TableContainer component={Paper}>
-        <Table className={styles.table} aria-label="simple table">
+    <Paper style={styles.root}>
+      <TableContainer style={styles.container} component={Paper}>
+        <Table stickyHeader aria-label="sticky table" style={styles.table}>
           <TableHead>
             <TableRow>
               {uploadDataFieldsArray.map(item => {
                 return (
-                  <TableCell align="center" className={styles.tableHeader}>
+                  <TableCell align="center" style={styles.tableHeader}>
                     {item.value}
                   </TableCell>
                 );
@@ -52,10 +65,10 @@ const UploadDataTable = ({ data }) => {
           <TableBody>
             {data
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(item => {
+              .map((item, index) => {
                 return (
                   <Fragment>
-                    <TableRow tabIndex={-1}>
+                    <TableRow tabIndex={-1} key={item.asset_code} style={index%2 === 0 ? styles.tableCell: null}>
                       <TableCell align="center">{item.asset_code}</TableCell>
                       <TableCell align="center">
                         {item.date_of_installation}
@@ -127,7 +140,7 @@ const UploadDataTable = ({ data }) => {
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
       />
-    </Fragment>
+    </Paper>
   );
 };
 
