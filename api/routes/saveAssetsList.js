@@ -11,6 +11,7 @@ const schema = Joi.array().items(
   Joi.object().keys({
     asset_code: Joi.number().required(),
     category: Joi.string().required(),
+    sub_category: Joi.string().required(),
     description: Joi.string(),
     element: Joi.string(),
     vendor_name: Joi.string(),

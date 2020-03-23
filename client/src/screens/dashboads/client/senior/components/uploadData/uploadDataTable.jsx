@@ -1,4 +1,4 @@
-import React, { Fragment, Component } from "react";
+import React, { Fragment } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -86,6 +86,7 @@ const UploadDataTable = ({ data }) => {
                       </TableCell>
                       <TableCell align="center">{item.description}</TableCell>
                       <TableCell align="center">{item.category}</TableCell>
+                      <TableCell align="center">{item.sub_category}</TableCell>
                       <TableCell align="center">{item.location}</TableCell>
                       <TableCell align="center">{item.quantity}</TableCell>
                       <TableCell align="center">{item.base_amount}</TableCell>

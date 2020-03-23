@@ -24,6 +24,9 @@ export let uploadDataFieldsArray = [
     value: "Category"
   },
   {
+    value: "Sub Category"
+  },
+  {
     value: "Location"
   },
   {
@@ -74,7 +77,6 @@ export let uploadDataFieldsArray = [
   {
     value: "Capitalised value"
   },
-  ,
   {
     value: "Useful life Companies act"
   },

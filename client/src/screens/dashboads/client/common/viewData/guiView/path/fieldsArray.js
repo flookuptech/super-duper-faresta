@@ -12,6 +12,10 @@ export let assetInfoArray = [
     helperText: "Category"
   },
   {
+    value: "sub_category",
+    helperText: "Sub Category"
+  },
+  {
     value: "quantity",
     helperText: "Quantity"
   },

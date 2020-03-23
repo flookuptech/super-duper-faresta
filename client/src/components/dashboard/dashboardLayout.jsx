@@ -16,12 +16,16 @@ import {
   Container,
   Paper,
   Grid,
-  Avatar
+  Avatar,
+  Tooltip
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
+import FLookupGif from "../../assets/images/brand/flookupGif.gif";
+import FlookupLogo from "../../assets/images/brand/logo.png";
+import CacbLogo from "../../assets/images/brand/15.png";
 import AppsIcon from "@material-ui/icons/Apps";
 import { Link } from "react-router-dom";
 import {
@@ -75,6 +79,22 @@ const useStyles = makeStyles(theme => ({
   },
   productsMenuButton: {
     marginRight: 20
+  },
+  productsMenuHeading: {
+    paddingLeft: 10,
+    fontSize: 14,
+    fontWeight: "bold",
+    color: "#009933"
+  },
+  productIcon: {
+    height: 20,
+    width: 25
+  },
+  productName: {
+    padding: 5,
+    color: "black",
+    fontFamily: "Poppins",
+    fontSize: 16
   },
   menuButton: {
     marginRight: 20
@@ -229,15 +249,17 @@ export default function Dashboard({ user, children }) {
         className={clsx(classes.appBar, open && classes.appBarShift)}
       >
         <Toolbar className={classes.toolbar}>
-          <IconButton
-            edge="start"
-            color="inherit"
-            aria-label="open modal"
-            className={classes.productsMenuButton}
-            onClick={handleClickProductsMenu}
-          >
-            <AppsIcon />
-          </IconButton>
+          <Tooltip title="Apps by Flookup">
+            <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="open modal"
+              className={classes.productsMenuButton}
+              onClick={handleClickProductsMenu}
+            >
+              <AppsIcon />
+            </IconButton>
+          </Tooltip>
           <Menu
             id="simple-menu"
             anchorEl={anchorElProductsMenu}
@@ -245,16 +267,84 @@ export default function Dashboard({ user, children }) {
             open={Boolean(anchorElProductsMenu)}
             onClose={handleCloseProductsMenu}
           >
-            <Typography>More from Flookup</Typography>
+            <img
+              src={FlookupLogo}
+              style={{ height: 55, width: 130, padding: 10 }}
+              alt="Flookup logo"
+            />
             <Divider />
-            <Typography>Current</Typography>
-            <MenuItem>FAST</MenuItem>
+            <Typography
+              variant="overline"
+              className={classes.productsMenuHeading}
+            >
+              Current
+            </Typography>
+            <MenuItem>
+              <Typography variant="body2" className={classes.productName}>
+                FAST
+              </Typography>
+            </MenuItem>
             <Divider />
-            <Typography>Check out</Typography>
-            <MenuItem>15CACB</MenuItem>
-            <MenuItem>CA ASSIST</MenuItem>
-            <MenuItem>Tally Visuals</MenuItem>
-            <MenuItem>Recon</MenuItem>
+            <Typography
+              variant="overline"
+              className={classes.productsMenuHeading}
+            >
+              Also Discover
+            </Typography>
+            <a
+              style={{ textDecoration: "none" }}
+              href="http://www.15cacb.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MenuItem>
+                <img
+                  src={CacbLogo}
+                  className={classes.productIcon}
+                  alt="15CACB logo"
+                />
+                <Typography variant="body2" className={classes.productName}>
+                  15CACB
+                </Typography>
+              </MenuItem>
+            </a>
+            <a
+              style={{ textDecoration: "none" }}
+              href="http://www.caassist.in"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <MenuItem>
+                <img src={CacbLogo} className={classes.productIcon} />
+                <Typography variant="body2" className={classes.productName}>
+                  CA Assist
+                </Typography>
+              </MenuItem>
+            </a>
+            <Divider />
+            <Typography
+              variant="overline"
+              className={classes.productsMenuHeading}
+            >
+              Visit us At
+            </Typography>
+            <a
+              href="http://www.flookup.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
+              <MenuItem>
+                <img
+                  src={FLookupGif}
+                  style={{ height: 30, width: 35 }}
+                  alt="Flookup gif"
+                />
+                <Typography variant="body2" className={classes.productName}>
+                  Finance Lookup Advisors
+                </Typography>
+              </MenuItem>
+            </a>
           </Menu>
           <IconButton
             edge="start"

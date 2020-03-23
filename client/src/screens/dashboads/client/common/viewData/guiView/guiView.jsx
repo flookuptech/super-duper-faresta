@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { withStyles, Grid } from "@material-ui/core";
 
 import AssetCard from "components/card";
-import { getDistinctAssets } from "services/getAssets";
+import { getDistinctAssetsCategory } from "services/getAssets";
 
 const styles = {
   boxBorder: {
@@ -23,8 +23,10 @@ class GUIView extends Component {
   };
 
   async componentDidMount() {
-    const { data } = await getDistinctAssets();
-    this.setState({ data: data });
+    try {
+      const { data } = await getDistinctAssetsCategory();
+      this.setState({ data: data });
+    } catch (error) {}
   }
 
   get getAssets() {

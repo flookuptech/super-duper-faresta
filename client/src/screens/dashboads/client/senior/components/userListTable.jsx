@@ -8,6 +8,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+
 const styles = {
   table: {
     minWidth: 650
@@ -30,7 +31,7 @@ const styles = {
 class UserTable extends Component {
   render() {
     const { userList, classes } = this.props;
-    return (
+     return (
       <Paper style={styles.root}>
         <TableContainer style={styles.container} component={Paper}>
           <Table
@@ -77,7 +78,7 @@ class UserTable extends Component {
                       <TableCell align="center">{item.role}</TableCell>
                       <TableCell align="center">{item.designation}</TableCell>
                       <TableCell align="center">{item.contact}</TableCell>
-                      <TableCell align="center">{item.dateCreated}</TableCell>
+                      <TableCell align="center">{item.dateCreated.split('T')[0]}</TableCell>
                       <TableCell align="center">Switch</TableCell>
                     </TableRow>
                   </React.Fragment>

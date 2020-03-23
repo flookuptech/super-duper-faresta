@@ -46,9 +46,10 @@ class Code extends Component {
     const { assetData, loading } = this.state;
     const data = JSON.parse(getUser());
     const dbName = data.orgDatabase;
+    if (loading) return <LoaderApp />;
+
     return (
       <Fragment>
-        {loading && <LoaderApp />}
         <br />
         <br />
         <div id="printme">

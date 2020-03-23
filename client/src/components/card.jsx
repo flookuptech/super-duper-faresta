@@ -30,7 +30,7 @@ const styles = {
     fontFamily: "Oleo Script",
     color: "#009933",
     textAlign: "center",
-    marginTop: "30px",
+    marginTop: "10px",
     marginBottom: "40px"
   },
   textDeco: {
