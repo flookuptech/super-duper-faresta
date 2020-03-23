@@ -2,13 +2,26 @@ import React, { Component } from "react";
 import { Grid, Button } from "@material-ui/core";
 
 import InputField from "components/form/inputField";
+import { SelectField } from "components/form/select";
+import {MultipleSelect} from "components/form/multiSelect";
+
 
 class userDataFields extends Component {
   state = {};
 
   render() {
-    const { onChange, onSubmit } = this.props;
+    const role = [
+      {
+        value: "junior",
+        label: "Junior"
+      },
+      {
+        value: "auditor",
+        label: "Auditor"
+      }
+    ];
 
+    const { onChange, onSubmit} = this.props;
     return (
       <form onSubmit={onSubmit}>
         <div>
@@ -60,19 +73,13 @@ class userDataFields extends Component {
                 onChange={onChange}
               />
             </Grid>
-            <Grid item xs={6} md={8} lg={6} className="select-button-padding">
-              <select
-                name="role"
+            <Grid item xs={6} md={4} lg={4} className="select-button-padding">
+              <SelectField
                 onChange={onChange}
-                required
-                className="select-button-styles"
-              >
-                <option disabled selected value={null}>
-                  Role
-                </option>
-                <option value="junior">Junior</option>
-                <option value="auditor">Auditor</option>
-              </select>
+                options={role}
+                label="Role"
+                name="role"
+              />
             </Grid>
             <Grid item xs={12} md={12} lg={12}>
               <div>

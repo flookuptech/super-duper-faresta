@@ -3,9 +3,24 @@ import { Grid, Button } from "@material-ui/core";
 import HowToRegIcon from '@material-ui/icons/HowToReg';
 import InputField from "components/form/inputField";
 
+import { SelectField } from "components/form/select";
+
 class OrgDataFields extends Component {
   state = {};
   render() {
+    const role = [
+      {
+        value: 'senior',
+        label: 'Senior'
+      }
+    ];
+
+    const userType = [
+      {
+        value: 'client',
+        label: 'Client'
+      }
+    ];
     const { onSubmit, onChange } = this.props;
     return (
       <Fragment>
@@ -106,31 +121,21 @@ class OrgDataFields extends Component {
                 </FormControl>
               </Grid> */}
               <Grid item xs={12} md={3} lg={3}>
-                <select
-                  className="select-button-padding select-button-org-styles"
-                  name="role"
+                <SelectField
                   onChange={onChange}
-                  required
-                >
-                  <option disabled selected value={null}>
-                    Role
-                  </option>
-                  <option value="senior">Senior</option>
-                </select>
+                  options={role}
+                  label="Role"
+                  name="role"
+                />
               </Grid>
 
               <Grid item xs={12} md={3} lg={3}>
-                <select
-                  className="select-button-padding select-button-org-styles"
-                  name="userType"
+                <SelectField
                   onChange={onChange}
-                  required
-                >
-                  <option disabled selected value={null}>
-                    User type
-                  </option>
-                  <option value="client">Client</option>
-                </select>
+                  options={userType}
+                  label="User Type"
+                  name="userType"
+                />
               </Grid>
 
               <Grid item xs={12} lg={12}>

@@ -47,12 +47,15 @@ class AddUsers extends Form {
       companyName: this.state.companyName,
       registeredBy: this.state.registeredBy
     };
-    try {
-      const result = await createUser(data);
-      if (result.status === 200) toast.success(result.data.res);
-    } catch (error) {
-      const { data } = error.response;
-      toast.error(data.res);
+    if (data['role'] === "") return alert('Role cannot be empty. Please assign a role');
+    else{
+      try {
+        const result = await createUser(data);
+        if (result.status === 200) toast.success(result.data.res);
+      } catch (error) {
+        const { data } = error.response;
+        toast.error(data.res);
+      }
     }
   };
 
