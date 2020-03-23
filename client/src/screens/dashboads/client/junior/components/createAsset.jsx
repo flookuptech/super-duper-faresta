@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import { Grid, Button } from "@material-ui/core";
 import InputField from "components/form/inputField";
-import { assetInfoArray } from "../../common/viewData/guiView/fieldsArray";
+import { assetInfoArray } from "../../common/viewData/guiView/path/fieldsArray";
 import Form from "components/form/form";
 import { Typography, Box, Container } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";

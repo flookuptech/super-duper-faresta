@@ -1,5 +1,12 @@
 import React, { Fragment } from "react";
-import { Button, Grid, Box, Container, Typography, TextField} from "@material-ui/core";
+import {
+  Button,
+  Grid,
+  Box,
+  Container,
+  Typography,
+  TextField
+} from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import config from "config.js";
 import Dialog from "components/dialog";
@@ -43,9 +50,8 @@ class AssetInformation extends Form {
 
   async componentDidMount() {
     try {
-      const category = this.props.match.params.category;
-      const assetId = this.props.match.params.id;
-      const { data: assetDataFrom } = await getAssetById(category, assetId);
+      const { id: assetId } = this.props.match.params;
+      const { data: assetDataFrom } = await getAssetById(assetId);
       this.setState({
         data: assetDataFrom[0],
         id: assetId,
@@ -161,12 +167,11 @@ class AssetInformation extends Form {
     const { verifiedStatus, imageUri, imageUriByAuditor } = this.state.data;
     const selected = this.state.selected;
     const { user } = this.props;
+    if (loading) return <LoaderApp />;
 
     return (
       <Fragment>
         <ToastContainer autoClose={1500} closeButton={false} />
-        {loading && <LoaderApp />}
-
         <Container maxWidth="lg">
           <Box>
             <Grid container direction="column">
@@ -237,7 +242,7 @@ class AssetInformation extends Form {
                     />
                   </Grid>
                 )}
-                {(user.role === 'junior' || user.role === 'senior') && (
+                {(user.role === "junior" || user.role === "senior") && (
                   <Grid item lg={4} xs={6} md={4}>
                     <TextField
                       error
@@ -246,7 +251,7 @@ class AssetInformation extends Form {
                       value={this.state.selected}
                       helperText="Submitted by Auditor"
                       variant="outlined"
-                      style={{marginTop: 25}}
+                      style={{ marginTop: 25 }}
                       fullWidth
                     />
                   </Grid>
@@ -254,11 +259,11 @@ class AssetInformation extends Form {
                 <Grid item>
                   <Typography
                     variant="overline"
-                    style={{ fontWeight: "500", fontSize: 15}}
+                    style={{ fontWeight: "500", fontSize: 15 }}
                   >
                     Asset Verified:&nbsp;&nbsp;
                   </Typography>
-                    <SwitchSelector
+                  <SwitchSelector
                     onChangeHandler={
                       user.role === "auditor" ? this.handleChangeSwitch : null
                     }

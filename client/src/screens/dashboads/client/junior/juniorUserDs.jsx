@@ -9,10 +9,11 @@ import ViewData from "../common/viewData/viewData";
 import QRCodeList from "../common/qrCodeList";
 import NotFound from "components/pageNotFound";
 import EditProfile from "components/editProfile";
-import AssetList from "../common/viewData/guiView/assetList";
-import AssetInformation from "../common/viewData/guiView/assetInformation";
+import AssetList from "../common/viewData/guiView/path/2-assetList";
+import AssetInformation from "../common/viewData/guiView/path/3-assetInformation";
 import CreateAsset from "./components/createAsset";
-import FloorToFile from '../common/floorToFile/floorToFile';
+import FloorToFile from "../common/floorToFile/floorToFile";
+import AssetSubCategoryList from "../common/viewData/guiView/path/1-assetSubCategoryList";
 
 class JuniorUserDS extends Component {
   state = {};
@@ -24,16 +25,22 @@ class JuniorUserDS extends Component {
           <Route path="/dashboard/qrList" component={QRCodeList} />
           <Route
             path="/dashboard/floorToFile"
-            render={props => (
-              <FloorToFile user={this.props.user} {...props} />
-            )} />
+            render={props => <FloorToFile user={this.props.user} {...props} />}
+          />
           <Route
-            path="/dashboard/viewData/:category/:id"
+            path="/dashboard/viewData/:category/:subcategory/:id"
             render={props => (
               <AssetInformation user={this.props.user} {...props} />
             )}
           />
-          <Route path="/dashboard/viewData/:category" component={AssetList} />
+          <Route
+            path="/dashboard/viewData/:category/:subcategory"
+            component={AssetList}
+          />
+          <Route
+            path="/dashboard/viewData/:category"
+            component={AssetSubCategoryList}
+          />
           <Route
             path="/dashboard/viewdata"
             render={props => <ViewData user={this.props.user} {...props} />}

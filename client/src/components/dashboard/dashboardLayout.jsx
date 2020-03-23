@@ -23,9 +23,9 @@ import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonOutlineIcon from "@material-ui/icons/PersonOutline";
-import FLookupGif from '../../assets/images/brand/flookupGif.gif'
-import FlookupLogo from "../../assets/images/brand/logo.png"
-import CacbLogo from "../../assets/images/brand/15.png"
+import FLookupGif from "../../assets/images/brand/flookupGif.gif";
+import FlookupLogo from "../../assets/images/brand/logo.png";
+import CacbLogo from "../../assets/images/brand/15.png";
 import AppsIcon from "@material-ui/icons/Apps";
 import { Link } from "react-router-dom";
 import {
@@ -83,8 +83,8 @@ const useStyles = makeStyles(theme => ({
   productsMenuHeading: {
     paddingLeft: 10,
     fontSize: 14,
-    fontWeight: 'bold',
-    color: '#009933'
+    fontWeight: "bold",
+    color: "#009933"
   },
   productIcon: {
     height: 20,
@@ -92,8 +92,8 @@ const useStyles = makeStyles(theme => ({
   },
   productName: {
     padding: 5,
-    color: 'black',
-    fontFamily: 'Poppins',
+    color: "black",
+    fontFamily: "Poppins",
     fontSize: 16
   },
   menuButton: {
@@ -259,7 +259,7 @@ export default function Dashboard({ user, children }) {
             >
               <AppsIcon />
             </IconButton>
-            </Tooltip>
+          </Tooltip>
           <Menu
             id="simple-menu"
             anchorEl={anchorElProductsMenu}
@@ -267,25 +267,53 @@ export default function Dashboard({ user, children }) {
             open={Boolean(anchorElProductsMenu)}
             onClose={handleCloseProductsMenu}
           >
-            <img src={FlookupLogo} style={{height: 55, width: 170, padding: 10}} />
+            <img
+              src={FlookupLogo}
+              style={{ height: 55, width: 130, padding: 10 }}
+              alt="Flookup logo"
+            />
             <Divider />
-              <Typography variant="overline" className={classes.productsMenuHeading}>Current</Typography>
-             <MenuItem>
-              <Typography variant="body2" className={classes.productName} >
+            <Typography
+              variant="overline"
+              className={classes.productsMenuHeading}
+            >
+              Current
+            </Typography>
+            <MenuItem>
+              <Typography variant="body2" className={classes.productName}>
                 FAST
               </Typography>
             </MenuItem>
             <Divider />
-            <Typography variant="overline" className={classes.productsMenuHeading}>Also Discover</Typography>
-            <a style={{textDecoration: 'none'}} href="http://www.15cacb.com">
+            <Typography
+              variant="overline"
+              className={classes.productsMenuHeading}
+            >
+              Also Discover
+            </Typography>
+            <a
+              style={{ textDecoration: "none" }}
+              href="http://www.15cacb.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <MenuItem>
-                  <img src={CacbLogo} className={classes.productIcon}/>
-                  <Typography variant="body2" className={classes.productName}>
-                    15 CACB
-                  </Typography>
+                <img
+                  src={CacbLogo}
+                  className={classes.productIcon}
+                  alt="15CACB logo"
+                />
+                <Typography variant="body2" className={classes.productName}>
+                  15CACB
+                </Typography>
               </MenuItem>
             </a>
-            <a style={{textDecoration: 'none'}} href="http://www.caassist.in">
+            <a
+              style={{ textDecoration: "none" }}
+              href="http://www.caassist.in"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <MenuItem>
                 <img src={CacbLogo} className={classes.productIcon} />
                 <Typography variant="body2" className={classes.productName}>
@@ -294,13 +322,27 @@ export default function Dashboard({ user, children }) {
               </MenuItem>
             </a>
             <Divider />
-            <Typography variant="overline" className={classes.productsMenuHeading}>Visit us At</Typography>
-            <a href="http://www.flookup.com" style={{textDecoration: 'none'}}>
+            <Typography
+              variant="overline"
+              className={classes.productsMenuHeading}
+            >
+              Visit us At
+            </Typography>
+            <a
+              href="http://www.flookup.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: "none" }}
+            >
               <MenuItem>
-                  <img src={FLookupGif} style={{height: 30, width: 35}}/>
-                  <Typography variant="body2" className={classes.productName}>
-                    FLookup Advisors
-                  </Typography>
+                <img
+                  src={FLookupGif}
+                  style={{ height: 30, width: 35 }}
+                  alt="Flookup gif"
+                />
+                <Typography variant="body2" className={classes.productName}>
+                  Finance Lookup Advisors
+                </Typography>
               </MenuItem>
             </a>
           </Menu>

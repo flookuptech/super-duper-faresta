@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 
 import NotFound from "components/pageNotFound";
 import EditProfile from "components/editProfile";
-
 import AddUsers from "./components/addUsers/addUsers";
 import UsersList from "./components/userList";
 import ViewData from "../common/viewData/viewData";
@@ -12,11 +11,11 @@ import UploadData from "./components/uploadData";
 import Home from "./components/home";
 import DashboardLayout from "../../../../components/dashboard/dashboardLayout";
 import Guide from "components/guide";
-import AssetList from "../common/viewData/guiView/assetList";
-import AssetInformation from "../common/viewData/guiView/assetInformation";
+import AssetList from "../common/viewData/guiView/path/2-assetList";
+import AssetInformation from "../common/viewData/guiView/path/3-assetInformation";
 import QRCodeList from "../common/qrCodeList";
 import SearchAsset from "../common/search/searchIndex";
-
+import AssetSubCategoryList from "../common/viewData/guiView/path/1-assetSubCategoryList";
 class SeniorUserDS extends Component {
   state = {};
   render() {
@@ -27,10 +26,17 @@ class SeniorUserDS extends Component {
           <Route path="/dashboard/search" component={SearchAsset} />
           <Route path="/dashboard/qrList" component={QRCodeList} />
           <Route
-            path="/dashboard/viewData/:category/:id"
+            path="/dashboard/viewData/:category/:subcategory/:id"
             render={props => <AssetInformation user={user} {...props} />}
           />
-          <Route path="/dashboard/viewData/:category" component={AssetList} />
+          <Route
+            path="/dashboard/viewData/:category/:subcategory"
+            component={AssetList}
+          />
+          <Route
+            path="/dashboard/viewData/:category"
+            component={AssetSubCategoryList}
+          />
           <Route
             path="/dashboard/viewData"
             render={props => <ViewData user={user} {...props} />}

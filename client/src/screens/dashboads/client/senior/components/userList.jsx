@@ -37,10 +37,10 @@ class UsersList extends Component {
   render() {
     const { classes } = this.props;
     const { userList, loading } = this.state;
+    if (loading) return <LoaderApp />;
 
     return (
       <Fragment>
-        {loading && <LoaderApp />}
         <ToastContainer auatoClose={1500} closeButton={false} />
         <Grid>
           <main className={classes.content}>

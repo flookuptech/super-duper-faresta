@@ -3,7 +3,8 @@ var uniqueValidator = require("mongoose-unique-validator");
 
 const assetSchema = new mongoose.Schema({
   asset_code: { type: String, required: true, unique: true },
-  category: { type: String, default: null },
+  category: { type: String, default: null, required: true },
+  sub_category: { type: String, default: null, required: true },
   description: { type: String, default: null },
   element: { type: String, default: null },
   vendor_name: { type: String, default: null },

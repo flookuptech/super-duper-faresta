@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import { Grid, IconButton } from "@material-ui/core";
 import FullscreenIcon from "@material-ui/icons/Fullscreen";
-import JsonTable from "ts-react-json-table";
+// import JsonTable from "ts-react-json-table";
 import Fullscreen from "react-full-screen";
 import FullscreenExitIcon from "@material-ui/icons/FullscreenExit";
 import UploadDataTable from "../../../senior/components/uploadData/uploadDataTable";
@@ -29,15 +29,12 @@ class TabularView extends Component {
               <FullscreenIcon />
             </IconButton>
           </Grid>
-          <Grid item className="fullscreen-scroll"> 
+          <Grid item className="fullscreen-scroll">
             <Fullscreen
               enabled={isFull}
               onChange={isFull => this.setState({ isFull })}
             >
-              <div
-                id="screen"
-                style={{ backgroundColor: "white" }}
-              >
+              <div id="screen" style={{ backgroundColor: "white" }}>
                 {isFull && (
                   <IconButton onClick={this.exitFull}>
                     <FullscreenExitIcon />
