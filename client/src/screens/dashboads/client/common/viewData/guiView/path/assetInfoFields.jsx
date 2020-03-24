@@ -4,7 +4,8 @@ import InputField from "components/form/inputField";
 import {
   assetInfoArray,
   juniorRemarksArray,
-  auditorRemarksArray
+  auditorRemarksArray,
+  juniorAndAuditorAssetInfo
 } from "./fieldsArray";
 
 class AssetInfoFields extends Component {
@@ -25,20 +26,38 @@ class AssetInfoFields extends Component {
     return (
       <Fragment>
         <Grid container spacing={3}>
-          {assetInfoArray.map(item => {
-            return (
-              <Grid item xs={6} md={4} lg={3}>
-                <InputField
-                  id="standard-read-only-input"
-                  value={assetData[item.value]}
-                  helperText={item.helperText}
-                  InputProps={{ readOnly: readStatus }}
-                  name={item.value}
-                  onChange={handleOnChange}
-                />
-              </Grid>
-            );
-          })}
+          {user.role === 'senior' && (
+            assetInfoArray.map(item => {
+              return (
+                <Grid item xs={6} md={4} lg={3}>
+                  <InputField
+                    id="standard-read-only-input"
+                    value={assetData[item.value]}
+                    helperText={item.helperText}
+                    InputProps={{ readOnly: readStatus }}
+                    name={item.value}
+                    onChange={handleOnChange}
+                  />
+                </Grid>
+              );
+            })
+          )}
+          {(user.role === 'auditor' || user.role === 'junior') && (
+            juniorAndAuditorAssetInfo.map(item => {
+              return (
+                <Grid item xs={6} md={4} lg={3}>
+                  <InputField
+                    id="standard-read-only-input"
+                    value={assetData[item.value]}
+                    helperText={item.helperText}
+                    InputProps={{ readOnly: readStatus }}
+                    name={item.value}
+                    onChange={handleOnChange}
+                  />
+                </Grid>
+              );
+            })
+          )}
         </Grid>
 
         {/* Junior Remarks */}

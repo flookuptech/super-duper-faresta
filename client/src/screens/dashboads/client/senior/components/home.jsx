@@ -9,7 +9,6 @@ import {
 
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
-
 import {
   getReportsData,
   getReportsDataVerifiedOnly,

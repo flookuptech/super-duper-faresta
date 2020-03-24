@@ -52,7 +52,7 @@ class UploadData extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, user} = this.props;
     const { data } = this.state;
 
     return (
@@ -95,7 +95,7 @@ class UploadData extends Component {
               <br />
               {data && (
                 <Box className={classes.boxBorder}>
-                    <UploadDataTable data={data} />
+                    <UploadDataTable data={data} user={user} />
                 </Box>
               )}
             </Container>
