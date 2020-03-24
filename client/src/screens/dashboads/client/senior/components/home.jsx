@@ -4,9 +4,9 @@ import {
   Container,
   Box,
   withStyles,
-  Grid
+  Grid,
+  Button
 } from "@material-ui/core";
-
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
 import {
@@ -15,6 +15,7 @@ import {
   getLocationData
 } from "services/getReportsData";
 
+import Date from 'components/datePicker';
 import LoaderApp from "components/loaderApp";
 
 const styles = {
@@ -37,7 +38,9 @@ class AuditReport extends PureComponent {
     verifiedOnly: [],
     auditorRemarksOnly: [],
     juniorRemarksOnly: [],
-    locationData: []
+    locationData: [], 
+    startDate: "",
+    endDate: ""
   };
 
   async componentDidMount() {
@@ -68,6 +71,23 @@ class AuditReport extends PureComponent {
         </Fragment>
       );
     });
+  }
+
+  handleDateChange = ({target}) => {
+    const name = this.state;
+    name[target.name] = target.value;
+    this.setState({name});
+  };
+
+
+  dateSubmit = async () => {
+    try{
+      console.log("Start Date" + this.state.startDate);
+      console.log("End Date" + this.state.endDate);
+    }
+    catch{
+      console.log("Error");
+    }
   }
 
   // getAuditorRemarkedAssets() {
@@ -108,7 +128,7 @@ class AuditReport extends PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { reportsData, verifiedOnly, locationData, loading } = this.state;
+    const { reportsData, verifiedOnly, locationData, loading} = this.state;
     if (loading) return <LoaderApp />;
     return (
       <Fragment>
@@ -126,6 +146,48 @@ class AuditReport extends PureComponent {
                   </Typography>
                 </Fragment>
                 <br />
+                <Grid
+                  container
+                  direction="row"
+                  justify="center"
+                  alignItems="center" 
+                >
+                  <Grid item xs={12} md={3} lg={3}  style={{margin: 10}}>
+                    <Date
+                      name="startDate"
+                      label="Start Date"
+                      type="date"
+                      selected={this.state.startDate}
+                      onChange={this.handleDateChange}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3} lg={3} style={{margin: 10}}>
+                    <Date
+                      name="endDate"
+                      label="End Date"
+                      type="date"
+                      selected={this.state.endDate}
+                      onChange={this.handleDateChange}
+                      required
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={3} lg={3} style={{margin: 10}}>
+                    <Button
+                      onClick={this.dateSubmit}
+                      type="submit"
+                      variant="contained"
+                      style={{
+                        backgroundColor: "#009933",
+                        color: "white",
+                        marginTop: 20
+                      }}
+                    >
+                      Get Reports
+                    </Button>
+                  </Grid>
+                </Grid>
+                <br /><br />
                 {reportsData.length ? (
                   <Grid container direction="row" justify="space-between">
                     <Grid item lg={6}>
