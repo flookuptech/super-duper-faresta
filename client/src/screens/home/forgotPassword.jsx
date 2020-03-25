@@ -45,12 +45,12 @@ class ForgotPassWord extends Form {
             <Fragment>
                 <AppBar position="static" style={{backgroundColor: 'white'}}>
                     <Toolbar>
-                        <Typography variant="overline" style={{color: '#006633', fontWeight: 'bolder', fontSize: 18}}>
+                        <Typography variant="overline" style={{color: '#009933', fontWeight: 'bolder', fontSize: 18}}>
                             Fixed Assets Register
                         </Typography>
                     </Toolbar>
                 </AppBar>
-                <div style={{backgroundColor: '#E0E0E0', display: 'block', height: '95vh'}}>
+                <div style={{backgroundColor: '#F0F0F0', display: 'block', height: '95vh'}}>
                     <Grid
                         container 
                         alignItems="center"
@@ -94,9 +94,10 @@ class ForgotPassWord extends Form {
                                                     type="submit"
                                                     variant="contained"
                                                     style={{
-                                                        backgroundColor: "#006633",
+                                                        backgroundColor: "#009933",
                                                         color: "white",
-                                                        marginTop: 8
+                                                        marginTop: 8,
+                                                        fontWeight: 'bold'
                                                     }}
                                                     >
                                                     Send me Login link
@@ -114,7 +115,7 @@ class ForgotPassWord extends Form {
                                     style={{textDecoration: 'none'}}
                                     to={"/"}
                                     >
-                                        <Typography style={{color: '#006633', fontWeight: 'bold'}}>
+                                        <Typography style={{color: '#009933', fontWeight: 'bold'}}>
                                             Back to Login
                                         </Typography>
                                     </Link>
