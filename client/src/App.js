@@ -18,7 +18,7 @@ import RootUserDashboard from "screens/dashboads/root/adminDashBoard";
 import AuditorDashboard from "screens/dashboads/client/auditor/auditorDs";
 import SeniorUserDashboard from "screens/dashboads/client/senior/seniorUserDs";
 import JuniorUserDashboard from "screens/dashboads/client/junior/juniorUserDs";
-
+import ForgotPassword from "screens/home/forgotPassword";
 //APPLoader
 import LoaderApp from "./components/loaderApp";
 const Login = lazy(() => import("./screens/home/login"));
@@ -53,6 +53,7 @@ class App extends Component {
               <Switch>
                 <Route path="/logout" component={Logout} />
                 <Route exact path="/" component={Login} />
+                <Route path="/forgotPassword" component={ForgotPassword} />
                 <Route
                   path="/dashboard/"
                   render={props => {

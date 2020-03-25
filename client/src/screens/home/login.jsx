@@ -8,6 +8,8 @@ import { connect } from "services/assetDbCall";
 import Logo from "assets/images/brand/logo.png";
 import Particles from "components/loginAnimation";
 import InputField from "components/form/inputField";
+import {Link} from "react-router-dom";
+import GooglePlayIcon from 'assets/images/brand/googlePlay.png';
 
 class Login extends Form {
   state = {
@@ -94,7 +96,7 @@ class Login extends Form {
                           Log In
                         </Button>
                       </Grid>
-                      {/* <Grid item>
+                      <Grid item>
                         <Link
                           style={{
                             textDecoration: "none",
@@ -104,11 +106,22 @@ class Login extends Form {
                         >
                           Forgot password?
                         </Link>
-                      </Grid> */}
+                      </Grid>
                     </Fragment>
                   </Grid>
                 </form>
               </Grid>
+              <div style={{ bottom: 100, position: "absolute", flex: 1 }}>
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.flookup.fast&hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ textDecoration: "none", color: "blue" }}
+                >
+
+                  <img src={GooglePlayIcon} style={{height: 75, width: 170}}/>
+                </a>
+              </div>
               <div style={{ bottom: 20, position: "absolute", flex: 1 }}>
                 <a
                   href="https://fixed-asset-flookup.s3.ap-south-1.amazonaws.com/privacy_policy_fastapp.html"
