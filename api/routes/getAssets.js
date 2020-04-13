@@ -27,9 +27,7 @@ router.get("/app/:id", async (req, res) => {
 // Get assets distinctly by category
 router.get("/distinctCategory", async (req, res) => {
   try {
-    const data = await Asset.find()
-      .select("-__v")
-      .distinct("category");
+    const data = await Asset.find().select("-__v").distinct("category");
 
     res.send(data);
   } catch (error) {
@@ -69,7 +67,7 @@ router.get("/assetlist/:category/:subcategory", async (req, res) => {
   try {
     const data = await Asset.find({
       category: category,
-      sub_category: sub_category
+      sub_category: sub_category,
     }).select("-__v -date");
 
     res.send(data);
@@ -86,6 +84,38 @@ router.get("/getAssetById/:id", async (req, res) => {
     res.send(data);
   } catch (error) {
     res.status(500).send({ err: "Request failed" });
+  }
+});
+
+router.post("/sortAssetsBy", async (req, res) => {
+  const filterUsing = JSON.parse(req.query.sortBy);
+
+  if (!filterUsing)
+    return res.status(400).send({ err: "Select fields to sort by!" });
+
+  // const filterUsing = { category: "Office Equipments", location: "Delhi" };
+  // const queries = [
+  //   "sub_category",
+  //   "category",
+  //   "vendor_name",
+  //   "location",
+  //   "verifiedStatus",
+  // ];
+  // const queryString = {};
+
+  // for (const queryType in filterUsing) {
+  //   console.log(queryType);
+  //   if (queries.includes(queryType)) {
+  //     queryString[queryType] = filterUsing[queryType];
+  //   }
+  // }
+  // console.log(queryString);
+
+  try {
+    const filteredData = await Asset.find(filterUsing);
+    res.send(filteredData);
+  } catch (error) {
+    res.status(400).send({ err: "Internal Error!" });
   }
 });
 

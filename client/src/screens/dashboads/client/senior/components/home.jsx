@@ -4,31 +4,32 @@ import {
   Container,
   Box,
   withStyles,
-  Grid
+  Grid,
+  Button,
 } from "@material-ui/core";
-
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
-
 import {
   getReportsData,
   getReportsDataVerifiedOnly,
-  getLocationData
+  getLocationData,
 } from "services/getReportsData";
 
 import LoaderApp from "components/loaderApp";
+import SortByFields from "./home/sortBy";
+import { getSortedAssets } from "services/home/sortBy";
 
 const styles = {
   boxBorder: {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
-    overflow: "auto"
-  }
+    overflow: "auto",
+  },
 };
 
 class AuditReport extends PureComponent {
@@ -38,7 +39,9 @@ class AuditReport extends PureComponent {
     verifiedOnly: [],
     auditorRemarksOnly: [],
     juniorRemarksOnly: [],
-    locationData: []
+    locationData: [],
+    startDate: "",
+    endDate: "",
   };
 
   async componentDidMount() {
@@ -52,13 +55,13 @@ class AuditReport extends PureComponent {
         reportsData,
         verifiedOnly,
         locationData,
-        loading: false
+        loading: false,
       });
     } catch (error) {}
   }
 
   getAssetsVerifiedStatus() {
-    return this.state.verifiedOnly.map(item => {
+    return this.state.verifiedOnly.map((item) => {
       return (
         <Fragment>
           {item.id ? (
@@ -70,6 +73,24 @@ class AuditReport extends PureComponent {
       );
     });
   }
+
+  handleChange = ({ target }) => {
+    const name = this.state;
+    name[target.name] = target.value;
+    this.setState({ name });
+  };
+
+  handleSubmit = async () => {
+    const data = {
+      location: this.state.location,
+    };
+    try {
+      const results = await getSortedAssets(data);
+      console.log(results);
+    } catch (error) {
+      console.log("Error");
+    }
+  };
 
   // getAuditorRemarkedAssets() {
   //   return this.state.auditorRemarksOnly.map((remark, counter) => {
@@ -119,14 +140,12 @@ class AuditReport extends PureComponent {
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
-              <br />
               <Box className={classes.boxBorder}>
-                <Fragment>
-                  <Typography component="h5" variant="h5">
-                    Home
-                  </Typography>
-                </Fragment>
-                <br />
+                <SortByFields
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSubmit}
+                  locationData={locationData}
+                />
                 {reportsData.length ? (
                   <Grid container direction="row" justify="space-between">
                     <Grid item lg={6}>

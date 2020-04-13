@@ -47,7 +47,9 @@ class Organizations extends Form {
     // Call to backend to create organisation database
 
     try {
-      const { data } = this.state;
+      const data = {...this.state.data};
+      if (data['role'] === "") return alert('Role cannot be empty. Please assign the role');
+      if (data['userType'] === "") return alert('User Type cannot be empty. Please assign the user type');
       const register = await registerSenior(data);
       toast.success(register.data.res);
     } catch (error) {

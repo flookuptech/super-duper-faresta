@@ -25,8 +25,6 @@
     "react": "^16.12.0",
     "react-csv": "^1.1.2",
     "react-csv-reader": "^2.0.2",
-    "react-datepicker": "^2.10.1",
-    "react-day-picker": "^7.4.0",
     "react-dom": "^16.12.0",
     "react-full-screen": "^0.2.4",
     "react-helmet": "^5.2.1",

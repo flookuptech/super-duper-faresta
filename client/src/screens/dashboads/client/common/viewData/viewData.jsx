@@ -58,7 +58,7 @@ class ViewData extends Form {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, user } = this.props;
     const { view, assetData, loading } = this.state;
     if (loading) return <LoaderApp />;
 
@@ -122,7 +122,7 @@ class ViewData extends Form {
                   </ButtonGroup>
                 </div>
                 <div>
-                  {view ? <GUIView /> : <TabularView data={assetData} />}
+                  {view ? <GUIView /> : <TabularView data={assetData} user={user} />}
                 </div>
                 <br />
               </Box>

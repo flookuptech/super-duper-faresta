@@ -19,7 +19,7 @@ class TabularView extends Component {
   };
 
   render() {
-    const { data } = this.props;
+    const { data, user } = this.props;
     const { isFull } = this.state;
     return (
       <Fragment>
@@ -40,7 +40,7 @@ class TabularView extends Component {
                     <FullscreenExitIcon />
                   </IconButton>
                 )}
-                <UploadDataTable data={data} />
+                <UploadDataTable data={data} user={user}/>
               </div>
             </Fullscreen>
           </Grid>

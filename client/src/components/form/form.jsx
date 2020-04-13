@@ -15,10 +15,9 @@ class Form extends Component {
     this.overrideOnSubmit();
   };
 
-  handleOnChange = ({ currentTarget: input }) => {
+  handleOnChange = ({ target }) => {
     const data = { ...this.state.data };
-    data[input.name] = input.value;
-
+    data[target.name] = target.value;
     this.setState({ data });
   };
 

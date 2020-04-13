@@ -41,7 +41,10 @@ class SeniorUserDS extends Component {
             path="/dashboard/viewData"
             render={props => <ViewData user={user} {...props} />}
           />
-          <Route path="/dashboard/uploadData" component={UploadData} />
+          <Route 
+            path="/dashboard/uploadData"
+            render={props => <UploadData user={user} {...props} />}
+          />
           <Route path="/dashboard/reports" component={Reports} />
           <Route
             path="/dashboard/addUsers"

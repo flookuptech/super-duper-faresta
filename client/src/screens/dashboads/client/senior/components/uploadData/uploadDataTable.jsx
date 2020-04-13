@@ -6,7 +6,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { uploadDataFieldsArray } from "./uploadDataFieldsArray";
+import { uploadDataFieldsArray, juniorAndAuditorFields } from "./uploadDataFieldsArray";
 import TablePagination from "@material-ui/core/TablePagination";
 
 const styles = {
@@ -33,7 +33,7 @@ const styles = {
   }
 };
 
-const UploadDataTable = ({ data }) => {
+const UploadDataTable = ({ user, data }) => {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -52,13 +52,24 @@ const UploadDataTable = ({ data }) => {
         <Table stickyHeader aria-label="sticky table" style={styles.table}>
           <TableHead>
             <TableRow>
-              {uploadDataFieldsArray.map(item => {
-                return (
-                  <TableCell align="center" style={styles.tableHeader}>
-                    {item.value}
-                  </TableCell>
-                );
-              })}
+              {user.role === 'senior' && (
+                uploadDataFieldsArray.map(item => {
+                  return (
+                    <TableCell align="center" style={styles.tableHeader}>
+                      {item.value}
+                    </TableCell>
+                  );
+                })
+              )}
+              {(user.role === 'junior' || user.role === 'auditor') && (
+                juniorAndAuditorFields.map(item => {
+                  return (
+                    <TableCell align="center" style={styles.tableHeader}>
+                      {item.value}
+                    </TableCell>
+                  );
+                })
+              )}        
             </TableRow>
           </TableHead>
           <TableBody>
@@ -99,13 +110,21 @@ const UploadDataTable = ({ data }) => {
                       <TableCell align="center">
                         {item.amount_capitalised}
                       </TableCell>
-                      <TableCell align="center">{item.dep_per_day}</TableCell>
-                      <TableCell align="center">{item.dep_rate}</TableCell>
+                      {user.role === 'senior' && (
+                        <Fragment>
+                          <TableCell align="center">{item.dep_per_day}</TableCell>
+                          <TableCell align="center">{item.dep_rate}</TableCell>
+                        </Fragment>
+                      )}
                       <TableCell align="center">
                         {item.number_of_days}
                       </TableCell>
-                      <TableCell align="center">{item.depreciation}</TableCell>
-                      <TableCell align="center">{item.net_block}</TableCell>
+                      {user.role === 'senior' && (
+                        <Fragment>
+                          <TableCell align="center">{item.depreciation}</TableCell>
+                          <TableCell align="center">{item.net_block}</TableCell>
+                        </Fragment>
+                      )}
                       <TableCell align="center">
                         {item.classification}
                       </TableCell>
