@@ -5,30 +5,31 @@ import {
   Box,
   withStyles,
   Grid,
-  Button
+  Button,
 } from "@material-ui/core";
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
 import {
   getReportsData,
   getReportsDataVerifiedOnly,
-  getLocationData
+  getLocationData,
 } from "services/getReportsData";
 
-import Date from 'components/datePicker';
 import LoaderApp from "components/loaderApp";
+import SortByFields from "./home/sortBy";
+import { getSortedAssets } from "services/home/sortBy";
 
 const styles = {
   boxBorder: {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
-    overflow: "auto"
-  }
+    overflow: "auto",
+  },
 };
 
 class AuditReport extends PureComponent {
@@ -38,9 +39,9 @@ class AuditReport extends PureComponent {
     verifiedOnly: [],
     auditorRemarksOnly: [],
     juniorRemarksOnly: [],
-    locationData: [], 
+    locationData: [],
     startDate: "",
-    endDate: ""
+    endDate: "",
   };
 
   async componentDidMount() {
@@ -54,13 +55,13 @@ class AuditReport extends PureComponent {
         reportsData,
         verifiedOnly,
         locationData,
-        loading: false
+        loading: false,
       });
     } catch (error) {}
   }
 
   getAssetsVerifiedStatus() {
-    return this.state.verifiedOnly.map(item => {
+    return this.state.verifiedOnly.map((item) => {
       return (
         <Fragment>
           {item.id ? (
@@ -73,22 +74,23 @@ class AuditReport extends PureComponent {
     });
   }
 
-  handleDateChange = ({target}) => {
+  handleChange = ({ target }) => {
     const name = this.state;
     name[target.name] = target.value;
-    this.setState({name});
+    this.setState({ name });
   };
 
-
-  dateSubmit = async () => {
-    try{
-      console.log("Start Date" + this.state.startDate);
-      console.log("End Date" + this.state.endDate);
-    }
-    catch{
+  handleSubmit = async () => {
+    const data = {
+      location: this.state.location,
+    };
+    try {
+      const results = await getSortedAssets(data);
+      console.log(results);
+    } catch (error) {
       console.log("Error");
     }
-  }
+  };
 
   // getAuditorRemarkedAssets() {
   //   return this.state.auditorRemarksOnly.map((remark, counter) => {
@@ -128,7 +130,7 @@ class AuditReport extends PureComponent {
 
   render() {
     const { classes } = this.props;
-    const { reportsData, verifiedOnly, locationData, loading} = this.state;
+    const { reportsData, verifiedOnly, locationData, loading } = this.state;
     if (loading) return <LoaderApp />;
     return (
       <Fragment>
@@ -138,56 +140,12 @@ class AuditReport extends PureComponent {
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
-              <br />
               <Box className={classes.boxBorder}>
-                <Fragment>
-                  <Typography component="h5" variant="h5">
-                    Home
-                  </Typography>
-                </Fragment>
-                <br />
-                <Grid
-                  container
-                  direction="row"
-                  justify="center"
-                  alignItems="center" 
-                >
-                  <Grid item xs={12} md={3} lg={3}  style={{margin: 10}}>
-                    <Date
-                      name="startDate"
-                      label="Start Date"
-                      type="date"
-                      selected={this.state.startDate}
-                      onChange={this.handleDateChange}
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3} lg={3} style={{margin: 10}}>
-                    <Date
-                      name="endDate"
-                      label="End Date"
-                      type="date"
-                      selected={this.state.endDate}
-                      onChange={this.handleDateChange}
-                      required
-                    />
-                  </Grid>
-                  <Grid item xs={12} md={3} lg={3} style={{margin: 10}}>
-                    <Button
-                      onClick={this.dateSubmit}
-                      type="submit"
-                      variant="contained"
-                      style={{
-                        backgroundColor: "#009933",
-                        color: "white",
-                        marginTop: 20
-                      }}
-                    >
-                      Get Reports
-                    </Button>
-                  </Grid>
-                </Grid>
-                <br /><br />
+                <SortByFields
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSubmit}
+                  locationData={locationData}
+                />
                 {reportsData.length ? (
                   <Grid container direction="row" justify="space-between">
                     <Grid item lg={6}>
