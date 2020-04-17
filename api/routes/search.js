@@ -8,7 +8,25 @@ const { Asset } = require("../models/assets");
 router.get("/", async (req, res) => {
   try {
     const { query } = req.query;
-    console.log(query);
+
+    if (!query) return res.send({ msg: "Search assets" });
+
+    const results = await Asset.find({
+      $or: [
+        {
+          $text: {
+            $search: query,
+          },
+        },
+        {
+          asset_code: {
+            $regex: query,
+            $options: "i",
+          },
+        },
+      ],
+    });
+    res.send(results);
   } catch (error) {
     console.log(error);
     res.status(500).send({ err: "Unable to search" });

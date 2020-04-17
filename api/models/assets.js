@@ -12,7 +12,7 @@ const assetSchema = new mongoose.Schema({
   location: { type: String, default: null },
   base_amount: { type: String, default: null },
   date_of_installation: {
-    type: Date
+    type: Date,
   },
   month_of_installation: { type: String, default: null },
   vat: { type: String, default: null },
@@ -47,7 +47,12 @@ const assetSchema = new mongoose.Schema({
   remarkJunior_3: { type: String, default: null },
   remarkAuditor_1: { type: String, default: null },
   remarkAuditor_2: { type: String, default: null },
-  remarkAuditor_3: { type: String, default: null }
+  remarkAuditor_3: { type: String, default: null },
+});
+
+assetSchema.index({
+  asset_code: "text",
+  description: "text",
 });
 
 assetSchema.plugin(uniqueValidator);
