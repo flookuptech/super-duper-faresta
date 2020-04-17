@@ -6,10 +6,11 @@ import { searchQuery } from "services/search";
 
 class Search extends Form {
   state = {
-    searchText: ""
+    searchText: "",
+    searchResults: "",
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ searchText: e.target.value }, () => {
       this.searchData();
     });
@@ -17,10 +18,11 @@ class Search extends Form {
 
   searchData = async () => {
     try {
-      const results = await searchQuery(this.state.searchText);
-      console.log(results);
+      const { data } = await searchQuery(this.state.searchText);
+      this.setState({ searchResults: data });
+      console.log(data);
     } catch (error) {
-      console.log(error.response);
+      console.log(error.response.data.msg);
     }
   };
 
