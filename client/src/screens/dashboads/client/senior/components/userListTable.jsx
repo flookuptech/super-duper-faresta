@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-
+import Switch from '../../../../../components/switch';
 
 const styles = {
   table: {
@@ -29,6 +29,12 @@ const styles = {
 };
 
 class UserTable extends Component {
+
+  handleSwitchChange = (id) => {
+    alert(id);
+    console.log(id);
+  }
+
   render() {
     const { userList, classes } = this.props;
      return (
@@ -65,7 +71,7 @@ class UserTable extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userList.map(function(item) {
+              {userList.map((item) =>{
                 return (
                   <React.Fragment>
                     <TableRow key={item._id}>
@@ -79,7 +85,9 @@ class UserTable extends Component {
                       <TableCell align="center">{item.designation}</TableCell>
                       <TableCell align="center">{item.contact}</TableCell>
                       <TableCell align="center">{item.dateCreated.split('T')[0]}</TableCell>
-                      <TableCell align="center">Switch</TableCell>
+                      <TableCell align="center">
+                      <Switch onChangeHandler={()=>this.handleSwitchChange(item._id)} checked={true} />
+                      </TableCell>
                     </TableRow>
                   </React.Fragment>
                 );

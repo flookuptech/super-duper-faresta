@@ -413,7 +413,8 @@ export default function Dashboard({ user, children }) {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>{children}</Paper>
+              {children}
+              {/* <Paper className={classes.paper}>{children}</Paper> */}
             </Grid>
           </Grid>
         </Container>

@@ -5,7 +5,8 @@ import {
   Box,
   Container,
   Typography,
-  TextField
+  TextField,
+  Paper
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import config from "config.js";
@@ -173,132 +174,140 @@ class AssetInformation extends Form {
       <Fragment>
         <ToastContainer autoClose={1500} closeButton={false} />
         <Container maxWidth="lg">
-          <Box>
-            <Grid container direction="column">
-              <Grid container direction="row" justify="space-between">
-                <Grid item>
-                  <div id="printme">
-                    <QRCodeGenerator id={id} keyValue={dbName} />
-                  </div>
-                  <button onClick={() => this.printOrder()}>Print</button>
-                  {user.role === "senior" && (
-                    <div className="upload-btn-style">
-                      <ImageUpload
-                        onChangeHandler={this.onChangeHandler}
-                        onClickHandler={this.onClickHandler}
-                        loaded={this.state.loaded}
-                        imageSet={this.state.selectedFile}
-                      />
-                    </div>
-                  )}
-                  {user.role === "auditor" && (
-                    <div className="upload-btn-style">
-                      <ImageUpload
-                        onChangeHandler={this.onChangeHandler}
-                        onClickHandler={this.onClickHandlerAuditor}
-                        loaded={this.state.loaded}
-                        imageSet={this.state.selectedFile}
-                      />
-                    </div>
-                  )}
-                </Grid>
-                <Grid item>
-                  <ModalImage
-                    className="image-upload-style"
-                    small={imageUri}
-                    large={imageUri}
-                    alt="Image Preview"
-                  />
-                </Grid>
-                <Grid item>
-                  <p>Auditor Uploaded Image</p>
-                  <ModalImage
-                    className="image-upload-style"
-                    small={imageUriByAuditor}
-                    large={imageUriByAuditor}
-                    alt="Image Preview"
-                  />
-                </Grid>
-              </Grid>
-              <br />
-              <Grid
-                container
-                justify="space-between"
-                alignItems="center"
-                direction="row"
-              >
-                {user.role === "auditor" && (
-                  <Grid item lg={3} xs={6} md={6}>
-                    <MultiSelect
-                      overrideStrings={{
-                        selectSomeItems: "Tag incase error...",
-                        search: "Search tag"
-                      }}
-                      options={options}
-                      selected={selected}
-                      onSelectedChanged={selected =>
-                        this.setState({ selected })
-                      }
-                    />
-                  </Grid>
-                )}
-                {(user.role === "junior" || user.role === "senior") && (
-                  <Grid item lg={4} xs={6} md={4}>
-                    <TextField
-                      error
-                      id="filled-error-helper-text"
-                      label="Error Tag"
-                      value={this.state.selected}
-                      helperText="Submitted by Auditor"
-                      variant="outlined"
-                      style={{ marginTop: 25 }}
-                      fullWidth
-                    />
-                  </Grid>
-                )}
-                <Grid item>
-                  <Typography
-                    variant="overline"
-                    style={{ fontWeight: "500", fontSize: 15 }}
-                  >
-                    Asset Verified:&nbsp;&nbsp;
-                  </Typography>
-                  <SwitchSelector
-                    onChangeHandler={
-                      user.role === "auditor" ? this.handleChangeSwitch : null
-                    }
-                    checked={verifiedStatus}
-                  />
-                </Grid>
-              </Grid>
-              <br />
-              <Grid>
-                <AssetInfoFields
-                  assetData={this.state.data}
-                  handleOnChange={this.handleOnChange}
-                  user={user}
-                />
-              </Grid>
-              <br />
-              <Grid container direction="row" justify="space-between">
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    startIcon={<SaveIcon />}
-                    onClick={this.handleSave}
-                  >
-                    Save
-                  </Button>
-                </Grid>
-                {user.role === "senior" && (
+        <Paper
+          style={{
+            display: 'flex',
+            flexDirection: "column",
+            overflow: 'auto',
+            padding: 32
+          }}>
+            <Box>
+              <Grid container direction="column">
+                <Grid container direction="row" justify="space-between">
                   <Grid item>
-                    <Dialog onClick={this.deleteAssetById} />
+                    <div id="printme">
+                      <QRCodeGenerator id={id} keyValue={dbName} />
+                    </div>
+                    <button onClick={() => this.printOrder()}>Print</button>
+                    {user.role === "senior" && (
+                      <div className="upload-btn-style">
+                        <ImageUpload
+                          onChangeHandler={this.onChangeHandler}
+                          onClickHandler={this.onClickHandler}
+                          loaded={this.state.loaded}
+                          imageSet={this.state.selectedFile}
+                        />
+                      </div>
+                    )}
+                    {user.role === "auditor" && (
+                      <div className="upload-btn-style">
+                        <ImageUpload
+                          onChangeHandler={this.onChangeHandler}
+                          onClickHandler={this.onClickHandlerAuditor}
+                          loaded={this.state.loaded}
+                          imageSet={this.state.selectedFile}
+                        />
+                      </div>
+                    )}
                   </Grid>
-                )}
+                  <Grid item>
+                    <ModalImage
+                      className="image-upload-style"
+                      small={imageUri}
+                      large={imageUri}
+                      alt="Image Preview"
+                    />
+                  </Grid>
+                  <Grid item>
+                    <p>Auditor Uploaded Image</p>
+                    <ModalImage
+                      className="image-upload-style"
+                      small={imageUriByAuditor}
+                      large={imageUriByAuditor}
+                      alt="Image Preview"
+                    />
+                  </Grid>
+                </Grid>
+                <br />
+                <Grid
+                  container
+                  justify="space-between"
+                  alignItems="center"
+                  direction="row"
+                >
+                  {user.role === "auditor" && (
+                    <Grid item lg={3} xs={6} md={6}>
+                      <MultiSelect
+                        overrideStrings={{
+                          selectSomeItems: "Tag incase error...",
+                          search: "Search tag"
+                        }}
+                        options={options}
+                        selected={selected}
+                        onSelectedChanged={selected =>
+                          this.setState({ selected })
+                        }
+                      />
+                    </Grid>
+                  )}
+                  {(user.role === "junior" || user.role === "senior") && (
+                    <Grid item lg={4} xs={6} md={4}>
+                      <TextField
+                        error
+                        id="filled-error-helper-text"
+                        label="Error Tag"
+                        value={this.state.selected}
+                        helperText="Submitted by Auditor"
+                        variant="outlined"
+                        style={{ marginTop: 25 }}
+                        fullWidth
+                      />
+                    </Grid>
+                  )}
+                  <Grid item>
+                    <Typography
+                      variant="overline"
+                      style={{ fontWeight: "500", fontSize: 15 }}
+                    >
+                      Asset Verified:&nbsp;&nbsp;
+                    </Typography>
+                    <SwitchSelector
+                      onChangeHandler={
+                        user.role === "auditor" ? this.handleChangeSwitch : null
+                      }
+                      checked={verifiedStatus}
+                    />
+                  </Grid>
+                </Grid>
+                <br />
+                <Grid>
+                  <AssetInfoFields
+                    assetData={this.state.data}
+                    handleOnChange={this.handleOnChange}
+                    user={user}
+                  />
+                </Grid>
+                <br />
+                <Grid container direction="row" justify="space-between">
+                  <Grid item>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      startIcon={<SaveIcon />}
+                      onClick={this.handleSave}
+                    >
+                      Save
+                    </Button>
+                  </Grid>
+                  {user.role === "senior" && (
+                    <Grid item>
+                      <Dialog onClick={this.deleteAssetById} />
+                    </Grid>
+                  )}
+                </Grid>
               </Grid>
-            </Grid>
-          </Box>
+            </Box>
+          </Paper>
         </Container>
         <br />
       </Fragment>

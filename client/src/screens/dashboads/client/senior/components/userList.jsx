@@ -4,7 +4,8 @@ import {
   Container,
   Box,
   withStyles,
-  Grid
+  Grid,
+  Paper
 } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -17,11 +18,17 @@ const styles = {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "20px"
   },
   content: {
     flexGrow: 1,
     overflow: "auto"
+  },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
   }
 };
 
@@ -46,22 +53,24 @@ class UsersList extends Component {
           <main className={classes.content}>
             <Container maxWidth="lg">
               <br />
-              <Box className={classes.boxBorder}>
-                <div>
-                  <Typography component="h5" variant="h5">
-                    Users list
-                  </Typography>
+              <Paper className={classes.paper}>
+                <Box className={classes.boxBorder}>
+                  <div>
+                    <Typography component="h5" variant="h5">
+                      Users list
+                    </Typography>
+                    <br />
+                    <Typography component="p" variant="p">
+                      Total number of users: <b>{userList.length}</b>
+                    </Typography>
+                    <br />
+                  </div>
+                  <Fragment>
+                    <UserListTable userList={userList} />
+                  </Fragment>
                   <br />
-                  <Typography component="p" variant="p">
-                    Total number of users: <b>{userList.length}</b>
-                  </Typography>
-                  <br />
-                </div>
-                <Fragment>
-                  <UserListTable userList={userList} />
-                </Fragment>
-                <br />
-              </Box>
+                </Box>
+              </Paper>
               <br />
             </Container>
           </main>

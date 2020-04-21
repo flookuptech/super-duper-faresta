@@ -5,7 +5,8 @@ import {
   Box,
   withStyles,
   Button,
-  Grid
+  Grid, 
+  Paper
 } from "@material-ui/core";
 // import CsvDownload from "react-json-to-csv";
 import { ToastContainer, toast } from "react-toastify";
@@ -25,6 +26,12 @@ const styles = {
     flexGrow: 1,
     // height: "100vh",
     overflow: "auto"
+  },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
   }
 };
 
@@ -63,40 +70,44 @@ class UploadData extends Component {
           <main className={classes.content}>
             <Container maxWidth="lg">
               <br />
-              <Box className={classes.boxBorder}>
-                <div>
-                  <Typography component="h5" variant="h5">
-                    Upload csv data
-                  </Typography>
-                </div>
-                <br />
-                <div>
-                  <UploadCSV
-                    onFileLoaded={this.handleFileUpload}
-                    onError={this.handleErrorOnUpload}
-                  />
-                </div>
-                <br />
-                <div className="button-padding">
-                  <Button
-                    className="button-font-style"
-                    variant="contained"
-                    disabled={data ? false : true}
-                    color="secondary"
-                    onClick={this.handleSaveData}
-                  >
-                    &nbsp; Save to DataBase
-                  </Button>
-                </div>
-                {/* <div className="button-padding button-styling">
-                  <CsvDownload data={data} />
-                </div> */}
-              </Box>
+              <Paper className={classes.paper}>
+                <Box className={classes.boxBorder}>
+                  <div>
+                    <Typography component="h5" variant="h5">
+                      Upload csv data
+                    </Typography>
+                  </div>
+                  <br />
+                  <div>
+                    <UploadCSV
+                      onFileLoaded={this.handleFileUpload}
+                      onError={this.handleErrorOnUpload}
+                    />
+                  </div>
+                  <br />
+                  <div className="button-padding">
+                    <Button
+                      className="button-font-style"
+                      variant="contained"
+                      disabled={data ? false : true}
+                      color="secondary"
+                      onClick={this.handleSaveData}
+                    >
+                      &nbsp; Save to DataBase
+                    </Button>
+                  </div>
+                  {/* <div className="button-padding button-styling">
+                    <CsvDownload data={data} />
+                  </div> */}
+                </Box>
+              </Paper>
               <br />
               {data && (
-                <Box className={classes.boxBorder}>
-                    <UploadDataTable data={data} user={user} />
-                </Box>
+                <Paper className={classes.paper}>
+                  <Box className={classes.boxBorder}>
+                      <UploadDataTable data={data} user={user} />
+                  </Box>
+                </Paper>
               )}
             </Container>
           </main>

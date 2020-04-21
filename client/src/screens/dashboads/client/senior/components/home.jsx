@@ -6,6 +6,7 @@ import {
   withStyles,
   Grid,
   Button,
+  Paper
 } from "@material-ui/core";
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
@@ -30,6 +31,12 @@ const styles = {
     flexGrow: 1,
     overflow: "auto",
   },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 24
+  }
 };
 
 class AuditReport extends PureComponent {
@@ -140,12 +147,20 @@ class AuditReport extends PureComponent {
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
-              <Box className={classes.boxBorder}>
-                <SortByFields
-                  onChange={this.handleChange}
-                  onSubmit={this.handleSubmit}
-                  locationData={locationData}
-                />
+                <Paper className={classes.paper}>
+                  {/* <Box className={classes.boxBorder} style={{padding: 32}}> */}
+                    <SortByFields
+                      onChange={this.handleChange}
+                      onSubmit={this.handleSubmit}
+                      locationData={locationData}
+                      verifiedOnly={verifiedOnly}
+                      reportsData={reportsData}
+                    />
+                  {/* </Box> */}
+                </Paper>
+              <br /><br />
+              <Paper className={classes.paper}>
+              {/* <Box className={classes.boxBorder}> */}
                 {reportsData.length ? (
                   <Grid container direction="row" justify="space-between">
                     <Grid item lg={6}>
@@ -201,7 +216,8 @@ class AuditReport extends PureComponent {
                 ) : (
                   <div>Upload some assets</div>
                 )}
-              </Box>
+              {/* </Box> */}
+              </Paper>
               <br />
             </Container>
           </main>
