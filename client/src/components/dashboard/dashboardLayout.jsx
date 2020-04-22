@@ -14,10 +14,9 @@ import {
   List,
   MenuItem,
   Container,
-  Paper,
   Grid,
   Avatar,
-  Tooltip
+  Tooltip,
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
@@ -32,85 +31,85 @@ import {
   ListRootDrawerItems,
   ListSeniorDrawerItems,
   ListJuniorDrawerItems,
-  ListAuditorDrawerItems
+  ListAuditorDrawerItems,
 } from "./drawerItems";
 
 const drawerWidth = 220;
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex"
+    display: "flex",
   },
   toolbar: {
-    paddingRight: 24
+    paddingRight: 24,
   },
   white: {
     color: "#000",
     opacity: 0.95,
     backgroundColor: "#fff",
-    margin: theme.spacing(1)
+    margin: theme.spacing(1),
   },
   toolbarIcon: {
     display: "flex",
     alignItems: "center",
     justifyContent: "flex-end",
     padding: "0 8px",
-    ...theme.mixins.toolbar
+    ...theme.mixins.toolbar,
   },
   profileTextDeco: {
     textDecoration: "none",
-    color: "black"
+    color: "black",
   },
   appBar: {
     backgroundColor: "#009933",
     zIndex: theme.zIndex.drawer + 1,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
-    })
+      duration: theme.transitions.duration.leavingScreen,
+    }),
   },
   appBarShift: {
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(["width", "margin"], {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   productsMenuButton: {
-    marginRight: 20
+    marginRight: 20,
   },
   productsMenuHeading: {
     paddingLeft: 10,
     fontSize: 14,
     fontWeight: "bold",
-    color: "#009933"
+    color: "#009933",
   },
   productIcon: {
     height: 20,
-    width: 25
+    width: 25,
   },
   productName: {
     padding: 5,
     color: "black",
     fontFamily: "Poppins",
-    fontSize: 16
+    fontSize: 16,
   },
   menuButton: {
-    marginRight: 20
+    marginRight: 20,
   },
   menuButtonHidden: {
-    display: "none"
+    display: "none",
   },
   title: {
-    flexGrow: 1
+    flexGrow: 1,
   },
   titleHide: {
     flexGrow: 1,
     display: "none",
     [theme.breakpoints.up("sm")]: {
-      display: "block"
-    }
+      display: "block",
+    },
   },
   drawerPaper: {
     position: "relative",
@@ -118,43 +117,43 @@ const useStyles = makeStyles(theme => ({
     width: drawerWidth,
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
+      duration: theme.transitions.duration.enteringScreen,
+    }),
   },
   drawerPaperClose: {
     overflowX: "hidden",
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen
+      duration: theme.transitions.duration.leavingScreen,
     }),
     width: theme.spacing(7),
     [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(8)
-    }
+      width: theme.spacing(8),
+    },
   },
   appBarSpacer: theme.mixins.toolbar,
   content: {
     flexGrow: 1,
     height: "100vh",
-    overflow: "auto"
+    overflow: "auto",
   },
   container: {
     paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(3),
-    paddingLeft: theme.spacing(2)
+    paddingLeft: theme.spacing(2),
   },
   paper: {
     padding: theme.spacing(2),
     display: "flex",
     overflow: "auto",
-    flexDirection: "column"
+    flexDirection: "column",
   },
   fixedHeight: {
-    height: 240
+    height: 240,
   },
   accountMenu: {
-    margin: theme.spacing(0.7)
-  }
+    margin: theme.spacing(0.7),
+  },
 }));
 
 export default function Dashboard({ user, children }) {
@@ -193,7 +192,7 @@ export default function Dashboard({ user, children }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [anchorElProductsMenu, setAnchorElProductsMenu] = React.useState(null);
 
-  const handleClickProductsMenu = event => {
+  const handleClickProductsMenu = (event) => {
     setAnchorElProductsMenu(event.currentTarget);
   };
 
@@ -315,7 +314,11 @@ export default function Dashboard({ user, children }) {
               rel="noopener noreferrer"
             >
               <MenuItem>
-                <img src={CacbLogo} className={classes.productIcon} />
+                <img
+                  src={CacbLogo}
+                  className={classes.productIcon}
+                  alt={"CA Assist Flookup Logo"}
+                />
                 <Typography variant="body2" className={classes.productName}>
                   CA Assist
                 </Typography>
@@ -395,7 +398,7 @@ export default function Dashboard({ user, children }) {
       <Drawer
         variant="permanent"
         classes={{
-          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose)
+          paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
         }}
         open={open}
       >
@@ -413,7 +416,8 @@ export default function Dashboard({ user, children }) {
         <Container maxWidth="lg" className={classes.container}>
           <Grid container spacing={3}>
             <Grid item xs={12}>
-              <Paper className={classes.paper}>{children}</Paper>
+              {children}
+              {/* <Paper className={classes.paper}>{children}</Paper> */}
             </Grid>
           </Grid>
         </Container>

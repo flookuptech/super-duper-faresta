@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { Typography, Box, withStyles, Container } from "@material-ui/core";
+import { Typography, Box, withStyles, Container, Paper} from "@material-ui/core";
 
 import UserDataFields from "./userDataFields";
 import Form from "components/form/form";
@@ -17,6 +17,12 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto"
+  },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32,
   }
 };
 
@@ -68,20 +74,22 @@ class AddUsers extends Form {
           <main className={classes.content}>
             <Container maxWidth="lg">
               <br />
-              <Box className={classes.boxBorder}>
-                <div>
-                  <Typography component="h5" variant="h5">
-                    Register Users
-                  </Typography>
-                </div>
-                <br />
-                <div>
-                  <UserDataFields
-                    onSubmit={this.handleSubmit}
-                    onChange={this.handleOnChange}
-                  />
-                </div>
-              </Box>
+              <Paper className={classes.paper}>
+                <Box className={classes.boxBorder}>
+                  <div>
+                    <Typography component="h5" variant="h5">
+                      Register Users
+                    </Typography>
+                  </div>
+                  <br />
+                  <div>
+                    <UserDataFields
+                      onSubmit={this.handleSubmit}
+                      onChange={this.handleOnChange}
+                    />
+                  </div>
+                </Box>
+              </Paper>
               <br />
             </Container>
           </main>

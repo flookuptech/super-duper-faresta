@@ -9,7 +9,7 @@ const prod = {
 };
 
 const config = process.env.NODE_ENV === "production" ? prod : dev;
-// const config = prod;
+// const config = prod; // Enable while running in docker
 
 export default {
   ...config,

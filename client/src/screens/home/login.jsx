@@ -8,34 +8,34 @@ import { connect } from "services/assetDbCall";
 import Logo from "assets/images/brand/logo.png";
 import Particles from "components/loginAnimation";
 import InputField from "components/form/inputField";
-import {Link} from "react-router-dom";
-import GooglePlayIcon from 'assets/images/brand/googlePlay.png';
+import { Link } from "react-router-dom";
+import GooglePlayIcon from "assets/images/brand/googlePlay.png";
 
 class Login extends Form {
   state = {
     data: {
       email: "",
-      password: ""
+      password: "",
     },
-    error: ""
+    error: "",
   };
 
   onSubmit = async () => {
     const { data } = this.state;
     await login(data.email, data.password)
-      .then(async result => {
+      .then(async (result) => {
         const { orgDatabase } = jwtDecode(result.data);
         await connect(orgDatabase)
           .then(() => {
             window.location = "/dashboard/";
           })
-          .catch(err => {
+          .catch((err) => {
             this.setState({
-              error: "Something failed! Contact Administrator."
+              error: "Something failed! Contact Administrator.",
             });
           });
       })
-      .catch(ex => {
+      .catch((ex) => {
         this.setState({ error: ex.response.data.err });
         return null;
       });
@@ -90,7 +90,7 @@ class Login extends Form {
                           variant="contained"
                           style={{
                             backgroundColor: "#009933",
-                            color: "white"
+                            color: "white",
                           }}
                         >
                           Log In
@@ -100,7 +100,7 @@ class Login extends Form {
                         <Link
                           style={{
                             textDecoration: "none",
-                            color: "blue"
+                            color: "blue",
                           }}
                           to={"/forgotpassword"}
                         >
@@ -118,8 +118,11 @@ class Login extends Form {
                   rel="noopener noreferrer"
                   style={{ textDecoration: "none", color: "blue" }}
                 >
-
-                  <img src={GooglePlayIcon} style={{height: 75, width: 170}}/>
+                  <img
+                    src={GooglePlayIcon}
+                    style={{ height: 75, width: 170 }}
+                    alt={"Google Play Icon"}
+                  />
                 </a>
               </div>
               <div style={{ bottom: 20, position: "absolute", flex: 1 }}>

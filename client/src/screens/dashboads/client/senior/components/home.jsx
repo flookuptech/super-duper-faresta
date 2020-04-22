@@ -2,10 +2,9 @@ import React, { Fragment, PureComponent } from "react";
 import {
   Typography,
   Container,
-  Box,
   withStyles,
   Grid,
-  Button,
+  Paper,
 } from "@material-ui/core";
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
@@ -29,6 +28,12 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto",
+  },
+  paper: {
+    display: "flex",
+    flexDirection: "column",
+    overflow: "auto",
+    padding: 24,
   },
 };
 
@@ -83,7 +88,15 @@ class AuditReport extends PureComponent {
   handleSubmit = async () => {
     const data = {
       location: this.state.location,
+      category: this.state.category,
+      verifiedStatus:
+        this.state.verifiedStatus == "Not Verified"
+          ? false
+          : this.state.verifiedStatus == "Verified"
+          ? true
+          : undefined,
     };
+    console.log(data);
     try {
       const results = await getSortedAssets(data);
       console.log(results);
@@ -140,12 +153,18 @@ class AuditReport extends PureComponent {
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
-              <Box className={classes.boxBorder}>
+              <Paper className={classes.paper}>
                 <SortByFields
                   onChange={this.handleChange}
                   onSubmit={this.handleSubmit}
                   locationData={locationData}
+                  verifiedOnly={verifiedOnly}
+                  reportsData={reportsData}
                 />
+              </Paper>
+              <br />
+              <br />
+              <Paper className={classes.paper}>
                 {reportsData.length ? (
                   <Grid container direction="row" justify="space-between">
                     <Grid item lg={6}>
@@ -201,7 +220,7 @@ class AuditReport extends PureComponent {
                 ) : (
                   <div>Upload some assets</div>
                 )}
-              </Box>
+              </Paper>
               <br />
             </Container>
           </main>

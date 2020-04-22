@@ -12,7 +12,9 @@ app.use(express.json({ limit: "50mb" }));
 //Local imports
 const auth = require("./routes/auth");
 const getUsers = require("./routes/getUsers");
+const userStatus = require("./routes/userStatus");
 const getAllTenants = require("./routes/getTenants");
+const forgotPassword = require("./routes/forgotPassword");
 const registerTenant = require("./routes/registerTenants");
 const regsiterClient = require("./routes/registerClientUser");
 const { dbUriFuncAuth } = require("./services/dbConnectionAuth/dbUri");
@@ -35,6 +37,7 @@ if (!process.env.FAR_DB_PASSWORD) {
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useUnifiedTopology", true);
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 const dbName = config.get("dbName");
 const uri = dbUriFuncAuth(dbName);
@@ -42,12 +45,14 @@ const uri = dbUriFuncAuth(dbName);
 mongoose
   .connect(uri)
   .then(() => console.log(`Connected to auth database..`))
-  .catch(err => console.log("Could not connect to auth database: ", err));
+  .catch((err) => console.log("Could not connect to auth database: ", err));
 
 // Routes
 app.use("/login", auth);
 app.use("/getUsers", getUsers);
+app.use("/userStatus", userStatus);
 app.use("/register", registerTenant);
+app.use("/forgotPassword", forgotPassword);
 app.use("/getAllTenants", getAllTenants);
 app.use("/regsiterClient", regsiterClient);
 

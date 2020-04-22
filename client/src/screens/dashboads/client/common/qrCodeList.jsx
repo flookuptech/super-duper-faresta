@@ -5,7 +5,8 @@ import {
   Box,
   withStyles,
   Container,
-  Grid
+  Grid,
+  Paper
 } from "@material-ui/core";
 
 import Print from "react-to-print";
@@ -27,6 +28,12 @@ const styles = {
     flexGrow: 1,
     height: "auto",
     overflow: "auto"
+  },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
   }
 };
 
@@ -126,41 +133,44 @@ class QRCodeList extends Component {
         <br />
         <main className={classes.content}>
           <Container maxWidth="lg">
-            <Box className={classes.boxBorder}>
-              {
-                <Button
-                  className="button-font-style"
-                  onClick={this.setDescription}
-                  color="primary"
-                  variant="contained"
-                >
-                  {des ? "Hide description" : "Unhide description"}
-                </Button>
-              }
-
-              <Print
-                trigger={() => (
-                  // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                  <a
-                    href="#"
+            <Paper className={classes.paper}>
+              <Box className={classes.boxBorder}>
+                {
+                  <Button
                     className="button-font-style"
-                    style={{ textDecoration: "none", paddingLeft: "20px" }}
+                    onClick={this.setDescription}
+                    color="primary"
+                    variant="contained"
                   >
-                    <Button
-                      className="print-button-font-style"
-                      variant="contained"
-                      color="secondary"
-                    >
-                      <PrintIcon />
-                      <Typography>&nbsp; Print</Typography>
-                    </Button>
-                  </a>
-                )}
-                content={() => this.componentRef}
-              />
+                    {des ? "Hide description" : "Unhide description"}
+                  </Button>
+                }
 
-              <Code ref={el => (this.componentRef = el)} des={this.state.des} />
-            </Box>
+                <Print
+                  trigger={() => (
+                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
+                    <a
+                      href="#"
+                      className="button-font-style"
+                      style={{ textDecoration: "none", paddingLeft: "20px" }}
+                    >
+                      <Button
+                        className="print-button-font-style"
+                        variant="contained"
+                        color="secondary"
+                      >
+                        <PrintIcon />
+                        <Typography>&nbsp; Print</Typography>
+                      </Button>
+                    </a>
+                  )}
+                  content={() => this.componentRef}
+                />
+
+                <Code ref={el => (this.componentRef = el)} des={this.state.des} />
+              </Box>
+            </Paper>
+            <br />
           </Container>
         </main>
       </Fragment>

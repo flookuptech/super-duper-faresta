@@ -71,7 +71,16 @@ class AssetList extends Component {
   render() {
     return (
       <Fragment>
-        <div>{this.assetsList}</div>
+        <Paper
+          style={{
+            display: 'flex',
+            flexDirection: "column",
+            overflow: 'auto',
+            padding: 16
+          }
+        }>
+          <div>{this.assetsList}</div>
+        </Paper>
       </Fragment>
     );
   }
