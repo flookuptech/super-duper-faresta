@@ -15,6 +15,7 @@ const getUsers = require("./routes/getUsers");
 const getAllTenants = require("./routes/getTenants");
 const registerTenant = require("./routes/registerTenants");
 const regsiterClient = require("./routes/registerClientUser");
+const forgotPassword = require("./routes/forgotPassword");
 const { dbUriFuncAuth } = require("./services/dbConnectionAuth/dbUri");
 
 // Check if the jwt private key is set or not
@@ -42,12 +43,13 @@ const uri = dbUriFuncAuth(dbName);
 mongoose
   .connect(uri)
   .then(() => console.log(`Connected to auth database..`))
-  .catch(err => console.log("Could not connect to auth database: ", err));
+  .catch((err) => console.log("Could not connect to auth database: ", err));
 
 // Routes
 app.use("/login", auth);
 app.use("/getUsers", getUsers);
 app.use("/register", registerTenant);
+app.use("/forgotPassword", forgotPassword);
 app.use("/getAllTenants", getAllTenants);
 app.use("/regsiterClient", regsiterClient);
 

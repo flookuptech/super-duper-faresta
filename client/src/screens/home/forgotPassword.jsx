@@ -13,7 +13,7 @@ import Form from "components/form/form";
 import InputField from "components/form/inputField";
 import { Link } from "react-router-dom";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
-
+import { forgotPassword } from "services/auth/forgotPassword";
 const styles = {
   root: {
     minWidth: 180,
@@ -41,13 +41,17 @@ const styles = {
 class ForgotPassWord extends Form {
   state = {
     data: {},
+    message: "",
   };
 
   onSubmit = async () => {
-    console.log(this.state);
+    const { email } = this.state.data;
+    const { data } = await forgotPassword(email);
+    this.setState({ message: data.msg });
   };
 
   render() {
+    const { message } = this.state;
     return (
       <Fragment>
         <AppBar position="static" style={{ backgroundColor: "white" }}>
@@ -90,36 +94,46 @@ class ForgotPassWord extends Form {
                     Enter your email and we'll send you a mail to reset your
                     password
                   </Typography>
-                  <form onSubmit={this.handleSubmit}>
-                    <Grid container alignItems="center" justify="center">
-                      <Grid item xs={12} md={10} lg={10}>
-                        <InputField
-                          required
-                          id="email"
-                          name="email"
-                          placeholder="Email"
-                          autoComplete="email"
-                          autoFocus={true}
-                          onChange={this.handleOnChange}
-                          type="email"
-                          size="small"
-                          margin="normal"
-                        />
+                  {message && (
+                    <Fragment>
+                      <br />
+                      <Grid container alignItems="center" justify="center">
+                        <p style={{ color: "#009933" }}>{message}</p>
                       </Grid>
-                      <Button
-                        type="submit"
-                        variant="contained"
-                        style={{
-                          backgroundColor: "#009933",
-                          color: "white",
-                          marginTop: 8,
-                          fontWeight: "bold",
-                        }}
-                      >
-                        Submit
-                      </Button>
-                    </Grid>
-                  </form>
+                    </Fragment>
+                  )}
+                  {!message && (
+                    <form onSubmit={this.handleSubmit}>
+                      <Grid container alignItems="center" justify="center">
+                        <Grid item xs={12} md={10} lg={10}>
+                          <InputField
+                            required
+                            id="email"
+                            name="email"
+                            placeholder="Email"
+                            autoComplete="email"
+                            autoFocus={true}
+                            onChange={this.handleOnChange}
+                            type="email"
+                            size="small"
+                            margin="normal"
+                          />
+                        </Grid>
+                        <Button
+                          type="submit"
+                          variant="contained"
+                          style={{
+                            backgroundColor: "#009933",
+                            color: "white",
+                            marginTop: 8,
+                            fontWeight: "bold",
+                          }}
+                        >
+                          Submit
+                        </Button>
+                      </Grid>
+                    </form>
+                  )}
                 </CardContent>
                 <br />
                 <Grid container alignItems="center" justify="center">
