@@ -3,8 +3,6 @@ import { Grid, Button } from "@material-ui/core";
 
 import InputField from "components/form/inputField";
 import { SelectField } from "components/form/select";
-import {MultipleSelect} from "components/form/multiSelect";
-
 
 class userDataFields extends Component {
   state = {};
@@ -13,15 +11,15 @@ class userDataFields extends Component {
     const role = [
       {
         value: "junior",
-        label: "Junior"
+        label: "Junior",
       },
       {
         value: "auditor",
-        label: "Auditor"
-      }
+        label: "Auditor",
+      },
     ];
 
-    const { onChange, onSubmit} = this.props;
+    const { onChange, onSubmit } = this.props;
     return (
       <form onSubmit={onSubmit}>
         <div>

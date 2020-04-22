@@ -16,23 +16,23 @@ const styles = {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
-    overflow: "auto"
-  }
+    overflow: "auto",
+  },
 };
 
 export default class FloorToFile extends Form {
   state = {
-    data: {assetFoundBy: this.props.user.name}
+    data: { assetFoundBy: this.props.user.name },
   };
 
-  onChangeHandler = event => {
+  onChangeHandler = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
-      loaded: 0
+      loaded: 0,
     });
   };
 
@@ -42,27 +42,28 @@ export default class FloorToFile extends Form {
     data.append("file", this.state.selectedFile);
     data.append("id", this.state.id);
     http.post(imageUploadUrlAuditor, data, {
-      onUploadProgress: ProgressEvent => {
+      onUploadProgress: (ProgressEvent) => {
         this.setState({
-          loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
         });
-      }
+      },
     });
-    {this.props.user.role === 'auditor' ?     
-      http.post(imageUploadUrlAuditor, data, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+    {
+      this.props.user.role === "auditor"
+        ? http.post(imageUploadUrlAuditor, data, {
+            onUploadProgress: (ProgressEvent) => {
+              this.setState({
+                loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
+              });
+            },
+          })
+        : http.post(imageUploadUrl, data, {
+            onUploadProgress: (ProgressEvent) => {
+              this.setState({
+                loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
+              });
+            },
           });
-        }
-      }) : 
-      http.post(imageUploadUrl, data, {
-        onUploadProgress: ProgressEvent => {
-          this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
-          });
-        }
-      });
     }
   };
 
@@ -78,9 +79,8 @@ export default class FloorToFile extends Form {
           <Container maxWidth="lg">
             <br />
             <Box style={styles.boxBorder}>
-              <Typography component="h5" variant="h5">
-              </Typography>
-                Floor to file
+              <Typography component="h5" variant="h5"></Typography>
+              Floor to file
               <br />
               <form onSubmit={this.handleSubmit}>
                 <Grid container direction="column">

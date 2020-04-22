@@ -12,10 +12,11 @@ app.use(express.json({ limit: "50mb" }));
 //Local imports
 const auth = require("./routes/auth");
 const getUsers = require("./routes/getUsers");
+const userStatus = require("./routes/userStatus");
 const getAllTenants = require("./routes/getTenants");
+const forgotPassword = require("./routes/forgotPassword");
 const registerTenant = require("./routes/registerTenants");
 const regsiterClient = require("./routes/registerClientUser");
-const forgotPassword = require("./routes/forgotPassword");
 const { dbUriFuncAuth } = require("./services/dbConnectionAuth/dbUri");
 
 // Check if the jwt private key is set or not
@@ -36,6 +37,7 @@ if (!process.env.FAR_DB_PASSWORD) {
 mongoose.set("useNewUrlParser", true);
 mongoose.set("useUnifiedTopology", true);
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 const dbName = config.get("dbName");
 const uri = dbUriFuncAuth(dbName);
@@ -48,6 +50,7 @@ mongoose
 // Routes
 app.use("/login", auth);
 app.use("/getUsers", getUsers);
+app.use("/userStatus", userStatus);
 app.use("/register", registerTenant);
 app.use("/forgotPassword", forgotPassword);
 app.use("/getAllTenants", getAllTenants);

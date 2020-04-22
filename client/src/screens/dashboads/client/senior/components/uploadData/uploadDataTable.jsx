@@ -6,31 +6,34 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import { uploadDataFieldsArray, juniorAndAuditorFields } from "./uploadDataFieldsArray";
+import {
+  uploadDataFieldsArray,
+  juniorAndAuditorFields,
+} from "./uploadDataFieldsArray";
 import TablePagination from "@material-ui/core/TablePagination";
 
 const styles = {
   table: {
-    minWidth: 650
+    minWidth: 650,
   },
 
   container: {
-    maxHeight: 650
+    maxHeight: 650,
   },
 
   tableHeader: {
     fontWeight: "bold",
     fontSize: 16,
-    minWidth: 200
+    minWidth: 200,
   },
 
   tableCell: {
-    backgroundColor: "#F8F8F8"
+    backgroundColor: "#F8F8F8",
   },
 
   root: {
-    width: "100%"
-  }
+    width: "100%",
+  },
 };
 
 const UploadDataTable = ({ user, data }) => {
@@ -41,7 +44,7 @@ const UploadDataTable = ({ user, data }) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = event => {
+  const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
@@ -52,24 +55,22 @@ const UploadDataTable = ({ user, data }) => {
         <Table stickyHeader aria-label="sticky table" style={styles.table}>
           <TableHead>
             <TableRow>
-              {user.role === 'senior' && (
-                uploadDataFieldsArray.map(item => {
+              {user.role === "senior" &&
+                uploadDataFieldsArray.map((item) => {
                   return (
                     <TableCell align="center" style={styles.tableHeader}>
                       {item.value}
                     </TableCell>
                   );
-                })
-              )}
-              {(user.role === 'junior' || user.role === 'auditor') && (
-                juniorAndAuditorFields.map(item => {
+                })}
+              {(user.role === "junior" || user.role === "auditor") &&
+                juniorAndAuditorFields.map((item) => {
                   return (
                     <TableCell align="center" style={styles.tableHeader}>
                       {item.value}
                     </TableCell>
                   );
-                })
-              )}        
+                })}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,6 +84,9 @@ const UploadDataTable = ({ user, data }) => {
                       key={item.asset_code}
                       style={index % 2 === 0 ? null : styles.tableCell}
                     >
+                      <TableCell align="center">
+                        {item.verifiedStatus ? "Yes" : "No"}
+                      </TableCell>
                       <TableCell align="center">{item.asset_code}</TableCell>
                       <TableCell align="center">
                         {item.date_of_installation}
@@ -110,18 +114,22 @@ const UploadDataTable = ({ user, data }) => {
                       <TableCell align="center">
                         {item.amount_capitalised}
                       </TableCell>
-                      {user.role === 'senior' && (
+                      {user.role === "senior" && (
                         <Fragment>
-                          <TableCell align="center">{item.dep_per_day}</TableCell>
+                          <TableCell align="center">
+                            {item.dep_per_day}
+                          </TableCell>
                           <TableCell align="center">{item.dep_rate}</TableCell>
                         </Fragment>
                       )}
                       <TableCell align="center">
                         {item.number_of_days}
                       </TableCell>
-                      {user.role === 'senior' && (
+                      {user.role === "senior" && (
                         <Fragment>
-                          <TableCell align="center">{item.depreciation}</TableCell>
+                          <TableCell align="center">
+                            {item.depreciation}
+                          </TableCell>
                           <TableCell align="center">{item.net_block}</TableCell>
                         </Fragment>
                       )}

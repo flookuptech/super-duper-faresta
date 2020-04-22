@@ -1,187 +1,188 @@
 export let uploadDataFieldsArray = [
   {
-    value: "Asset Code"
+    value: "Verification Status",
   },
   {
-    value: "Date of Installation"
+    value: "Asset Code",
   },
   {
-    value: "Month of installation"
+    value: "Date of Installation",
   },
   {
-    value: "Vendor Name"
+    value: "Month of installation",
   },
   {
-    value: "Invoice Date"
+    value: "Vendor Name",
   },
   {
-    value: "Invoice Number"
+    value: "Invoice Date",
   },
   {
-    value: "Description"
+    value: "Invoice Number",
   },
   {
-    value: "Category"
+    value: "Description",
   },
   {
-    value: "Sub Category"
+    value: "Category",
   },
   {
-    value: "Location"
+    value: "Sub Category",
   },
   {
-    value: "Quantity"
+    value: "Location",
   },
   {
-    value: "Base Amount"
+    value: "Quantity",
   },
   {
-    value: "VAT"
+    value: "Base Amount",
   },
   {
-    value: "Service Tax"
+    value: "VAT",
   },
   {
-    value: "Other Charges"
+    value: "Service Tax",
   },
   {
-    value: "Total Invoice Amount"
+    value: "Other Charges",
   },
   {
-    value: "Amount capitalised"
+    value: "Total Invoice Amount",
   },
   {
-    value: "Dep per day"
+    value: "Amount capitalised",
   },
   {
-    value: "Dep Rate"
+    value: "Dep per day",
   },
   {
-    value: "Number of days"
+    value: "Dep Rate",
   },
   {
-    value: "Depreciation"
+    value: "Number of days",
   },
   {
-    value: "Net Block"
+    value: "Depreciation",
   },
   {
-    value: "Classification"
+    value: "Net Block",
   },
   {
-    value: "Purchase Value"
+    value: "Classification",
   },
   {
-    value: "Taxes"
+    value: "Purchase Value",
   },
   {
-    value: "Capitalised value"
+    value: "Taxes",
   },
   {
-    value: "Useful life Companies act"
+    value: "Capitalised value",
   },
   {
-    value: "Useful life Management"
+    value: "Useful life Companies act",
   },
   {
-    value: "Gross block"
+    value: "Useful life Management",
   },
   {
-    value: "Accumulated depreciation"
+    value: "Gross block",
   },
   {
-    value: "WDV Opening"
+    value: "Accumulated depreciation",
   },
   {
-    value: "WDV Closing"
-  }
+    value: "WDV Opening",
+  },
+  {
+    value: "WDV Closing",
+  },
 ];
-
 
 export let juniorAndAuditorFields = [
   {
-    value: "Asset Code"
+    value: "Asset Code",
   },
   {
-    value: "Date of Installation"
+    value: "Date of Installation",
   },
   {
-    value: "Month of installation"
+    value: "Month of installation",
   },
   {
-    value: "Vendor Name"
+    value: "Vendor Name",
   },
   {
-    value: "Invoice Date"
+    value: "Invoice Date",
   },
   {
-    value: "Invoice Number"
+    value: "Invoice Number",
   },
   {
-    value: "Description"
+    value: "Description",
   },
   {
-    value: "Category"
+    value: "Category",
   },
   {
-    value: "Sub Category"
+    value: "Sub Category",
   },
   {
-    value: "Location"
+    value: "Location",
   },
   {
-    value: "Quantity"
+    value: "Quantity",
   },
   {
-    value: "Base Amount"
+    value: "Base Amount",
   },
   {
-    value: "VAT"
+    value: "VAT",
   },
   {
-    value: "Service Tax"
+    value: "Service Tax",
   },
   {
-    value: "Other Charges"
+    value: "Other Charges",
   },
   {
-    value: "Total Invoice Amount"
+    value: "Total Invoice Amount",
   },
   {
-    value: "Amount capitalised"
+    value: "Amount capitalised",
   },
   {
-    value: "Number of days"
+    value: "Number of days",
   },
   {
-    value: "Classification"
+    value: "Classification",
   },
   {
-    value: "Purchase Value"
+    value: "Purchase Value",
   },
   {
-    value: "Taxes"
+    value: "Taxes",
   },
   {
-    value: "Capitalised value"
+    value: "Capitalised value",
   },
   {
-    value: "Useful life Companies act"
+    value: "Useful life Companies act",
   },
   {
-    value: "Useful life Management"
+    value: "Useful life Management",
   },
   {
-    value: "Gross block"
+    value: "Gross block",
   },
   {
-    value: "Accumulated depreciation"
+    value: "Accumulated depreciation",
   },
   {
-    value: "WDV Opening"
+    value: "WDV Opening",
   },
   {
-    value: "WDV Closing"
-  }
-
+    value: "WDV Closing",
+  },
 ];

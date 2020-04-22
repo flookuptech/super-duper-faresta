@@ -2,11 +2,9 @@ import React, { Fragment, PureComponent } from "react";
 import {
   Typography,
   Container,
-  Box,
   withStyles,
   Grid,
-  Button,
-  Paper
+  Paper,
 } from "@material-ui/core";
 import { Helmet } from "react-helmet";
 import { PieChart } from "components/charts/pie";
@@ -31,12 +29,12 @@ const styles = {
     flexGrow: 1,
     overflow: "auto",
   },
-  paper:{
-    display: 'flex',
+  paper: {
+    display: "flex",
     flexDirection: "column",
-    overflow: 'auto',
-    padding: 24
-  }
+    overflow: "auto",
+    padding: 24,
+  },
 };
 
 class AuditReport extends PureComponent {
@@ -48,7 +46,7 @@ class AuditReport extends PureComponent {
     juniorRemarksOnly: [],
     locationData: [],
     startDate: "",
-    endDate: ""
+    endDate: "",
   };
 
   async componentDidMount() {
@@ -91,7 +89,12 @@ class AuditReport extends PureComponent {
     const data = {
       location: this.state.location,
       category: this.state.category,
-      verifiedStatus: (this.state.verifiedStatus=='Not Verified' ? false : this.state.verifiedStatus=='Verified' ? true : undefined)
+      verifiedStatus:
+        this.state.verifiedStatus == "Not Verified"
+          ? false
+          : this.state.verifiedStatus == "Verified"
+          ? true
+          : undefined,
     };
     console.log(data);
     try {
@@ -150,20 +153,18 @@ class AuditReport extends PureComponent {
         <Grid>
           <main className={classes.content}>
             <Container maxWidth="lg">
-                <Paper className={classes.paper}>
-                  {/* <Box className={classes.boxBorder} style={{padding: 32}}> */}
-                    <SortByFields
-                      onChange={this.handleChange}
-                      onSubmit={this.handleSubmit}
-                      locationData={locationData}
-                      verifiedOnly={verifiedOnly}
-                      reportsData={reportsData}
-                    />
-                  {/* </Box> */}
-                </Paper>
-              <br /><br />
               <Paper className={classes.paper}>
-              {/* <Box className={classes.boxBorder}> */}
+                <SortByFields
+                  onChange={this.handleChange}
+                  onSubmit={this.handleSubmit}
+                  locationData={locationData}
+                  verifiedOnly={verifiedOnly}
+                  reportsData={reportsData}
+                />
+              </Paper>
+              <br />
+              <br />
+              <Paper className={classes.paper}>
                 {reportsData.length ? (
                   <Grid container direction="row" justify="space-between">
                     <Grid item lg={6}>
@@ -219,7 +220,6 @@ class AuditReport extends PureComponent {
                 ) : (
                   <div>Upload some assets</div>
                 )}
-              {/* </Box> */}
               </Paper>
               <br />
             </Container>
