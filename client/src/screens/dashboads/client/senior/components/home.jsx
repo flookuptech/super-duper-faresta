@@ -48,7 +48,7 @@ class AuditReport extends PureComponent {
     juniorRemarksOnly: [],
     locationData: [],
     startDate: "",
-    endDate: "",
+    endDate: ""
   };
 
   async componentDidMount() {
@@ -90,7 +90,10 @@ class AuditReport extends PureComponent {
   handleSubmit = async () => {
     const data = {
       location: this.state.location,
+      category: this.state.category,
+      verifiedStatus: (this.state.verifiedStatus=='Not Verified' ? false : this.state.verifiedStatus=='Verified' ? true : undefined)
     };
+    console.log(data);
     try {
       const results = await getSortedAssets(data);
       console.log(results);

@@ -34,8 +34,11 @@ function SelectField({ onChange, options, label, name}) {
           name={name}
           labelWidth={labelWidth}
         >
+          <MenuItem value={undefined}>None</MenuItem>
           {options.map(item => {
-            return <MenuItem value={item.id}>{item.label}</MenuItem>;
+            return (
+              <MenuItem value={item.id}>{item.label}</MenuItem>
+            );
           })}
         </Select>
       </FormControl>
@@ -55,7 +58,7 @@ const SortBy = ({ onChange, onSubmit, locationData, verifiedOnly, reportsData })
             options={locationData} />
         </Grid><br/>
         <Grid item xs={12} md={3} lg={3}>
-          <SelectField name="location" onChange={onChange} label="Verified Status"
+          <SelectField name="verifiedStatus" onChange={onChange} label="Verified Status"
             options={verifiedOnly} />
         </Grid><br/>
         <Grid item xs={12} md={3} lg={3}>
