@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const generateRandomPassword = require("randomstring");
 
 // Models
-const { Tenant } = require("../models/tenant");
+const { Tenant, validateTenant } = require("../models/tenant");
 
 // Local imports
 const sendMail = require("../services/mailSender");
@@ -16,9 +16,11 @@ router.post("/", async (req, res) => {
   // To prevent tenants with similar email-id
   let tenant = await Tenant.findOne({ email: req.body.email });
   if (tenant) return res.status(500).send({ res: "Tenant already registered" });
+  console.log(req.body);
 
   const tenantData = {
     name: req.body.name,
+    address: req.body.address,
     email: req.body.email,
     companyName: req.body.companyName,
     role: req.body.role,
@@ -28,22 +30,21 @@ router.post("/", async (req, res) => {
     userType: req.body.userType,
     contact: req.body.contact,
     orgDatabase:
-      req.body.companyName
-        .toString()
-        .replace(/ /g, "")
-        .toLowerCase() + "-db"
+      req.body.companyName.toString().replace(/ /g, "").toLowerCase() + "-db",
   };
+
+  // Perform validation checks
+  const { error } = validateTenant(tenantData);
+  if (error) return res.status(500).send({ err: error.details[0].message });
 
   tenant = new Tenant(tenantData);
 
   // Generate random string as password for the registered user.
-  tenant.password = generateRandomPassword.generate(8);
-
-  const unHashedPassword = tenant.password;
+  const unHashedPassword = generateRandomPassword.generate(8);
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
-  tenant.password = await bcrypt.hash(tenant.password, salt);
+  tenant.password = await bcrypt.hash(unHashedPassword, salt);
 
   try {
     // Save to database

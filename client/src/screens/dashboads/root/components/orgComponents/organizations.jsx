@@ -4,7 +4,7 @@ import {
   Box,
   withStyles,
   Grid,
-  Container
+  Container,
 } from "@material-ui/core";
 
 import { registerSenior } from "services/createCallsRoot";
@@ -18,13 +18,13 @@ const styles = {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
     height: "100vh",
-    overflow: "auto"
-  }
+    overflow: "auto",
+  },
 };
 
 class Organizations extends Form {
@@ -39,22 +39,24 @@ class Organizations extends Form {
       name: "",
       email: "",
       userType: "",
-      role: ""
-    }
+      role: "",
+    },
   };
 
   onSubmit = async () => {
     // Call to backend to create organisation database
 
     try {
-      const data = {...this.state.data};
-      if (data['role'] === "") return alert('Role cannot be empty. Please assign the role');
-      if (data['userType'] === "") return alert('User Type cannot be empty. Please assign the user type');
+      const data = { ...this.state.data };
+      if (data["role"] === "")
+        return alert("Role cannot be empty. Please assign the role");
+      if (data["userType"] === "")
+        return alert("User Type cannot be empty. Please assign the user type");
       const register = await registerSenior(data);
       toast.success(register.data.res);
     } catch (error) {
       const { data } = error.response;
-      toast.error(data.res);
+      toast.error(data.err);
     }
   };
 

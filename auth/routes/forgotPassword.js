@@ -12,19 +12,19 @@ const { Tenant } = require("../models/tenant");
 router.post("/reset", async (req, res) => {
   const { email } = req.body;
 
+  if (!email) return res.status(400).send({ err: "Enter a valid email" });
+
   // Check if the user is present or not
   let tenant = await Tenant.findOne({ email: email });
   if (!tenant)
     return res.status(400).send({ err: "Invalid email or password" });
 
   // Generate random string as password for the registered user.
-  tenant.password = generateRandomPassword.generate(8);
-
-  const unHashedPassword = tenant.password;
+  const unHashedPassword = generateRandomPassword.generate(8);
 
   // Hash password
   const salt = await bcrypt.genSalt(10);
-  tenant.password = await bcrypt.hash(tenant.password, salt);
+  tenant.password = await bcrypt.hash(unHashedPassword, salt);
 
   try {
     await tenant.save();

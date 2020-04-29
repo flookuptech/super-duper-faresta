@@ -12,7 +12,8 @@ export async function createUser({
   panNumber,
   contact,
   companyName,
-  registeredBy
+  userType,
+  registeredBy,
 }) {
   const result = http.post(apiToCreateUser, {
     name,
@@ -22,7 +23,8 @@ export async function createUser({
     panNumber,
     contact,
     companyName,
-    registeredBy
+    userType,
+    registeredBy,
   });
   return result;
 }
