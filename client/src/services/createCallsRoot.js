@@ -14,7 +14,7 @@ export async function registerSenior({
   name,
   email,
   userType,
-  role
+  role,
 }) {
   const data = http.post(apiUrlToRegisterSenior, {
     companyName,
@@ -26,9 +26,8 @@ export async function registerSenior({
     name,
     email,
     userType,
-    role
+    role,
   });
 
   return data;
-  // sendMail(email, password);
 }

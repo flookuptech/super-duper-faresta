@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hapi/joi": "^17.1.1",
     "bcryptjs": "*",
     "config": "^3.2.5",
     "cors": "^2.8.5",

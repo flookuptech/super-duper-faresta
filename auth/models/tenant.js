@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
+const Joi = require("@hapi/joi");
 
 const tenantSchema = new mongoose.Schema({
   status: {
@@ -9,64 +10,53 @@ const tenantSchema = new mongoose.Schema({
   companyName: {
     type: String,
     minlength: 3,
-    maxlength: 50,
   },
   panNumber: {
     type: String,
     minlength: 3,
-    maxlength: 50,
   },
   orgEmail: {
     type: String,
     minlength: 3,
-    maxlength: 50,
   },
   contact: {
     type: String,
-    minlength: 3,
-    maxlength: 50,
+    minlength: 10,
   },
-
   designation: {
     type: String,
     minlength: 3,
-    maxlength: 50,
   },
   email: {
     type: String,
-    minlength: 3,
-    maxlength: 255,
+    minlength: 5,
     unique: true,
   },
   password: {
     type: String,
     minlength: 3,
-    maxlength: 1024,
   },
   role: {
     type: String,
-    minlength: 3,
-    maxlength: 255,
+    minlength: 2,
   },
   userType: {
     type: String,
-    minlength: 3,
-    maxlength: 255,
   },
   orgDatabase: {
     type: String,
     minlength: 3,
-    maxlength: 255,
   },
   name: {
     type: String,
     minlength: 3,
-    maxlength: 255,
   },
   registeredBy: {
     type: String,
+  },
+  address: {
+    type: String,
     minlength: 3,
-    maxlength: 255,
   },
   dateCreated: {
     type: Date,
@@ -91,6 +81,40 @@ tenantSchema.methods.generateAuthToken = function () {
   return token;
 };
 
+function validateUser(user) {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+    companyName: Joi.string().min(3).required(),
+    email: Joi.string().min(5).max(255).required().email(),
+    contact: Joi.string().min(10).max(10).required(),
+    designation: Joi.string().min(3).required(),
+    role: Joi.string().min(2).required(),
+    orgDatabase: Joi.string().required(),
+    userType: Joi.string().required(),
+    registeredBy: Joi.string().required(),
+  });
+  return schema.validate(user);
+}
+
+function validateTenant(tenant) {
+  const schema = Joi.object({
+    name: Joi.string().min(3).required(),
+    companyName: Joi.string().min(3).required(),
+    email: Joi.string().min(5).max(255).required().email(),
+    orgEmail: Joi.string().min(5).max(255).required().email(),
+    contact: Joi.string().min(10).max(10).required(),
+    designation: Joi.string().min(3).required(),
+    role: Joi.string().min(2).required(),
+    orgDatabase: Joi.string().required(),
+    userType: Joi.string().required(),
+    address: Joi.string().min(3).required(),
+    panNumber: Joi.string().required(),
+  });
+  return schema.validate(tenant);
+}
+
 const Tenant = mongoose.model("Tenant", tenantSchema);
 
 exports.Tenant = Tenant;
+exports.validate = validateUser;
+exports.validateTenant = validateTenant;

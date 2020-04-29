@@ -1,5 +1,11 @@
 import React, { Fragment } from "react";
-import { Typography, Box, withStyles, Container, Paper} from "@material-ui/core";
+import {
+  Typography,
+  Box,
+  withStyles,
+  Container,
+  Paper,
+} from "@material-ui/core";
 
 import UserDataFields from "./userDataFields";
 import Form from "components/form/form";
@@ -12,18 +18,18 @@ const styles = {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
-    overflow: "auto"
+    overflow: "auto",
   },
-  paper:{
-    display: 'flex',
+  paper: {
+    display: "flex",
     flexDirection: "column",
-    overflow: 'auto',
+    overflow: "auto",
     padding: 32,
-  }
+  },
 };
 
 class AddUsers extends Form {
@@ -33,11 +39,10 @@ class AddUsers extends Form {
       email: "",
       role: "",
       designation: "",
-      panNumber: "",
-      contact: ""
+      contact: "",
     },
     companyName: "",
-    registeredBy: ""
+    registeredBy: "",
   };
 
   UNSAFE_componentWillMount() {
@@ -50,17 +55,19 @@ class AddUsers extends Form {
   onSubmit = async () => {
     const data = {
       ...this.state.data,
+      userType: "client",
       companyName: this.state.companyName,
-      registeredBy: this.state.registeredBy
+      registeredBy: this.state.registeredBy,
     };
-    if (data['role'] === "") return alert('Role cannot be empty. Please assign a role');
-    else{
+    if (data["role"] === "")
+      return alert("Role cannot be empty. Please assign a role");
+    else {
       try {
         const result = await createUser(data);
         if (result.status === 200) toast.success(result.data.res);
       } catch (error) {
         const { data } = error.response;
-        toast.error(data.res);
+        toast.error(data.err);
       }
     }
   };
