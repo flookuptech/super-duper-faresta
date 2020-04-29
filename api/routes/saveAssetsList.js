@@ -4,11 +4,12 @@ const mongoose = require("mongoose");
 const Joi = require("joi");
 
 // Local imports
+const auth = require("../middleware/auth");
 const { Asset, validateAssetData } = require("../models/assets");
 const { manipulateData } = require("../services/filterAssetData");
 
 // Routes to save assets list recieved from the client
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   // Function call to filter and clean the data
   const array = manipulateData(req.body);
 
@@ -29,7 +30,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.put("/edit/:id", async (req, res) => {
+router.put("/edit/:id", auth, async (req, res) => {
   const id = req.params.id;
   const newData = req.body;
   try {

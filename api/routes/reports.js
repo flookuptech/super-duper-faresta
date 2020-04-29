@@ -2,14 +2,15 @@ const express = require("express");
 const router = express.Router();
 
 const { Asset } = require("../models/assets");
+const auth = require("../middleware/auth");
 
-router.get("/all", async (req, res) => {
+router.get("/all", auth, async (req, res) => {
   try {
     const data = await Asset.aggregate([
       { $match: {} },
       { $group: { _id: "$category", value: { $sum: 1 } } },
       { $project: { _id: 0, id: "$_id", label: "$_id", value: 1 } },
-      { $sort: { total: -1 } }
+      { $sort: { total: -1 } },
     ]);
 
     res.send(data);
@@ -18,15 +19,15 @@ router.get("/all", async (req, res) => {
   }
 });
 
-router.get("/verifiedStatus", async (req, res) => {
+router.get("/verifiedStatus", auth, async (req, res) => {
   try {
     const data = await Asset.aggregate([
       { $match: {} },
       { $group: { _id: "$verifiedStatus", value: { $sum: 1 } } },
       { $project: { _id: 0, id: "$_id", label: "$_id", value: 1 } },
-      { $sort: { total: -1 } }
+      { $sort: { total: -1 } },
     ]);
-    data.map(obj => {
+    data.map((obj) => {
       obj.label = obj.label ? "Verified" : "Not Verified";
       obj.id = obj.id ? "Verified" : "Not Verified";
     });
@@ -36,13 +37,13 @@ router.get("/verifiedStatus", async (req, res) => {
   }
 });
 
-router.get("/location", async (req, res) => {
+router.get("/location", auth, async (req, res) => {
   try {
     const data = await Asset.aggregate([
       { $match: {} },
       { $group: { _id: "$location", value: { $sum: 1 } } },
       { $project: { _id: 0, id: "$_id", label: "$_id", value: 1 } },
-      { $sort: { total: -1 } }
+      { $sort: { total: -1 } },
     ]);
     res.send(data);
   } catch (error) {
@@ -50,15 +51,15 @@ router.get("/location", async (req, res) => {
   }
 });
 
-router.get("/auditorRemarksOnly", async (req, res) => {
+router.get("/auditorRemarksOnly", auth, async (req, res) => {
   try {
     const data = await Asset.find(
       {
         $or: [
           { remarkAuditor_1: { $ne: null } },
           { remarkAuditor_2: { $ne: null } },
-          { remarkAuditor_3: { $ne: null } }
-        ]
+          { remarkAuditor_3: { $ne: null } },
+        ],
       },
       { _id: 1 }
     );
@@ -68,15 +69,15 @@ router.get("/auditorRemarksOnly", async (req, res) => {
   }
 });
 
-router.get("/juniorRemarksOnly", async (req, res) => {
+router.get("/juniorRemarksOnly", auth, async (req, res) => {
   try {
     const data = await Asset.find(
       {
         $or: [
           { remarkJunior_1: { $ne: null } },
           { remarkJunior_2: { $ne: null } },
-          { remarkJunior_3: { $ne: null } }
-        ]
+          { remarkJunior_3: { $ne: null } },
+        ],
       },
       { _id: 1 }
     );

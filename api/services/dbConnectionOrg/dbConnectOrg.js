@@ -16,9 +16,9 @@ function connect(dbName) {
         `Connected to tenant's organisation database (api): ${dbName}..`
       )
     )
-    .catch(err => console.log("Could not connect to MongoDB api: ", err));
+    .catch((err) => console.log("Could not connect to MongoDB api: ", err));
 }
 
 module.exports = {
-  connect
+  connect,
 };

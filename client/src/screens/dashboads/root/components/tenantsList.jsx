@@ -4,7 +4,8 @@ import {
   Container,
   Box,
   withStyles,
-  Grid
+  Grid,
+  Paper 
 } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
@@ -21,6 +22,12 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto"
+  },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
   }
 };
 
@@ -43,23 +50,25 @@ class UsersList extends Component {
           <main className={classes.content}>
             <Container maxWidth="lg">
               <br />
+              <Paper className={classes.paper}>
               <Box className={classes.boxBorder}>
-                <div>
-                  <Typography component="h5" variant="h5">
-                    Users list
-                  </Typography>
+                  <div>
+                    <Typography component="h5" variant="h5">
+                      Users list
+                    </Typography>
+                    <br />
+                    <Typography component="p" variant="p">
+                      Total number of seniors/organizations:{" "}
+                      <b>{tenantList.length}</b>
+                    </Typography>
+                    <br />
+                  </div>
+                  <React.Fragment>
+                    <TenantTable tenantList={tenantList} />
+                  </React.Fragment>
                   <br />
-                  <Typography component="p" variant="p">
-                    Total number of seniors/organizations:{" "}
-                    <b>{tenantList.length}</b>
-                  </Typography>
-                  <br />
-                </div>
-                <React.Fragment>
-                  <TenantTable tenantList={tenantList} />
-                </React.Fragment>
-                <br />
-              </Box>
+                </Box>
+              </Paper>
               <br />
             </Container>
           </main>

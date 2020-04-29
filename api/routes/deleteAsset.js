@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const { Asset } = require("../models/assets");
+const auth = require("../middleware/auth");
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   const assetId = req.body.id;
   try {
     await Asset.deleteOne({ _id: assetId });
