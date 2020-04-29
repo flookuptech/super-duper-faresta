@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import config from "config.js";
 import http from "services/httpServices";
-import { Box, Container, Typography, Button, Grid } from "@material-ui/core";
+import { Box, Container, Typography, Button, Grid, Paper } from "@material-ui/core";
 import Form from "components/form/form";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
@@ -22,6 +22,12 @@ const styles = {
     flexGrow: 1,
     overflow: "auto",
   },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
+  }
 };
 
 export default class FloorToFile extends Form {
@@ -78,35 +84,36 @@ export default class FloorToFile extends Form {
         <main style={styles.content}>
           <Container maxWidth="lg">
             <br />
-            <Box style={styles.boxBorder}>
-              <Typography component="h5" variant="h5"></Typography>
-              Floor to file
-              <br />
-              <form onSubmit={this.handleSubmit}>
-                <Grid container direction="column">
-                  <Grid item>
-                    <ImageUpload
-                      onChangeHandler={this.onChangeHandler}
-                      onClickHandler={this.onClickHandlerAuditor}
-                      loaded={this.state.loaded}
-                      imageSet={this.state.selectedFile}
-                    />
-                    <br />
+            <Paper style={styles.paper}>
+              <Box style={styles.boxBorder}>
+                <Typography component="h5" variant="h5">Floor to file</Typography>
+                <br />
+                <form onSubmit={this.handleSubmit}>
+                  <Grid container direction="column">
+                    <Grid item>
+                      <ImageUpload
+                        onChangeHandler={this.onChangeHandler}
+                        onClickHandler={this.onClickHandlerAuditor}
+                        loaded={this.state.loaded}
+                        imageSet={this.state.selectedFile}
+                      />
+                      <br />
+                    </Grid>
+                    <Grid item>
+                      <FloorToFileFields
+                        onChange={this.handleOnChange}
+                        onSubmit={this.handleSubmit}
+                      />
+                    </Grid><br />
+                    <Grid item>
+                      <Button variant="contained" color="primary" type="submit">
+                        Save
+                      </Button>
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <FloorToFileFields
-                      onChange={this.handleOnChange}
-                      onSubmit={this.handleSubmit}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Button variant="contained" color="primary" type="submit">
-                      Save
-                    </Button>
-                  </Grid>
-                </Grid>
-              </form>
-            </Box>
+                </form>
+              </Box>
+            </Paper>
             <br />
           </Container>
         </main>

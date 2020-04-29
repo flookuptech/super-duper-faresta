@@ -33,7 +33,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
-    padding: 24,
+    padding: 32
   },
 };
 

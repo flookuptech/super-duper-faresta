@@ -1,10 +1,27 @@
 import React, { Component, Fragment } from "react";
+import {  Paper, withStyles } from "@material-ui/core";
+
+const styles = {
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 16
+  }
+};
 
 class Reports extends Component {
   state = {};
   render() {
-    return <Fragment>Reports screen</Fragment>;
+    const { classes } = this.props;
+    return (
+      <Fragment>
+        <Paper className={classes.paper}>
+          Reports screen
+        </Paper>
+      </Fragment>
+    );
   }
 }
 
-export default Reports;
+export default withStyles(styles)(Reports);

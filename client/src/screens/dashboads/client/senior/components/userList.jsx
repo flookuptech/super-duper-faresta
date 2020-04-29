@@ -28,7 +28,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
-    padding: 32,
+    padding: 32
   },
 };
 

@@ -5,6 +5,7 @@ import {
   withStyles,
   Grid,
   Container,
+  Paper
 } from "@material-ui/core";
 
 import { registerSenior } from "services/createCallsRoot";
@@ -25,6 +26,12 @@ const styles = {
     height: "100vh",
     overflow: "auto",
   },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
+  }
 };
 
 class Organizations extends Form {
@@ -70,20 +77,22 @@ class Organizations extends Form {
           <main className={classes.content}>
             <Container maxWidth="lg">
               <br />
-              <Box className={classes.boxBorder}>
-                <div>
-                  <Typography component="h5" variant="h5">
-                    Create organization
-                  </Typography>
-                </div>
-                <br />
-                <div>
-                  <OrgDataFields
-                    onSubmit={this.handleSubmit}
-                    onChange={this.handleOnChange}
-                  />
-                </div>
-              </Box>
+              <Paper className={classes.paper}>
+                <Box className={classes.boxBorder}>
+                  <div>
+                    <Typography component="h5" variant="h5">
+                      Create organization
+                    </Typography>
+                  </div>
+                  <br />
+                  <div>
+                    <OrgDataFields
+                      onSubmit={this.handleSubmit}
+                      onChange={this.handleOnChange}
+                    />
+                  </div>
+                </Box>
+              </Paper>
               <Box>
                 <Grid>{/* <Table /> */}</Grid>
               </Box>
