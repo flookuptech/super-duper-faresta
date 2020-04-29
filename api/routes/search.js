@@ -3,9 +3,10 @@ const router = express.Router();
 
 // Local imports
 const { Asset } = require("../models/assets");
+const auth = require("../middleware/auth");
 
 // Routes to search assets
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const { query } = req.query;
 
@@ -28,7 +29,6 @@ router.get("/", async (req, res) => {
     });
     res.send(results);
   } catch (error) {
-    console.log(error);
     res.status(500).send({ err: "Unable to search" });
   }
 });

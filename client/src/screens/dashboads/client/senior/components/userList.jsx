@@ -28,7 +28,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
-    padding: 32,
+    padding: 32
   },
 };
 
@@ -37,8 +37,14 @@ class UsersList extends Component {
 
   async componentDidMount() {
     const db = this.props.user.orgDatabase;
-    const { data: userList } = await getUsers(db);
-    this.setState({ userList, loading: false });
+    try {
+      const { data: userList } = await getUsers(db);
+      this.setState({ userList, loading: false });
+    } catch (error) {
+      this.setState({ loading: false });
+      toast.error("Internal server error");
+      console.log(error.response);
+    }
   }
 
   handleSwitchChange = async (e) => {

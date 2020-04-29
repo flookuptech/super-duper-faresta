@@ -2,8 +2,9 @@ const express = require("express");
 const router = express.Router();
 
 const { Tenant } = require("../models/tenant");
+const auth = require("../middleware/auth");
 
-router.post("/changeStatus", async (req, res) => {
+router.post("/changeStatus", auth, async (req, res) => {
   const { user } = req.body;
   const status = user.status;
   try {

@@ -1,9 +1,8 @@
 import React, { Fragment } from "react";
-import { Grid, Button } from "@material-ui/core";
 import InputField from "components/form/inputField";
 import { assetInfoArray } from "../../common/viewData/guiView/path/fieldsArray";
 import Form from "components/form/form";
-import { Typography, Box, Container } from "@material-ui/core";
+import { Typography, Box, Container, Paper, Grid, Button } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -17,6 +16,12 @@ const styles = {
   content: {
     flexGrow: 1,
     overflow: "auto"
+  },
+  paper:{
+    display: 'flex',
+    flexDirection: "column",
+    overflow: 'auto',
+    padding: 32
   }
 };
 
@@ -79,43 +84,45 @@ export default class CreateAsset extends Form {
         <main style={styles.content}>
           <Container maxWidth="lg">
             <br />
-            <Box style={styles.boxBorder}>
-              <div>
-                <Typography component="h5" variant="h5">
-                  Create Asset
-                </Typography>
-              </div>
-              <br />
-              <div>
-                <Grid container spacing={3}>
-                  {assetInfoArray.map(item => {
-                    return (
-                      <Grid item xs={6} md={4} lg={3}>
-                        <InputField
-                          id="standard-read-only-input"
-                          helperText={item.helperText}
-                          name={item.value}
-                          onChange={this.handleOnChange}
-                        />
-                      </Grid>
-                    );
-                  })}
-                </Grid>
+            <Paper style={styles.paper}>
+              <Box style={styles.boxBorder}>
+                <div>
+                  <Typography component="h5" variant="h5">
+                    Create Asset
+                  </Typography>
+                </div>
                 <br />
-                <Grid>
-                  <Grid item>
-                    <Button
-                      variant="contained"
-                      color="secondary"
-                      className="button-font-style"
-                      onClick={this.handleSubmit}
-                    >
-                      Submit
-                    </Button>
+                <div>
+                  <Grid container spacing={3}>
+                    {assetInfoArray.map(item => {
+                      return (
+                        <Grid item xs={6} md={4} lg={3}>
+                          <InputField
+                            id="standard-read-only-input"
+                            helperText={item.helperText}
+                            name={item.value}
+                            onChange={this.handleOnChange}
+                          />
+                        </Grid>
+                      );
+                    })}
                   </Grid>
-                </Grid>
-              </div>
-            </Box>
+                  <br />
+                  <Grid>
+                    <Grid item>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className="button-font-style"
+                        onClick={this.handleSubmit}
+                      >
+                        Submit
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </div>
+              </Box>
+            </Paper>
             <br />
           </Container>
         </main>

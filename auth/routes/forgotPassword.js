@@ -33,8 +33,6 @@ router.post("/reset", async (req, res) => {
   } catch (error) {
     res.status(400).send({ err: "Internal Server Error" });
   }
-
-  // res.send(token);
 });
 
 module.exports = router;

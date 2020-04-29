@@ -4,6 +4,7 @@ const app = express();
 const cors = require("cors");
 const config = require("config");
 const mongoose = require("mongoose");
+const winston = require("winston");
 require("dotenv").config();
 
 app.use(cors());
@@ -11,6 +12,7 @@ app.use(express.json({ limit: "50mb" }));
 
 //Local imports
 const auth = require("./routes/auth");
+const error = require("./middleware/error");
 const getUsers = require("./routes/getUsers");
 const userStatus = require("./routes/userStatus");
 const getAllTenants = require("./routes/getTenants");
@@ -18,6 +20,23 @@ const forgotPassword = require("./routes/forgotPassword");
 const registerTenant = require("./routes/registerTenants");
 const regsiterClient = require("./routes/registerClientUser");
 const { dbUriFuncAuth } = require("./services/dbConnectionAuth/dbUri");
+
+winston.exceptions.handle(
+  new winston.transports.File({ filename: "exceptions.log" })
+);
+winston.add(new winston.transports.File({ filename: "logfile.log" }));
+
+process.on("uncaughtException", (ex) => {
+  winston.error(ex.message, ex).on("finish", () => {
+    process.exit(1);
+  });
+});
+
+process.on("unhandledRejection", (ex) => {
+  winston.error(ex.message, ex).on("finish", () => {
+    process.exit(1);
+  });
+});
 
 // Check if the jwt private key is set or not
 if (!process.env.FAR_JWT_PRIVATEKEY) {
@@ -55,6 +74,8 @@ app.use("/register", registerTenant);
 app.use("/forgotPassword", forgotPassword);
 app.use("/getAllTenants", getAllTenants);
 app.use("/regsiterClient", regsiterClient);
+
+app.use(error);
 
 // Port
 const PORT = 5001;

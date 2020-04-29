@@ -3,7 +3,7 @@ FROM node:12.10-alpine
 WORKDIR /usr/app
 
 COPY ./package*.json ./
-RUN npm i
+RUN npm install
 COPY ./ ./ 
 
 CMD ["npm", "run", "dev"]

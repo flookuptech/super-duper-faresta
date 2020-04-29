@@ -2,16 +2,17 @@ const express = require("express");
 const router = express.Router();
 
 // Local imports
+const auth = require("../middleware/auth");
 const { Asset } = require("../models/assets");
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
   const id = req.params.id;
   const status = req.body.data;
   try {
     const result = await Asset.findOneAndUpdate(
       { _id: id },
       {
-        $set: { verifiedStatus: status }
+        $set: { verifiedStatus: status },
       },
       { new: true }
     );

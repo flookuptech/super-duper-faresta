@@ -2,17 +2,19 @@ const express = require("express");
 const router = express.Router();
 
 // External packages
-const _ = require("lodash");
 const bcrypt = require("bcryptjs");
 const generateRandomPassword = require("randomstring");
 
 // Models
 const { Tenant, validate } = require("../models/tenant");
 
+// Middlewares
+const auth = require("../middleware/auth");
+
 // Local imports
 const sendMail = require("../services/mailSender");
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
   // To prevent tenants with similar email-id
   let tenant = await Tenant.findOne({ email: req.body.email });
   if (tenant) return res.status(500).send({ err: "Tenant already registered" });
