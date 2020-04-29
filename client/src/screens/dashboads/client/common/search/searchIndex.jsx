@@ -21,7 +21,6 @@ class Search extends Form {
     try {
       const { data } = await searchQuery(this.state.searchText);
       this.setState({ searchResults: data });
-      console.log(data);
     } catch (error) {
       console.log(error.response.data.msg);
     }
