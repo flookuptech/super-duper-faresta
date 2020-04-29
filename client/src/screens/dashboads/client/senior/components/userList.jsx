@@ -57,7 +57,6 @@ class UsersList extends Component {
   };
 
   changeUserStatus = async (user) => {
-    console.log(user);
     try {
       const { data } = await changeUserStatus(user);
       toast.success(data.msg);

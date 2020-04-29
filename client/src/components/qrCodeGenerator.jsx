@@ -15,8 +15,6 @@ class QRCodeGenerator extends Component {
 
   render() {
     const { id, keyValue } = this.props;
-
-    console.log(id);
     return (
       <Fragment>
         <QRCode
