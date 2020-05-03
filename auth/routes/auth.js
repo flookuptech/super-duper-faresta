@@ -14,7 +14,8 @@ router.post("/", async (req, res) => {
   if (error) return res.status(400).send({ err: error.details[0].message });
 
   let tenant = await Tenant.findOne({ email: req.body.email });
-  if (!tenant) return res.status(400).send({ err: "Email id already in use!" });
+  if (!tenant)
+    return res.status(400).send({ err: "Invalid email or password" });
 
   if (!tenant.status)
     return res.status(400).send({ err: "Your account access is disabled" });

@@ -48,7 +48,6 @@ const UploadDataTable = ({ user, data }) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
   return (
     <Paper style={styles.root}>
       <TableContainer style={styles.container} component={Paper}>

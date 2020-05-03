@@ -2,65 +2,43 @@ import React, { Fragment } from "react";
 import InputField from "components/form/inputField";
 import { assetInfoArray } from "../../common/viewData/guiView/path/fieldsArray";
 import Form from "components/form/form";
-import { Typography, Box, Container, Paper, Grid, Button } from "@material-ui/core";
+import {
+  Typography,
+  Box,
+  Container,
+  Paper,
+  Grid,
+  Button,
+} from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
+import { createNewAsset } from "services/sendAssetData";
+import CsvErrorLogs from "../../common/csvError";
 
 const styles = {
   boxBorder: {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
-    overflow: "auto"
+    overflow: "auto",
   },
-  paper:{
-    display: 'flex',
+  paper: {
+    display: "flex",
     flexDirection: "column",
-    overflow: 'auto',
-    padding: 32
-  }
+    overflow: "auto",
+    padding: 32,
+  },
 };
 
-export default class CreateAsset extends Form {
+class CreateAsset extends Form {
   state = {
-    data: {
-      asset_code: "",
-      description: "",
-      category: "",
-      quantity: "",
-      vendor_name: "",
-      date_of_installation: "",
-      month_of_installation: "",
-      invoice_number: "",
-      invoice_date: "",
-      total_invoice_amount: "",
-      base_amount: "",
-      amount_capitalised: "",
-      capitalised_value: "",
-      location: "",
-      service_tax: "",
-      vat: "",
-      taxes_: "",
-      other_charges: "",
-      depreciation: "",
-      dep_rate: "",
-      dep_per_day: "",
-      accumulated_depreciation: "",
-      net_block: "",
-      gross_block: "",
-      number_of_days: "",
-      useful_life_companies_act: "",
-      useful_life_management: "",
-      wdv_opening: "",
-      wdv_closing: "",
-      classification: "",
-      purchase_value: ""
-    },
-    assetCreatedBy: ""
+    data: {},
+    assetCreatedBy: "",
+    errors: "",
   };
 
   componentDidMount() {
@@ -68,16 +46,26 @@ export default class CreateAsset extends Form {
   }
 
   handleSubmit = async () => {
+    const { assetCreatedBy } = this.state;
     const data = {
-      ...this.state.data
+      ...this.state.data,
+      assetCreatedBy,
     };
-    const assetCreatedBy = this.state.assetCreatedBy;
-    console.log(data);
-    console.log(assetCreatedBy);
-    toast.success("Success");
+    try {
+      const results = await createNewAsset(data);
+      console.log(results);
+      toast.success("Adde");
+    } catch (error) {
+      const msg = error.response.data.msg;
+      const err = error.response.data.err;
+      this.setState({ errors: err });
+      toast.error(msg);
+    }
   };
 
   render() {
+    const { classes } = this.props;
+    const { errors } = this.state;
     return (
       <Fragment>
         <ToastContainer autoClose={1500} closeButton={false} />
@@ -94,7 +82,7 @@ export default class CreateAsset extends Form {
                 <br />
                 <div>
                   <Grid container spacing={3}>
-                    {assetInfoArray.map(item => {
+                    {assetInfoArray.map((item) => {
                       return (
                         <Grid item xs={6} md={4} lg={3}>
                           <InputField
@@ -123,10 +111,18 @@ export default class CreateAsset extends Form {
                 </div>
               </Box>
             </Paper>
-            <br />
+            {errors && (
+              <Paper className={styles.paper}>
+                <Box className={styles.boxBorder}>
+                  <CsvErrorLogs errors={errors} />
+                </Box>
+              </Paper>
+            )}
           </Container>
         </main>
       </Fragment>
     );
   }
 }
+
+export default CreateAsset;

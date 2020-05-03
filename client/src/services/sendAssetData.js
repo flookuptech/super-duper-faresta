@@ -14,7 +14,13 @@ export function sendEditedData(data, id) {
   return result;
 }
 
+export function createNewAsset(data) {
+  const apiUrltoCreateNewAsset = apiUrlToSaveAssets + "/createNew";
+  const result = http.post(apiUrltoCreateNewAsset, data);
+  return result;
+}
+
 export default {
   saveAssetsData,
-  sendEditedData
+  sendEditedData,
 };

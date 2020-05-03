@@ -8,18 +8,18 @@ const styles = {
   boxBorder: {
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
     height: "auto",
-    overflow: "auto"
-  }
+    overflow: "auto",
+  },
 };
 
 class GUIView extends Component {
   state = {
-    data: []
+    data: [],
   };
 
   async componentDidMount() {
@@ -33,7 +33,7 @@ class GUIView extends Component {
     const distinctAssets = this.state.data;
     return (
       <Fragment>
-        {distinctAssets.map(function(item) {
+        {distinctAssets.map(function (item) {
           return (
             <div
               className="asset-card-font-style"

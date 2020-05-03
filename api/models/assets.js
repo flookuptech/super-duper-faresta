@@ -1,9 +1,10 @@
 const mongoose = require("mongoose");
+const Joi = require("@hapi/joi");
 var uniqueValidator = require("mongoose-unique-validator");
 
 const assetSchema = new mongoose.Schema({
   asset_code: { type: String, required: true, unique: true },
-  category: { type: String, default: null, required: true },
+  category: { type: String, default: "Other", required: true },
   sub_category: { type: String, default: null, required: true },
   description: { type: String, default: null },
   element: { type: String, default: null },
@@ -48,6 +49,7 @@ const assetSchema = new mongoose.Schema({
   remarkAuditor_1: { type: String, default: null },
   remarkAuditor_2: { type: String, default: null },
   remarkAuditor_3: { type: String, default: null },
+  assetCreatedBy: { type: String, default: null },
 });
 
 assetSchema.index({
@@ -59,7 +61,7 @@ assetSchema.plugin(uniqueValidator);
 
 function validateAssetData(assetData) {
   const schema = Joi.array().items(
-    Joi.object().keys({
+    Joi.object({
       asset_code: Joi.number().required(),
       category: Joi.string().required(),
       sub_category: Joi.string().required(),
@@ -67,7 +69,7 @@ function validateAssetData(assetData) {
       element: Joi.string(),
       vendor_name: Joi.string(),
       quantity: Joi.number(),
-      location: Joi.string(),
+      location: Joi.string().required(),
       base_amount: Joi.string(),
       month_of_installation: Joi.date()
         .max("now")
@@ -116,10 +118,69 @@ function validateAssetData(assetData) {
         .label("Invalid date"),
     })
   );
-  return schema.validate(assetData);
+  return schema.validate(assetData, { abortEarly: false });
+}
+
+function singleAsset(single) {
+  const schema = Joi.object().keys({
+    asset_code: Joi.any().required(),
+    category: Joi.string().required(),
+    sub_category: Joi.string().required(),
+    description: Joi.string(),
+    element: Joi.string(),
+    vendor_name: Joi.string(),
+    quantity: Joi.number(),
+    location: Joi.string(),
+    base_amount: Joi.string(),
+    month_of_installation: Joi.date()
+      .max("now")
+      .iso()
+      .required()
+      .label("Invalid date"),
+    vat: Joi.number(),
+    taxes_: Joi.string(),
+    service_tax: Joi.string(),
+    other_charges: Joi.string(),
+    invoice_date: Joi.date().max("now").iso().required().label("Invalid date"),
+    invoice_number: Joi.number(),
+    total_invoice_amount: Joi.string(),
+    amount_capitalised: Joi.string(),
+    depreciation: Joi.string(),
+    dep_rate: Joi.string(),
+    dep_per_day: Joi.string(),
+    net_block: Joi.string(),
+    classification: Joi.string(),
+    purchase_value: Joi.string(),
+    capitalised_value: Joi.string(),
+    useful_life_companies_act: Joi.string(),
+    useful_life_management: Joi.string(),
+    gross_block: Joi.string(),
+    accumulated_depreciation: Joi.string(),
+    wdv_opening: Joi.string(),
+    wdv_closing: Joi.string(),
+    number_of_days: Joi.string(),
+    imageUri: Joi.string(),
+    imageUriByAuditor: Joi.string(),
+    verifiedStatus: Joi.string(),
+    remarkJunior_1: Joi.string(),
+    remarkJunior_2: Joi.string(),
+    remarkJunior_3: Joi.string(),
+    remarkAuditor_1: Joi.string(),
+    remarkAuditor_2: Joi.string(),
+    remarkAuditor_3: Joi.string(),
+    date_of_installation: Joi.date()
+      .max("now")
+      .iso()
+      .required()
+      .label("Invalid date"),
+    assetCreatedBy: Joi.string().required(),
+  });
+
+  return schema.validate(single, { abortEarly: false });
 }
 
 const Asset = mongoose.model("Asset", assetSchema);
 
 exports.validateAssetData = validateAssetData;
+exports.singleAsset = singleAsset;
 exports.Asset = Asset;

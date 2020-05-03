@@ -1,0 +1,1 @@
+{"name":"MongoNetworkError","level":"error","message":"read ECONNRESETread ECONNRESET","stack":"Error: read ECONNRESET\n    at TLSWrap.onStreamRead (internal/stream_base_commons.js:201:27)"}

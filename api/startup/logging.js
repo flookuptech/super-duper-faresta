@@ -18,9 +18,9 @@ module.exports = function () {
   //   });
   // });
 
-  process.on("unhandledRejection", (ex) => {
-    winston.error(ex.message, ex).on("finish", () => {
-      throw ex;
-    });
-  });
+  // process.on("unhandledRejection", (ex) => {
+  //   winston.error(ex.message, ex).on("finish", () => {
+  //     throw ex;
+  //   });
+  // });
 };

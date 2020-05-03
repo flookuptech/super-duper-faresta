@@ -21,22 +21,22 @@ const registerTenant = require("./routes/registerTenants");
 const regsiterClient = require("./routes/registerClientUser");
 const { dbUriFuncAuth } = require("./services/dbConnectionAuth/dbUri");
 
-winston.exceptions.handle(
-  new winston.transports.File({ filename: "exceptions.log" })
-);
-winston.add(new winston.transports.File({ filename: "logfile.log" }));
+// winston.exceptions.handle(
+//   new winston.transports.File({ filename: "exceptions.log" })
+// );
+// winston.add(new winston.transports.File({ filename: "logfile.log" }));
 
-process.on("uncaughtException", (ex) => {
-  winston.error(ex.message, ex).on("finish", () => {
-    process.exit(1);
-  });
-});
+// process.on("uncaughtException", (ex) => {
+//   winston.error(ex.message, ex).on("finish", () => {
+//     process.exit(1);
+//   });
+// });
 
-process.on("unhandledRejection", (ex) => {
-  winston.error(ex.message, ex).on("finish", () => {
-    process.exit(1);
-  });
-});
+// process.on("unhandledRejection", (ex) => {
+//   winston.error(ex.message, ex).on("finish", () => {
+//     process.exit(1);
+//   });
+// });
 
 // Check if the jwt private key is set or not
 if (!process.env.FAR_JWT_PRIVATEKEY) {
