@@ -33,7 +33,7 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     overflow: "auto",
-    padding: 32
+    padding: 32,
   },
 };
 
@@ -90,13 +90,12 @@ class AuditReport extends PureComponent {
       location: this.state.location,
       category: this.state.category,
       verifiedStatus:
-        this.state.verifiedStatus == "Not Verified"
+        this.state.verifiedStatus === "Not Verified"
           ? false
-          : this.state.verifiedStatus == "Verified"
+          : this.state.verifiedStatus === "Verified"
           ? true
           : undefined,
     };
-    console.log(data);
     try {
       const results = await getSortedAssets(data);
       console.log(results);

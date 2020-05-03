@@ -7,7 +7,6 @@ const assetSchema = new mongoose.Schema({
   category: { type: String, default: "Other", required: true },
   sub_category: { type: String, default: null, required: true },
   description: { type: String, default: null },
-  element: { type: String, default: null },
   vendor_name: { type: String, default: null },
   quantity: { type: String, default: null },
   location: { type: String, default: null },
@@ -66,7 +65,6 @@ function validateAssetData(assetData) {
       category: Joi.string().required(),
       sub_category: Joi.string().required(),
       description: Joi.string(),
-      element: Joi.string(),
       vendor_name: Joi.string(),
       quantity: Joi.number(),
       location: Joi.string().required(),
@@ -116,6 +114,7 @@ function validateAssetData(assetData) {
         .iso()
         .required()
         .label("Invalid date"),
+      assetCreatedBy: Joi.string().required(),
     })
   );
   return schema.validate(assetData, { abortEarly: false });
@@ -127,7 +126,6 @@ function singleAsset(single) {
     category: Joi.string().required(),
     sub_category: Joi.string().required(),
     description: Joi.string(),
-    element: Joi.string(),
     vendor_name: Joi.string(),
     quantity: Joi.number(),
     location: Joi.string(),
@@ -176,7 +174,7 @@ function singleAsset(single) {
     assetCreatedBy: Joi.string().required(),
   });
 
-  return schema.validate(single, { abortEarly: false });
+  return schema.validate(single);
 }
 
 const Asset = mongoose.model("Asset", assetSchema);

@@ -7,7 +7,6 @@ import {
   MenuItem,
   FormControl,
   Select,
-  Typography,
 } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({

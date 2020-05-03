@@ -37,29 +37,17 @@ const styles = {
 class CreateAsset extends Form {
   state = {
     data: {},
-    assetCreatedBy: "",
-    errors: "",
   };
 
-  componentDidMount() {
-    this.setState({ assetCreatedBy: this.props.user.name });
-  }
-
   handleSubmit = async () => {
-    const { assetCreatedBy } = this.state;
     const data = {
       ...this.state.data,
-      assetCreatedBy,
     };
     try {
       const results = await createNewAsset(data);
-      console.log(results);
-      toast.success("Adde");
+      toast.success("Asset added");
     } catch (error) {
-      const msg = error.response.data.msg;
-      const err = error.response.data.err;
-      this.setState({ errors: err });
-      toast.error(msg);
+      toast.error(error.response.data.err);
     }
   };
 
@@ -68,7 +56,7 @@ class CreateAsset extends Form {
     const { errors } = this.state;
     return (
       <Fragment>
-        <ToastContainer autoClose={1500} closeButton={false} />
+        <ToastContainer autoClose={false} />
         <main style={styles.content}>
           <Container maxWidth="lg">
             <br />
