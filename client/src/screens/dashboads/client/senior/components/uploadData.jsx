@@ -5,12 +5,13 @@ import {
   Box,
   withStyles,
   Button,
-  Grid, 
-  Paper
+  Grid,
+  Paper,
 } from "@material-ui/core";
 // import CsvDownload from "react-json-to-csv";
 import { ToastContainer, toast } from "react-toastify";
 import UploadDataTable from "./uploadData/uploadDataTable";
+import CsvErrorLogs from "../../common/csvError";
 
 import { saveAssetsData } from "services/sendAssetData";
 import UploadCSV from "components/csvUpload";
@@ -20,31 +21,31 @@ const styles = {
     border: "1px solid rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     opacity: "1",
-    padding: "15px"
+    padding: "15px",
   },
   content: {
     flexGrow: 1,
-    // height: "100vh",
-    overflow: "auto"
+    overflow: "auto",
   },
-  paper:{
-    display: 'flex',
+  paper: {
+    display: "flex",
     flexDirection: "column",
-    overflow: 'auto',
-    padding: 32
-  }
+    overflow: "auto",
+    padding: 32,
+  },
 };
 
 class UploadData extends Component {
   state = {
-    data: ""
+    data: "",
+    errors: "",
   };
 
-  handleErrorOnUpload = error => {
+  handleErrorOnUpload = (error) => {
     this.setState({ error });
   };
 
-  handleFileUpload = data => {
+  handleFileUpload = (data) => {
     this.setState({ data: data });
   };
 
@@ -53,14 +54,15 @@ class UploadData extends Component {
       const result = await saveAssetsData(this.state.data);
       if (result.status === 200) toast.info(result.data.res);
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.err);
+      const err = error.response.data.err;
+      this.setState({ errors: err });
+      toast.error("Error found. Logs below");
     }
   };
 
   render() {
-    const { classes, user} = this.props;
-    const { data } = this.state;
+    const { classes, user } = this.props;
+    const { data, errors } = this.state;
 
     return (
       <Fragment>
@@ -96,16 +98,20 @@ class UploadData extends Component {
                       &nbsp; Save to DataBase
                     </Button>
                   </div>
-                  {/* <div className="button-padding button-styling">
-                    <CsvDownload data={data} />
-                  </div> */}
                 </Box>
               </Paper>
               <br />
+              {errors && (
+                <Paper className={classes.paper}>
+                  <Box className={classes.boxBorder}>
+                    <CsvErrorLogs errors={errors} />
+                  </Box>
+                </Paper>
+              )}
               {data && (
                 <Paper className={classes.paper}>
                   <Box className={classes.boxBorder}>
-                      <UploadDataTable data={data} user={user} />
+                    <UploadDataTable data={data} user={user} />
                   </Box>
                 </Paper>
               )}

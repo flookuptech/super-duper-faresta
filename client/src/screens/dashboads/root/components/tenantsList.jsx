@@ -8,9 +8,10 @@ import {
   Paper 
 } from "@material-ui/core";
 import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import { getAllTenants } from "services/getUsers";
 import TenantTable from "./tenantTable";
+import { changeUserStatus } from "services/user/statusChange";
 
 const styles = {
   boxBorder: {
@@ -39,6 +40,24 @@ class UsersList extends Component {
     this.setState({ tenantList });
   }
 
+  handleSwitchChange = async (e) => {
+    const { tenantList } = this.state;
+    const index = tenantList.findIndex((user) => user._id === e._id);
+    tenantList[index].status = !tenantList[index].status;
+    this.setState({ tenantList }, () => {
+      this.changeUserStatus(e);
+    });
+  };
+
+  changeUserStatus = async (user) => {
+    try {
+      const { data } = await changeUserStatus(user);
+      toast.success(data.msg);
+    } catch (error) {
+      toast.error("Failed to change user status");
+    }
+  };
+
   render() {
     const { classes } = this.props;
     const { tenantList } = this.state;
@@ -64,7 +83,7 @@ class UsersList extends Component {
                     <br />
                   </div>
                   <React.Fragment>
-                    <TenantTable tenantList={tenantList} />
+                    <TenantTable tenantList={tenantList} handleChange={this.handleSwitchChange} />
                   </React.Fragment>
                   <br />
                 </Box>
