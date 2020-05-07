@@ -13,7 +13,7 @@ router.post("/createNew", auth, async (req, res) => {
   console.log(error.details);
   if (error) {
     return res.status(500).send({
-      err: `Field: ${error.details[0].context.key}. Msg: ${error.details[0].message}`,
+      err: `Field: ${error.details[0].path}. Msg: ${error.details[0].message}`,
     });
   }
 
@@ -48,9 +48,7 @@ router.post("/", auth, async (req, res) => {
     await Asset.insertMany(array);
     res.send({ res: "Asset list added" });
   } catch (error) {
-    res
-      .status(500)
-      .send({ msg: "Failed to save file!", err: "Failed to save file!" });
+    res.status(500).send({ msg: error.message, err: "Failed to save file!" });
   }
 });
 

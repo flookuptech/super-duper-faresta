@@ -13,7 +13,6 @@ import {
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer, toast } from "react-toastify";
 import { createNewAsset } from "services/sendAssetData";
-import CsvErrorLogs from "../../common/csvError";
 
 const styles = {
   boxBorder: {
@@ -99,13 +98,6 @@ class CreateAsset extends Form {
                 </div>
               </Box>
             </Paper>
-            {errors && (
-              <Paper className={styles.paper}>
-                <Box className={styles.boxBorder}>
-                  <CsvErrorLogs errors={errors} />
-                </Box>
-              </Paper>
-            )}
           </Container>
         </main>
       </Fragment>

@@ -55,8 +55,8 @@ class UploadData extends Component {
       if (result.status === 200) toast.info(result.data.res);
     } catch (error) {
       const err = error.response.data.err;
-      this.setState({ errors: err });
-      toast.error("Error found. Logs below");
+      if (Array.isArray(err)) this.setState({ errors: err });
+      toast.error(error.response.data.msg);
     }
   };
 

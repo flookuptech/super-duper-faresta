@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
-var uniqueValidator = require("mongoose-unique-validator");
+const uniqueValidator = require("mongoose-unique-validator");
+const contextService = require("request-context");
+const Activity = require("./activity");
 
 const assetSchema = new mongoose.Schema({
   asset_code: { type: String, required: true, unique: true },
@@ -176,6 +178,24 @@ function singleAsset(single) {
 
   return schema.validate(single);
 }
+
+assetSchema.post("insertMany", async function (doc) {
+  const user = contextService.get("request:user");
+  console.log(doc.length);
+  let userActivity = {
+    action: {
+      actionType: "Upload",
+      count: doc.length * 1,
+    },
+    createdBy: user.name,
+  };
+  try {
+    const data = new Activity(userActivity);
+    await data.save();
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const Asset = mongoose.model("Asset", assetSchema);
 
