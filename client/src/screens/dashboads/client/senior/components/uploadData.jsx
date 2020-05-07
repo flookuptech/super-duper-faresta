@@ -108,13 +108,15 @@ class UploadData extends Component {
                   </Box>
                 </Paper>
               )}
-              {data && (
+              <br />
+              {(data!=="" && errors==="")&&(
                 <Paper className={classes.paper}>
                   <Box className={classes.boxBorder}>
                     <UploadDataTable data={data} user={user} />
                   </Box>
                 </Paper>
               )}
+              <br />
             </Container>
           </main>
         </Grid>
