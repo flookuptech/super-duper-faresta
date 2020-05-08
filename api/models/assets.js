@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Joi = require("@hapi/joi");
 const uniqueValidator = require("mongoose-unique-validator");
 const contextService = require("request-context");
-const Activity = require("./activity");
+const { Activity } = require("./activity");
 
 const assetSchema = new mongoose.Schema({
   asset_code: { type: String, required: true, unique: true },
