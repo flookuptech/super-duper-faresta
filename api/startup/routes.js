@@ -9,6 +9,7 @@ const error = require("../middleware/error");
 const connect = require("../routes/connect");
 const reports = require("../routes/reports");
 const sendMail = require("../routes/sendMail");
+const activity = require("../routes/activity");
 const getAssets = require("../routes/getAssets");
 const fileUpload = require("../routes/fileUpload");
 const deleteAsset = require("../routes/deleteAsset");
@@ -27,6 +28,7 @@ module.exports = function (app) {
   app.use("/connect", connect);
   app.use("/reports", reports);
   app.use("/sendMail", sendMail);
+  app.use("/activity", activity);
   app.use("/getAssets", getAssets);
   app.use("/imageUpload", fileUpload);
   app.use("/deleteAsset", deleteAsset);
