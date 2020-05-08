@@ -31,7 +31,7 @@ class Login extends Form {
           })
           .catch((err) => {
             this.setState({
-              error: "Something failed! Contact Administrator.",
+              error: "Refresh and try again!",
             });
           });
       })

@@ -51,6 +51,8 @@ const assetSchema = new mongoose.Schema({
   remarkAuditor_2: { type: String, default: null },
   remarkAuditor_3: { type: String, default: null },
   assetCreatedBy: { type: String, default: null },
+  deleteStatus: { type: Boolean, default: false },
+  visibility: { type: Boolean, default: false },
 });
 
 assetSchema.index({
@@ -117,6 +119,8 @@ function validateAssetData(assetData) {
         .required()
         .label("Invalid date"),
       assetCreatedBy: Joi.string().required(),
+      deleteStatus: Joi.boolean(),
+      visibility: Joi.boolean(),
     })
   );
   return schema.validate(assetData, { abortEarly: false });
@@ -181,13 +185,48 @@ function singleAsset(single) {
 
 assetSchema.post("insertMany", async function (doc) {
   const user = contextService.get("request:user");
-  console.log(doc.length);
   let userActivity = {
     action: {
       actionType: "Upload",
       count: doc.length * 1,
     },
-    createdBy: user.name,
+    createdBy: { name: user.name, role: user.role },
+  };
+  try {
+    const data = new Activity(userActivity);
+    await data.save();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+assetSchema.post("findOneAndUpdate", async function (doc) {
+  const user = contextService.get("request:user");
+  let userActivity = {
+    action: {
+      actionType: "Update",
+      count: 1,
+    },
+    editedBy: { name: user.name, role: user.role },
+    id: doc._id,
+  };
+  try {
+    const data = new Activity(userActivity);
+    await data.save();
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+assetSchema.post("deleteOne", async function (doc) {
+  const user = contextService.get("request:user");
+  let userActivity = {
+    action: {
+      actionType: "Delete",
+      count: 1,
+    },
+    editedBy: { name: user.name, role: user.role },
+    id: doc._id,
   };
   try {
     const data = new Activity(userActivity);

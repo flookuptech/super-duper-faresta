@@ -6,7 +6,7 @@ import {
   Container,
   Typography,
   TextField,
-  Paper
+  Paper,
 } from "@material-ui/core";
 import SaveIcon from "@material-ui/icons/Save";
 import config from "config.js";
@@ -43,10 +43,10 @@ class AssetInformation extends Form {
       remarkJunior_3: "",
       remarkAuditor_1: "",
       remarkAuditor_2: "",
-      remarkAuditor_3: ""
+      remarkAuditor_3: "",
     },
     selected: [],
-    loading: true
+    loading: true,
   };
 
   async componentDidMount() {
@@ -57,15 +57,15 @@ class AssetInformation extends Form {
         data: assetDataFrom[0],
         id: assetId,
         selected: assetDataFrom[0].assetTags,
-        loading: false
+        loading: false,
       });
     } catch (error) {}
   }
 
-  onChangeHandler = event => {
+  onChangeHandler = (event) => {
     this.setState({
       selectedFile: event.target.files[0],
-      loaded: 0
+      loaded: 0,
     });
   };
 
@@ -88,11 +88,11 @@ class AssetInformation extends Form {
     data.append("id", this.state.id);
     try {
       http.post(imageUploadUrl, data, {
-        onUploadProgress: ProgressEvent => {
+        onUploadProgress: (ProgressEvent) => {
           this.setState({
-            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+            loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
           });
-        }
+        },
       });
       toast.success("Image Uploaded");
     } catch (error) {
@@ -106,21 +106,20 @@ class AssetInformation extends Form {
     data.append("file", this.state.selectedFile);
     data.append("id", this.state.id);
     http.post(imageUploadUrlAuditor, data, {
-      onUploadProgress: ProgressEvent => {
+      onUploadProgress: (ProgressEvent) => {
         this.setState({
-          loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100
+          loaded: (ProgressEvent.loaded / ProgressEvent.total) * 100,
         });
-      }
+      },
     });
   };
 
   handleSave = async () => {
-    const { data } = this.state;
+    const { data, id } = this.state;
     data["assetTags"] = this.state.selected;
-    console.log(data);
     try {
-      const { data: result } = await sendEditedData(data, this.state.id);
-      toast.success(result.res);
+      const { data: result } = await sendEditedData(data, id);
+      toast.success(result.msg);
     } catch (error) {
       toast.error(error.response.data.err);
     }
@@ -174,13 +173,14 @@ class AssetInformation extends Form {
       <Fragment>
         <ToastContainer autoClose={1500} closeButton={false} />
         <Container maxWidth="lg">
-        <Paper
-          style={{
-            display: 'flex',
-            flexDirection: "column",
-            overflow: 'auto',
-            padding: 32
-          }}>
+          <Paper
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              overflow: "auto",
+              padding: 32,
+            }}
+          >
             <Box>
               <Grid container direction="column">
                 <Grid container direction="row" justify="space-between">
@@ -240,11 +240,11 @@ class AssetInformation extends Form {
                       <MultiSelect
                         overrideStrings={{
                           selectSomeItems: "Tag incase error...",
-                          search: "Search tag"
+                          search: "Search tag",
                         }}
                         options={options}
                         selected={selected}
-                        onSelectedChanged={selected =>
+                        onSelectedChanged={(selected) =>
                           this.setState({ selected })
                         }
                       />

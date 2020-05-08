@@ -34,6 +34,8 @@ router.post("/", auth, async (req, res) => {
 
   array.forEach((element) => {
     element.assetCreatedBy = req.user.name;
+    element.deleteStatus = false;
+    element.visibility = true;
   });
 
   const { error } = validateAssetData(array);
