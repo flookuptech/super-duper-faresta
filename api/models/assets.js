@@ -53,6 +53,10 @@ const assetSchema = new mongoose.Schema({
   assetCreatedBy: { type: String, default: null },
   deleteStatus: { type: Boolean, default: false },
   visibility: { type: Boolean, default: false },
+},
+{
+  toJSON: {virtuals: true},
+  toObject: {virtuals: true}
 });
 
 assetSchema.index({
