@@ -69,7 +69,7 @@ assetSchema.index({
 
 assetSchema.plugin(uniqueValidator);
 
-assetSchema.virtual('depriciation_per_day').get(function () {
+assetSchema.virtual('depriciations').get(function () {
   const end = DateTime.fromISO('2016-05-31') // Current year
   const start = DateTime.fromISO(this.month_of_installation) // Year of installation 2014-08-01
 
@@ -97,15 +97,16 @@ assetSchema.virtual('depriciation_per_day').get(function () {
     }
   }
 
-  console.log('Start Year: ' + this.month_of_installation + " value is " + total_cost);
-  console.log("Scrap Value: " + scrap_value);
-  console.log("Useful life in years: " + useful_life);
-  console.log("Total number of days: " + diffInDays);
-  console.log("Days in current year: " + start.daysInYear);
-  console.log("Depriciation value in years: " + dep_in_year);
-  console.log("Depriciation value in days: " + dep_in_days);
+  // console.log('Start Year: ' + this.month_of_installation + " value is " + total_cost);
+  // console.log("Scrap Value: " + scrap_value);
+  // console.log("Useful life in years: " + useful_life);
+  // console.log("Total number of days: " + diffInDays);
+  // console.log("Days in current year: " + start.daysInYear);
+  // console.log("Depriciation value in years: " + dep_in_year);
+  // console.log("Depriciation value in days: " + dep_in_days);
 
-  let obj = []
+  let dep_in_months = []
+  let dep_in_years = []
 
   for (let dayIncrementer = 1; diffInDays > 0; dayIncrementer++, diffInDays--) {
 
@@ -113,7 +114,7 @@ assetSchema.virtual('depriciation_per_day').get(function () {
 
     let luxonDate = start.plus({ days: dayIncrementer - 1})
     let date = luxonDate.toISODate()
-    let {day: lastDayOfMonth, daysInMonth, year: incrementingYear } = luxonDate.toLocal()
+    let {day: lastDayOfMonth, daysInMonth, year: incrementingYear, month } = luxonDate.toLocal()
 
     let difference = (total_cost - dep_in_days).toFixed(3)
     total_cost = difference > 0 ? difference : 0
@@ -145,14 +146,6 @@ assetSchema.virtual('depriciation_per_day').get(function () {
       depForTheYear = (dep_in_days * diffInDaysFromTodayToLastYearLastDay).toFixed(3)
     }
 
-    // let depForTheYear = startYear == incrementingYear 
-    //   ? (totalDep) 
-    //   : (dep_in_days * diffInDaysFromTodayToLastYearLastDay).toFixed(3)
-
-    // let depForTheYear = startYear == incrementingYear 
-    //   ? (totalDep - (dep_in_days * start.diff(DateTime.fromISO(`${incrementingYear}-03-31`), 'days'))) 
-    //   : (dep_in_days * diffInDaysFromTodayToLastYearLastDay).toFixed(3)
-
     if(lastDayOfMonth == daysInMonth) {
       let val = {
         'date': date,
@@ -162,11 +155,27 @@ assetSchema.virtual('depriciation_per_day').get(function () {
         'fiscalYear': `${testYEar.open.year}-${testYEar.close.year}`,
         'depForTheYear': depForTheYear
       }
-      obj.push(val)
-    }
+      dep_in_months.push(val)
+
+      if(month == 3) {
+        let val2 = {
+          'date': date,
+          'netValue': total_cost,
+          'depPerDay': dep_in_days,
+          'totalDep': totalDep,
+          'fiscalYear': `${testYEar.open.year}-${testYEar.close.year}`,
+          'depForTheYear': depForTheYear,
+        }
+        dep_in_years.push(val2)
+      }
+    } 
   }
-  console.log(obj);
-  return obj
+
+  return { 
+    'dep_in_months': dep_in_months,
+    'dep_in_years': dep_in_years
+  }
+
 })
 
 // assetSchema.virtual('depriciation_per_month').get(function () {
@@ -212,7 +221,7 @@ assetSchema.virtual('depriciation_per_day').get(function () {
 // })
 
 // assetSchema.virtual('depriciation_per_year').get(function () {
-//   const end = DateTime.fromISO('2021-01-08') // Current year
+//   const end = DateTime.fromISO('2016-05-31') // Current year
 //   const start = DateTime.fromISO(this.month_of_installation) // Year of installation 2014-08-01
 
 //   let total_cost = parseFloat(this.total_invoice_amount.replace(/,/g, ""))
