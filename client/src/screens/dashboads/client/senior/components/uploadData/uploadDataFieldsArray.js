@@ -39,6 +39,9 @@ export let uploadDataFieldsArray = [
     value: "Base Amount",
   },
   {
+    value: "Scrap value"
+  },
+  {
     value: "VAT",
   },
   {
@@ -79,6 +82,9 @@ export let uploadDataFieldsArray = [
   },
   {
     value: "Capitalised value",
+  },
+  {
+    value: "Useful life",
   },
   {
     value: "Useful life Companies act",

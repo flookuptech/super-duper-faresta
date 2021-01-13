@@ -10,6 +10,7 @@ router.get("/all", auth, async (req, res) => {
     const data = await Asset.find().select("-date -identifier -element -__v");
     res.send(data);
   } catch (error) {
+    console.log(error);
     res.status(500).send({ err: "Unable to fetch assets" });
   }
 });

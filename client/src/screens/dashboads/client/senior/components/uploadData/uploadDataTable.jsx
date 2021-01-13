@@ -104,6 +104,7 @@ const UploadDataTable = ({ user, data }) => {
                       <TableCell align="center">{item.location}</TableCell>
                       <TableCell align="center">{item.quantity}</TableCell>
                       <TableCell align="center">{item.base_amount}</TableCell>
+                      <TableCell align="center">{item.scrap_value}</TableCell>
                       <TableCell align="center">{item.vat}</TableCell>
                       <TableCell align="center">{item.service_tax}</TableCell>
                       <TableCell align="center">{item.other_charges}</TableCell>
@@ -141,6 +142,9 @@ const UploadDataTable = ({ user, data }) => {
                       <TableCell align="center">{item.taxes_}</TableCell>
                       <TableCell align="center">
                         {item.capitalised_value}
+                      </TableCell>
+                      <TableCell align="center">
+                        {item.useful_life}
                       </TableCell>
                       <TableCell align="center">
                         {item.useful_life_companies_act}

@@ -3,6 +3,7 @@ const Joi = require("@hapi/joi");
 const uniqueValidator = require("mongoose-unique-validator");
 const contextService = require("request-context");
 const { Activity } = require("./activity");
+const { DateTime } = require('luxon');
 
 const assetSchema = new mongoose.Schema({
   asset_code: { type: String, required: true, unique: true },
@@ -13,6 +14,7 @@ const assetSchema = new mongoose.Schema({
   quantity: { type: String, default: null },
   location: { type: String, default: null },
   base_amount: { type: String, default: null },
+  scrap_value: {type: String, default: null},
   date_of_installation: {
     type: Date,
   },
@@ -32,6 +34,7 @@ const assetSchema = new mongoose.Schema({
   classification: { type: String, default: null },
   purchase_value: { type: String, default: null },
   capitalised_value: { type: String, default: null },
+  useful_life: { type: String, default: null },
   useful_life_companies_act: { type: String, default: null },
   useful_life_management: { type: String, default: null },
   gross_block: { type: String },
@@ -66,6 +69,184 @@ assetSchema.index({
 
 assetSchema.plugin(uniqueValidator);
 
+assetSchema.virtual('depriciation_per_day').get(function () {
+  const end = DateTime.fromISO('2016-05-31') // Current year
+  const start = DateTime.fromISO(this.month_of_installation) // Year of installation 2014-08-01
+
+  let total_cost = parseFloat(this.total_invoice_amount.replace(/,/g, ""))
+  let scrap_value = parseFloat(this.scrap_value.replace(/,/g, '')) 
+
+  let useful_life = parseInt(this.useful_life)
+  
+  let diffInDays = end.diff(start, 'days').toObject().days + 1 // Difference in years (end - start) +1 to include the end date
+
+  let dep_in_year = ( total_cost - scrap_value ) / useful_life
+  let dep_in_days = parseFloat((dep_in_year / start.daysInYear ).toFixed(3))
+
+  let financialYear
+
+  if(start.month > 3) {
+    financialYear = {
+      open: DateTime.fromISO(`${start.year}-04-01`),
+      close: DateTime.fromISO(`${start.year + 1}-03-31`)
+    }
+  } else {
+    financialYear = {
+      open: DateTime.fromISO(`${start.year - 1}-04-01`),
+      close: DateTime.fromISO(`${start.year}-03-31`)
+    }
+  }
+
+  console.log('Start Year: ' + this.month_of_installation + " value is " + total_cost);
+  console.log("Scrap Value: " + scrap_value);
+  console.log("Useful life in years: " + useful_life);
+  console.log("Total number of days: " + diffInDays);
+  console.log("Days in current year: " + start.daysInYear);
+  console.log("Depriciation value in years: " + dep_in_year);
+  console.log("Depriciation value in days: " + dep_in_days);
+
+  let obj = []
+
+  for (let dayIncrementer = 1; diffInDays > 0; dayIncrementer++, diffInDays--) {
+
+    let startYear = start.year
+
+    let luxonDate = start.plus({ days: dayIncrementer - 1})
+    let date = luxonDate.toISODate()
+    let {day: lastDayOfMonth, daysInMonth, year: incrementingYear } = luxonDate.toLocal()
+
+    let difference = (total_cost - dep_in_days).toFixed(3)
+    total_cost = difference > 0 ? difference : 0
+    let totalDep = (dep_in_days * dayIncrementer).toFixed(3)
+
+    let testYEar
+
+    if(luxonDate.month > 3) {
+      testYEar = {
+        open: DateTime.fromISO(`${incrementingYear}-04-01`),
+        close: DateTime.fromISO(`${incrementingYear + 1}-03-31`)
+      }
+    } else {
+      testYEar = {
+        open: DateTime.fromISO(`${incrementingYear - 1}-04-01`),
+        close: DateTime.fromISO(`${incrementingYear}-03-31`)
+      }
+    }
+
+    let lastDayOfTheYear = DateTime.fromISO(`${testYEar.open.year}-03-31`)
+
+    let diffInDaysFromTodayToLastYearLastDay = Math.abs(luxonDate.diff(lastDayOfTheYear, 'days').toObject().days);
+
+    let depForTheYear = 0
+
+    if(luxonDate >= financialYear.open && luxonDate <= financialYear.close) {
+      depForTheYear = totalDep
+    } else {
+      depForTheYear = (dep_in_days * diffInDaysFromTodayToLastYearLastDay).toFixed(3)
+    }
+
+    // let depForTheYear = startYear == incrementingYear 
+    //   ? (totalDep) 
+    //   : (dep_in_days * diffInDaysFromTodayToLastYearLastDay).toFixed(3)
+
+    // let depForTheYear = startYear == incrementingYear 
+    //   ? (totalDep - (dep_in_days * start.diff(DateTime.fromISO(`${incrementingYear}-03-31`), 'days'))) 
+    //   : (dep_in_days * diffInDaysFromTodayToLastYearLastDay).toFixed(3)
+
+    if(lastDayOfMonth == daysInMonth) {
+      let val = {
+        'date': date,
+        'netValue': total_cost,
+        'depPerDay': dep_in_days,
+        'totalDep': totalDep,
+        'fiscalYear': `${testYEar.open.year}-${testYEar.close.year}`,
+        'depForTheYear': depForTheYear
+      }
+      obj.push(val)
+    }
+  }
+  console.log(obj);
+  return obj
+})
+
+// assetSchema.virtual('depriciation_per_month').get(function () {
+//   const end = DateTime.fromISO('2021-01-08') // Current year
+//   const start = DateTime.fromISO(this.month_of_installation) // Year of installation 2014-08-01
+
+//   let total_cost = parseFloat(this.total_invoice_amount.replace(/,/g, ""))
+//   let scrap_value = parseFloat(this.scrap_value.replace(/,/g, '')) 
+
+//   let useful_life = parseInt(this.useful_life)
+  
+//   let diffInMonths = Math.ceil(end.diff(start, 'months').toObject().months) // Difference in years (end - start)
+
+//   let dep_in_year = Math.abs(( total_cost - scrap_value ) / useful_life) 
+//   let dep_in_month = dep_in_year / 12
+
+//   console.log('Start Year: ' + this.month_of_installation + " value is " + total_cost);
+//   console.log("Scrap Value: " + scrap_value);
+//   console.log("Useful life in years: " + useful_life);
+//   console.log("Depriciation value in years: " + dep_in_year);
+//   console.log("Depriciation value in months: " + dep_in_month);
+//   console.log("Difference in months: " + diffInMonths);
+
+//   let obj = []
+
+//   for (let monthIncrementer = 1; diffInMonths > 0; monthIncrementer++, diffInMonths--) {
+
+//     total_cost = total_cost - dep_in_month > 0 ? total_cost - dep_in_month : 0
+
+//     if(Math.abs(start.plus({ months: monthIncrementer }).toLocal().month) == 3) {
+
+//       let val = {
+//         'date': start.plus({ months: monthIncrementer }).toISODate(),
+//         'netValue': total_cost,
+//         'totalDep': dep_in_month * monthIncrementer
+//       }
+//       obj.push(val)
+//     }
+//   }
+
+//   console.log(obj);
+//   return obj
+// })
+
+// assetSchema.virtual('depriciation_per_year').get(function () {
+//   const end = DateTime.fromISO('2021-01-08') // Current year
+//   const start = DateTime.fromISO(this.month_of_installation) // Year of installation 2014-08-01
+
+//   let total_cost = parseFloat(this.total_invoice_amount.replace(/,/g, ""))
+//   let scrap_value = parseFloat(this.scrap_value.replace(/,/g, '')) 
+
+//   let useful_life = parseInt(this.useful_life)
+  
+//   let diffInYears = Math.ceil(end.diff(start, 'years').toObject().years) // Difference in years (end - start)
+
+//   let dep = ( total_cost - scrap_value ) / useful_life
+
+//   console.log('Start Year: ' + this.month_of_installation + " value is " + total_cost);
+//   console.log("Scrap Value: " + scrap_value);
+//   console.log("Useful life  in years: " + useful_life);
+//   console.log("Depriciation value: " + dep);
+
+//   let obj = []
+
+//   for (let yearIncrementer = 0; diffInYears > 0; yearIncrementer++, diffInYears--) {
+
+//   total_cost = total_cost - dep 
+
+//     let val = {
+//       'date': start.plus({ years: yearIncrementer }).toISODate(),
+//       'amount': total_cost
+//     }
+
+//     obj.push(val)
+//   }
+
+//   console.log(obj);
+//   return obj
+// })
+
 function validateAssetData(assetData) {
   const schema = Joi.array().items(
     Joi.object({
@@ -92,6 +273,7 @@ function validateAssetData(assetData) {
         .required()
         .label("Invalid date"),
       invoice_number: Joi.number(),
+      scrap_value: Joi.string(),
       total_invoice_amount: Joi.string(),
       amount_capitalised: Joi.string(),
       depreciation: Joi.string(),
@@ -101,6 +283,7 @@ function validateAssetData(assetData) {
       classification: Joi.string(),
       purchase_value: Joi.string(),
       capitalised_value: Joi.string(),
+      useful_life: Joi.number(),
       useful_life_companies_act: Joi.string(),
       useful_life_management: Joi.string(),
       gross_block: Joi.string(),
@@ -151,6 +334,7 @@ function singleAsset(single) {
     other_charges: Joi.string(),
     invoice_date: Joi.date().max("now").iso().required().label("Invalid date"),
     invoice_number: Joi.number(),
+    scrap_value: Joi.string(),
     total_invoice_amount: Joi.string(),
     amount_capitalised: Joi.string(),
     depreciation: Joi.string(),
@@ -160,6 +344,7 @@ function singleAsset(single) {
     classification: Joi.string(),
     purchase_value: Joi.string(),
     capitalised_value: Joi.string(),
+    useful_life: Joi.number(),
     useful_life_companies_act: Joi.string(),
     useful_life_management: Joi.string(),
     gross_block: Joi.string(),
